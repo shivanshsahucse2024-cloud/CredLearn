@@ -1,0 +1,368 @@
+{% extends 'base.html'%}
+
+{% block title %} Home | CredLearn {% endblock title %}
+
+{% block body %}
+
+<!-- ========================= -->
+<!-- 1. FULLSCREEN HERO CAROUSEL -->
+<!-- ========================= -->
+<div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-touch="true" data-bs-interval="5000">
+
+  <div class="carousel-inner">
+
+   <div class="carousel-inner">
+
+  <!-- Slide 1 -->
+  <div class="carousel-item active">
+    <div class="slide-box">
+      <div class="slide-left">
+        <h1 class="slide-title">Teach Something. Earn Credits.</h1>
+        <p class="slide-text">Share your skills with learners and earn credits to learn new ones.</p>
+        <a href="#" class="btn btn-light px-4 py-2 mt-2">Start Teaching</a>
+      </div>
+
+      <div class="slide-right">
+        <img src="https://images.pexels.com/photos/3184328/pexels-photo-3184328.jpeg" 
+             class="slide-img" alt="Teacher image">
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 2 -->
+  <div class="carousel-item">
+    <div class="slide-box">
+      <div class="slide-left">
+        <h1 class="slide-title">Learn Without Money</h1>
+        <p class="slide-text">Use credits instead of cash. Skill exchange for everyone.</p>
+        <a href="#" class="btn btn-light px-4 py-2 mt-2">Start Learning</a>
+      </div>
+
+      <div class="slide-right">
+        <img src="https://images.pexels.com/photos/1181414/pexels-photo-1181414.jpeg" 
+             class="slide-img" alt="Learning image">
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3 -->
+  <div class="carousel-item">
+    <div class="slide-box">
+      <div class="slide-left">
+        <h1 class="slide-title">One Skill Can Change a Life</h1>
+        <p class="slide-text">Teach your talent. Inspire others. Build your portfolio.</p>
+        <a href="#" class="btn btn-light px-4 py-2 mt-2">Join Community</a>
+      </div>
+
+      <div class="slide-right">
+        <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg" 
+             class="slide-img" alt="Portfolio image">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+  <!-- Carousel Indicators -->
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+  </div>
+
+  <!-- LEFT / PREV BUTTON -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon custom-arrow" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+
+  <!-- RIGHT / NEXT BUTTON -->
+  <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon custom-arrow" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+
+</div>
+
+<!-- ========================= -->
+<!-- 2. YOUR HERO SECTION BELOW -->
+<!-- ========================= -->
+
+<section class="hero-section py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12">
+
+        <!-- CARD-LIKE BOX -->
+        <div class="hero-card row align-items-center">
+
+          <!-- LEFT CONTENT -->
+          <div class="col-md-6 hero-left">
+            <h1 class="hero-title mb-3">
+              Teach a Skill.<br>
+              Learn a Skill.<br>
+              Grow Together.
+            </h1>
+
+            <p class="hero-subtitle mb-4">
+              Join India’s first community-driven skill exchange platform.
+              Earn credits by teaching, spend them on learning.
+            </p>
+
+            <!-- BULLETS (OPTIONAL) -->
+            <ul class="hero-points mb-4">
+              <li>Learn new skills without paying money.</li>
+              <li>Earn credits every time you teach.</li>
+              <li>Track your growth with a skill portfolio.</li>
+            </ul>
+
+            <!-- SEARCH BAR -->
+            <div class="search-box d-flex mb-4">
+              <input type="text" class="form-control hero-search" placeholder="Search skills, mentors, topics…">
+              <button class="btn btn-primary ms-2 px-4">Search</button>
+            </div>
+
+            <!-- CTA BUTTONS -->
+            <div class="d-flex gap-3">
+              <a href="#" class="btn btn-light px-4 py-2 hero-btn">Start Learning</a>
+              <a href="#" class="btn btn-outline-light px-4 py-2 hero-btn">Start Teaching</a>
+            </div>
+          </div>
+
+          <!-- RIGHT IMAGE -->
+          <div class="col-md-6 text-center hero-right">
+            <img src="https://images.pexels.com/photos/1181676/pexels-photo-1181676.jpeg" 
+                 class="img-fluid hero-img" alt="Learning Image">
+          </div>
+
+        </div><!-- /hero-card -->
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ========================= -->
+<!--          CUSTOM CSS        -->
+<!-- ========================= -->
+<style>
+
+  /* ----------- CAROUSEL -------------- */
+
+ /* ============================= */
+/*        CAROUSEL WRAPPER       */
+/* ============================= */
+
+#heroCarousel {
+  padding: 40px 0;          /* space above & below carousel */
+}
+
+/* Remove default full-height behaviour if you had it earlier */
+#heroCarousel .carousel-item {
+  position: relative;
+}
+
+/* ============================= */
+/*        SLIDE CARD BOX         */
+/* ============================= */
+
+.slide-box {
+  height: 380px;             /* ❗ change this value to make it taller/shorter */
+  background: #162138ff;       /* dark card like Udemy */
+  border-radius: 24px;
+  width: 90%;                /* card width relative to page */
+  margin: 0 auto;            /* center the card */
+  padding: 40px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  box-shadow: 0 20px 40px rgba(47, 44, 44, 0.35);
+}
+
+/* ============================= */
+/*        LEFT TEXT SIDE         */
+/* ============================= */
+
+.slide-left {
+  max-width: 50%;
+  color: #f3f4f6;
+}
+
+.slide-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.slide-text {
+  font-size: 1rem;
+  color: #d1d5db;
+  margin-bottom: 1rem;
+}
+
+/* ============================= */
+/*        RIGHT IMAGE SIDE       */
+/* ============================= */
+
+.slide-right {
+  max-width: 45%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slide-img {
+  max-height: 280px;      /* image size inside the box */
+  width: auto;
+  border-radius: 20px;
+  object-fit: contain;
+}
+
+/* ============================= */
+/*     INDICATORS & ARROWS       */
+/* ============================= */
+
+/* dots */
+.carousel-indicators [data-bs-target] {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background-color: #9ca3af;
+}
+
+.carousel-indicators .active {
+  background-color: #f9fafb;
+}
+
+/* arrows */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1);      /* make icons white */
+  width: 40px;
+  height: 40px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  opacity: 0.9;
+  transition: 0.2s;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  opacity: 1;
+}
+
+/* ============================= */
+/*         RESPONSIVE FIXES      */
+/* ============================= */
+
+@media (max-width: 992px) {
+  .slide-box {
+    height: auto;               /* let it expand naturally on small screens */
+    padding: 30px 24px;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .slide-left,
+  .slide-right {
+    max-width: 100%;
+  }
+
+  .slide-img {
+    max-height: 220px;
+    margin-top: 16px;
+  }
+
+  .slide-title {
+    font-size: 1.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .slide-box {
+    width: 95%;
+    padding: 24px 18px;
+  }
+}
+
+
+  /* ----------- HERO SECTION -------------- */
+  body {
+  background: #4360a5ff; /* dark bluish background like Udemy block area */
+}
+
+/* HERO SECTION CARD */
+.hero-section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.hero-card {
+  background: #111827;             /* dark card */
+  border-radius: 24px;
+  padding: 3rem 3rem;
+  color: #f9fafb;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.4);
+}
+
+.hero-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+.hero-subtitle {
+  color: #d1d5db;
+  font-size: 1rem;
+}
+
+.hero-points {
+  list-style: none;
+  padding-left: 0;
+  color: #e5e7eb;
+  font-size: 0.95rem;
+}
+
+.hero-points li::before {
+  content: "• ";
+  color: #a855f7; /* accent bullet */
+}
+
+.hero-search {
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  border: none;
+}
+
+.hero-btn {
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+/* Make hero image smaller and neat */
+.hero-img {
+  max-width: 80%;
+  border-radius: 20px;
+}
+
+/* Stack nicely on mobile */
+@media (max-width: 768px) {
+  .hero-card {
+    padding: 2rem 1.5rem;
+  }
+  .hero-title {
+    font-size: 1.9rem;
+  }
+  .hero-right {
+    margin-top: 2rem;
+  }
+}
+
+
+</style>
+{%endblock body%}
