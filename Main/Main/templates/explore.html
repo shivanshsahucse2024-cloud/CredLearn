@@ -2,7 +2,160 @@
 
 {% block title %} Explore{% endblock title %}
 
-{% block body %}
-<h1> this is explore body </h1>
-<p> Your gateway to knowledge and rewards! </p>
+{% block body %}+
+
+<div class="explore-header">
+    <h1>Explore Skills</h1>
+    <p>Your gateway to learning, teaching, and earning credits</p>
+</div>
+
+<div class="trending-section">
+    <h2 class="trending-title">🔥 Trending Skills</h2>
+
+    <div class="trending-skills">
+        <div class="trending-tag">AI & Machine Learning</div>
+        <div class="trending-tag">Web Development</div>
+        <div class="trending-tag">UI/UX Design</div>
+        <div class="trending-tag">Cybersecurity</div>
+        <div class="trending-tag">Data Analysis</div>
+        <div class="trending-tag">Blockchain</div>
+        <div class="trending-tag">Digital Marketing</div>
+        <div class="trending-tag">Cloud Computing</div>
+
+    </div>
+</div>
+
+<h2 style="text-align:center; margin-top:20px;">Skill Categories</h2>
+
+<div class="categories">
+    <div class="category-card">
+        <div class="category-icon">💻</div>
+        <h3>Programming</h3>
+    </div>
+
+    <div class="category-card">
+        <div class="category-icon">🎨</div>
+        <h3>Design & Art</h3>
+    </div>
+
+    <div class="category-card">
+        <div class="category-icon">🎵</div>
+        <h3>Music</h3>
+    </div>
+
+    <div class="category-card">
+        <div class="category-icon">💬</div>
+        <h3>Languages</h3>
+    </div>
+
+    <div class="category-card">
+        <div class="category-icon">⚙️</div>
+        <h3>Technical skills</h3>
+    </div>
+
+    <div class="category-card">
+        <div class="category-icon">📈</div>
+        <h3>Business</h3>
+    </div>
+
+    <div class="category-card">
+        <div class="category-icon">🧠</div>
+        <h3>Personal Development</h3>
+    </div>
+
+    <div class="category-card">
+        <div class="category-icon">💼</div>
+        <h3>Career Skills</h3>
+    </div>
+</div>
+
+<style>
+    .trending-section {
+        margin: 20px auto;
+        width: 90%;
+        max-width: 1100px;
+    }
+
+    .trending-title {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .trending-skills {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .trending-tag {
+        background: #3e4955ff;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 20px;
+        font-size: 16px;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .trending-tag:hover {
+        background: #2f57d4;
+        transform: translateY(-3px);
+    }
+
+        /*explore*/ 
+
+    .explore-header{
+        text-align:center;
+        padding:40px 0;
+    }
+
+    .explore-header h1{
+        font-size:40px;
+        font-weight:700;
+        margin-bottom:10px;
+    }
+
+    .explore-header p{
+        font-size:18px;
+        color:#555;
+    }
+
+    .categories{
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+        margin-top:40px;
+        gap:20px;
+    }
+
+    .category-card{
+        width:220px;
+        background:white;
+        border-radius:12px;
+        padding:20px;
+        box-shadow:0 4px 10px rgba(0,0,0,0.1);
+        text-align:center;
+        transition:0.3s;
+        cursor:pointer;
+    }
+
+    .category-card:hover{
+        transform:translateY(-5px);
+        box-shadow:0 6px 16px rgba(0,0,0,0.2);
+    }
+
+    .category-card h3{
+        margin-top:10px;
+        font-size:20px;
+    }
+
+    .category-icon{
+        font-size:40px;
+        color:#4a76fd;
+    }
+</style>
+
 {%endblock body%}
