@@ -1,3 +1,4 @@
+
 {% extends 'base.html'%}
 
 {% block title %} Explore{% endblock title %}
@@ -7,67 +8,323 @@
 <div class="explore-header">
     <h1>Explore Skills</h1>
     <p>Your gateway to learning, teaching, and earning credits</p>
+    <!-- SEARCH BAR -->
+            <div class="search-box d-flex mb-4">
+              <input type="text" class="form-control hero-search" placeholder="Search skills, mentors, topics…">
+              <button class="btn btn-primary ms-2 px-4">Search</button>
+            </div>
 </div>
+<style>
+.search-box {
+    max-width: 500px;   /* control how short you want it */
+    width: 100%;
+    margin: 0 auto;     /* center it */
+}
+</style>
 
+{% load static %}
+
+<section class="trending-section-wrapper">
+
+    <!--<h2 class="section-main-title">Trending Skills</h2>-->
+
+    <div class="trending-grid">
+
+        <!-- COLUMN 1 — TRENDING SKILLS -->
+        <div class="trending-column">
+            <h3 class="column-title">Trending Skills →</h3>
+
+            <!-- Card 1 -->
+            <div class="trend-card">
+                <img src="https://via.placeholder.com/60?text=P" class="trend-icon">
+                <div class="trend-info">
+                    <h4>Programming</h4>
+                    <p>Improve coding skills with hands-on practice.</p>
+                    <span class="trend-rating">★ 4.8</span>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="trend-card">
+                <img src="https://via.placeholder.com/60?text=DA" class="trend-icon">
+                <div class="trend-info">
+                    <h4>Design & Art</h4>
+                    <p>Enhance creativity with modern design tools.</p>
+                    <span class="trend-rating">★ 4.7</span>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="trend-card">
+                <img src="https://via.placeholder.com/60?text=M" class="trend-icon">
+                <div class="trend-info">
+                    <h4>Music</h4>
+                    <p>Build musical talent and production skills.</p>
+                    <span class="trend-rating">★ 4.6</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- COLUMN 2 — WEEKLY SPOTLIGHT -->
+        <div class="trending-column">
+            <h3 class="column-title">Weekly Spotlight →</h3>
+
+            <!-- Card 1 -->
+            <div class="trend-card">
+                <img src="https://via.placeholder.com/60?text=LANG" class="trend-icon">
+                <div class="trend-info">
+                    <h4>Languages</h4>
+                    <p>Learn to communicate confidently worldwide.</p>
+                    <span class="trend-rating">★ 4.8</span>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="trend-card">
+                <img src="https://via.placeholder.com/60?text=COOK" class="trend-icon">
+                <div class="trend-info">
+                    <h4>Cooking</h4>
+                    <p>Master delicious recipes step by step.</p>
+                    <span class="trend-rating">★ 4.5</span>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="trend-card">
+                <img src="https://via.placeholder.com/60?text=BIZ" class="trend-icon">
+                <div class="trend-info">
+                    <h4>Business</h4>
+                    <p>Develop leadership and management abilities.</p>
+                    <span class="trend-rating">★ 4.7</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- COLUMN 3 — IN-DEMAND SKILLS -->
+        <div class="trending-column">
+            <h3 class="column-title">In-demand Skills →</h3>
+
+            <!-- Card 1 -->
+            <div class="trend-card">
+                <img src="https://via.placeholder.com/60?text=PD" class="trend-icon">
+                <div class="trend-info">
+                    <h4>Personal Development</h4>
+                    <p>Grow confidence and build mindset strength.</p>
+                    <span class="trend-rating">★ 4.9</span>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="trend-card">
+                <img src="https://via.placeholder.com/60?text=DAN" class="trend-icon">
+                <div class="trend-info">
+                    <h4>Dancing</h4>
+                    <p>Improve rhythm and movement techniques.</p>
+                    <span class="trend-rating">★ 4.6</span>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="trend-card">
+                <img src="https://via.placeholder.com/60?text=AI" class="trend-icon">
+                <div class="trend-info">
+                    <h4>AI & Machine Learning</h4>
+                    <p>Build modern AI and ML applications.</p>
+                    <span class="trend-rating">★ 4.9</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!--</style>
 <div class="trending-section">
     <h2 class="trending-title">🔥 Trending Skills</h2>
-
+    <h2 style="text-align:center; margin-top:10px;">Trending Skills</h2>
     <div class="trending-skills">
-        <div class="trending-tag">AI & Machine Learning</div>
+        <div class="trending-tag">Singing</div>
         <div class="trending-tag">Web Development</div>
         <div class="trending-tag">UI/UX Design</div>
-        <div class="trending-tag">Cybersecurity</div>
+        <div class="trending-tag">Dancing</div>
         <div class="trending-tag">Data Analysis</div>
-        <div class="trending-tag">Blockchain</div>
+        <div class="trending-tag">Languages</div>
         <div class="trending-tag">Digital Marketing</div>
-        <div class="trending-tag">Cloud Computing</div>
+    </div>
+</div>-->
+
+<h2 style="text-align:center; margin-top:40px;">Skill Categories</h2>
+<section class="pro-featured-categories">
+
+    <div class="pro-featured-grid">
+
+        <!-- LEFT TEXT BLOCK -->
+        <div class="pro-left-text">
+            <h2>Learn essential career and life skills</h2>
+            <p>Build in-demand skills fast and unlock your next career opportunity.</p>
+        </div>
+
+        <!-- 1 Programming -->
+        <div class="pro-card">
+            <img src="{% static 'images/2.jpg' %}" class="pro-img">
+            <div class="pro-info">
+                <div class="pro-meta">👤 2.4M+</div>
+                <h3>Programming</h3>
+                <span class="pro-arrow">→</span>
+            </div>
+        </div>
+
+        <!-- 2 Design & Art -->
+        <div class="pro-card">
+            <img src="{% static 'images/1.jpg' %}" class="pro-img">
+            <div class="pro-info">
+                <div class="pro-meta">👤 1.2M+</div>
+                <h3>Design & Art</h3>
+                <span class="pro-arrow">→</span>
+            </div>
+        </div>
+
+        <!-- 3 Music -->
+        <div class="pro-card">
+            <img src="{% static 'images/music.jpg' %}" class="pro-img">
+            <div class="pro-info">
+                <div class="pro-meta">👤 850K+</div>
+                <h3>Music</h3>
+                <span class="pro-arrow">→</span>
+            </div>
+        </div>
+
+        <!-- 4 Languages -->
+        <div class="pro-card">
+            <img src="{% static 'images/lang.jpg' %}" class="pro-img">
+            <div class="pro-info">
+                <div class="pro-meta">👤 1.6M+</div>
+                <h3>Languages</h3>
+                <span class="pro-arrow">→</span>
+            </div>
+        </div>
+
+        <!-- 5 Cooking -->
+        <div class="pro-card">
+            <img src="{% static 'images/cooking.jpg' %}" class="pro-img">
+            <div class="pro-info">
+                <div class="pro-meta">👤 700K+</div>
+                <h3>Cooking</h3>
+                <span class="pro-arrow">→</span>
+            </div>
+        </div>
+
+        <!-- 6 Business -->
+        <div class="pro-card">
+            <img src="{% static 'images/business.jpg' %}" class="pro-img">
+            <div class="pro-info">
+                <div class="pro-meta">👤 3M+</div>
+                <h3>Business</h3>
+                <span class="pro-arrow">→</span>
+            </div>
+        </div>
+
+        <!-- 7 Personal Development -->
+        <div class="pro-card">
+            <img src="{% static 'images/pd.jpg' %}" class="pro-img">
+            <div class="pro-info">
+                <div class="pro-meta">👤 1.9M+</div>
+                <h3>Personal Development</h3>
+                <span class="pro-arrow">→</span>
+            </div>
+        </div>
+
+        <!-- 8 Dancing -->
+        <div class="pro-card">
+            <img src="{% static 'images/pst.jpg' %}" class="pro-img">
+            <div class="pro-info">
+                <div class="pro-meta">👤 620K+</div>
+                <h3>Dancing</h3>
+                <span class="pro-arrow">→</span>
+            </div>
+        </div>
+
+        <!-- 9 AI & Machine Learning -->
+        <div class="pro-card">
+            <img src="{% static 'images/Ai.jpg' %}" class="pro-img">
+            <div class="pro-info">
+                <div class="pro-meta">👤 2.8M+</div>
+                <h3>AI & Machine Learning</h3>
+                <span class="pro-arrow">→</span>
+            </div>
+        </div>
 
     </div>
-</div>
 
-<h2 style="text-align:center; margin-top:20px;">Skill Categories</h2>
-
-<div class="categories">
-    <div class="category-card">
-        <div class="category-icon">💻</div>
-        <h3>Programming</h3>
+    <div class="pro-slider-dots">
+        <span class="dot"></span>
+        <span class="dot active-dot"></span>
+        <span class="dot"></span>
     </div>
 
-    <div class="category-card">
-        <div class="category-icon">🎨</div>
-        <h3>Design & Art</h3>
-    </div>
+</section>
 
-    <div class="category-card">
-        <div class="category-icon">🎵</div>
-        <h3>Music</h3>
-    </div>
+<!--Explore lists-->
+<h2 style="text-align:center; margin-top:40px;"</h2>
+<section class="explore-directory">
+    <div class="directory-container">
 
-    <div class="category-card">
-        <div class="category-icon">💬</div>
-        <h3>Languages</h3>
-    </div>
+        <div class="directory-col">
+            <h3>Explore Roles</h3>
+            <a href="#">Data Analyst</a>
+            <a href="#">Project Manager</a>
+            <a href="#">Cyber Security Analyst</a>
+            <a href="#">Data Scientist</a>
+            <a href="#">UI / UX Designer</a>
+            <a href="#">Machine Learning Engineer</a>
+            <a href="#" class="view-all">View all</a>
+        </div>
 
-    <div class="category-card">
-        <div class="category-icon">⚙️</div>
-        <h3>Technical skills</h3>
-    </div>
+        <div class="directory-col">
+            <h3>Explore Categories</h3>
+            <a href="#">Artificial Intelligence</a>
+            <a href="#">Business</a>
+            <a href="#">Computer Science</a>
+            <a href="#">Healthcare</a>
+            <a href="#">Physical Science</a>
+            <a href="#">Personal Development</a>
+            <a href="#" class="view-all">View all</a>
+        </div>
 
-    <div class="category-card">
-        <div class="category-icon">📈</div>
-        <h3>Business</h3>
-    </div>
+        <div class="directory-col">
+            <h3>Professional Certificates</h3>
+            <a href="#">Business</a>
+            <a href="#">Computer Science</a>
+            <a href="#">Data Science</a>
+            <a href="#">Information Technology</a>
+            <a href="#" class="view-all">View all</a>
+        </div>
 
-    <div class="category-card">
-        <div class="category-icon">🧠</div>
-        <h3>Personal Development</h3>
-    </div>
+        <div class="directory-col">
+            <h3>Online Degrees</h3>
+            <a href="#">Bachelor's Degrees</a>
+            <a href="#">Master's Degrees</a>
+            <a href="#">Postgraduate Programs</a>
+            <a href="#" class="view-all">View all</a>
+        </div>
 
-    <div class="category-card">
-        <div class="category-icon">💼</div>
-        <h3>Career Skills</h3>
+        <div class="directory-col">
+            <h3>Trending Skills</h3>
+            <a href="#">Python</a>
+            <a href="#">AI</a>
+            <a href="#">Excel</a>
+            <a href="#">Machine Learning</a>
+            <a href="#">SQL</a>
+            <a href="#">Marketing</a>
+            <a href="#" class="view-all">View all</a>
+        </div>
+
     </div>
-</div>
+</section>
 
 <style>
     .trending-section {
@@ -122,8 +379,113 @@
         font-size:18px;
         color:#555;
     }
+    .pro-featured-categories {
+    padding: 80px 60px;
+    background: #fff;
+}
 
-    .categories{
+/* GRID */
+.pro-featured-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr 1fr;
+    gap: 30px;
+}
+
+/* LEFT TEXT */
+.pro-left-text h2 {
+    font-size: 38px;
+    font-weight: 700;
+}
+
+.pro-left-text p {
+    font-size: 18px;
+    color: #555;
+    margin-top: 10px;
+}
+
+/* CARD */
+.pro-card {
+    background: #fff;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    transition: 0.3s ease;
+}
+
+.pro-card:hover {
+    transform: translateY(-8px) scale(1.01);
+}
+
+/* IMAGE */
+.pro-img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+}
+
+/* INFO */
+.pro-info {
+    padding: 20px;
+    position: relative;
+}
+
+.pro-meta {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 6px;
+}
+
+.pro-info h3 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.pro-arrow {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    font-size: 26px;
+    color: #555;
+}
+
+/* DOTS */
+.pro-slider-dots {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background: #ddd;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 6px;
+}
+
+.active-dot {
+    background: #a855f7;
+    width: 16px;
+    height: 16px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+    .pro-featured-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media (max-width: 800px) {
+    .pro-featured-grid {
+        grid-template-columns: 1fr;
+    }
+    .pro-left-text {
+        margin-bottom: 20px;
+    }
+}
+
+
+    /*.categories{
         display:flex;
         flex-wrap:wrap;
         justify-content:center;
@@ -155,7 +517,132 @@
     .category-icon{
         font-size:40px;
         color:#4a76fd;
+    }*/
+
+    
+ <!--Directory section-->
+.explore-directory {
+    padding: 80px 40px;
+    background: #fafafa;
+    border-top: 1px solid #eee;
+    margin-top: 80px;
+}
+
+.directory-container {
+    max-width: 1300px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 50px;
+}
+
+.directory-col h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.directory-col a {
+    display: block;
+    color: #444;
+    font-size: 15px;
+    margin-bottom: 10px;
+    text-decoration: none;
+}
+
+.directory-col a:hover {
+    color: #4f46e5;
+}
+
+.view-all {
+    margin-top: 8px;
+    font-weight: 600;
+    color: #4f46e5 !important;
+}
+
+
+                       <!--Trending skills  css-->
+/* WRAPPER */
+.trending-section-wrapper {
+    padding: 60px 40px;
+    margin-top: 40px;
+}
+
+/* MAIN TITLE */
+.section-main-title {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+/* GRID LAYOUT */
+.trending-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+/* COLUMN TITLE */
+.column-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #222;
+}
+
+/* CARD */
+.trend-card {
+    display: flex;
+    gap: 12px;
+    background: #f5f8ff;
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    transition: 0.2s;
+}
+
+.trend-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+/* ICON */
+.trend-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* INFO TEXT */
+.trend-info h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 2px 0 4px;
+}
+
+.trend-info p {
+    font-size: 14px;
+    color: #555;
+    margin: 0;
+}
+
+.trend-rating {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-top: 4px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .trending-grid {
+        grid-template-columns: 1fr;
     }
+}
+
 </style>
 
 {%endblock body%}

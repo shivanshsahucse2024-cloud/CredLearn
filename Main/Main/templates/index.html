@@ -3,7 +3,7 @@
 {% block title %} Home | CredLearn {% endblock title %}
 
 {% block body %}
-
+{%load static%}
 <!-- ========================= -->
 <!-- 1. FULLSCREEN HERO CAROUSEL -->
 <!-- ========================= -->
@@ -23,7 +23,7 @@
       </div>
 
       <div class="slide-right">
-        <img src="https://images.pexels.com/photos/3184328/pexels-photo-3184328.jpeg" 
+       <img src="https://images.pexels.com/photos/3184328/pexels-photo-3184328.jpeg"
              class="slide-img" alt="Teacher image">
       </div>
     </div>
@@ -143,6 +143,37 @@
   </div>
 </section>
 
+          <!--credit sectionn-->
+          <section class="credit-info-section py-5">
+         <div class="container">
+          <div class="row align-items-center">
+
+      <!-- LEFT SIDE TEXT -->
+      <div class="col-md-6">
+        <h2 class="fw-bold mb-3">How the Credit System Works</h2>
+        <p class="mb-3">
+          Our platform runs on a simple credit economy. Teach to earn credits, and use those credits to learn new skills.
+        </p>
+
+        <h5 class="fw-bold">Why Credits Matter</h5>
+        <ul class="mt-2">
+          <li>You don’t need money to learn — just earn credits by teaching.</li>
+          <li>Teachers earn <strong>10 credits per hour</strong> for every session.</li>
+          <li>Learners spend <strong>10 credits per hour</strong> to attend a session.</li>
+          <li>Credits make skills exchange fair and community-driven.</li>
+        </ul>
+      </div>
+
+      <!-- RIGHT SIDE IMAGE -->
+      <div class="col-md-6 text-center">
+        <img src="{% static 'images/credits.jpg' %}"
+             alt="Credits system"
+             class="img-fluid credit-image">
+      </div>
+
+    </div>
+  </div>
+</section>
 
 
 <!-- ========================= -->
@@ -294,7 +325,7 @@
 
   /* ----------- HERO SECTION -------------- */
   body {
-  background: #4c5a8bff; /* dark bluish background like Udemy block area */
+  background: #ffffffff; /* dark bluish background like Udemy block area */
 }
 
 /* HERO SECTION CARD */
@@ -304,7 +335,7 @@
 }
 
 .hero-card {
-  background: #111827;             /* dark card */
+  background: #162138ff;             /* dark card */
   border-radius: 24px;
   padding: 3rem 3rem;
   color: #f9fafb;
@@ -363,6 +394,20 @@
   }
 }
 
+
+/*credits css*/ 
+.credit-info-section {
+    background: #ffffffff;
+    border-radius: 25px;
+    margin-top: 40px;
+    padding: 60px 0;
+}
+
+.credit-image {
+    max-width: 350px;
+    border-radius: 20px;
+    box-shadow: 0px 6px 18px rgba(0,0,0,0.12);
+}
 
 </style>
 {%endblock body%}
