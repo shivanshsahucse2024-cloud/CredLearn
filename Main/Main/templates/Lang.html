@@ -1,0 +1,318 @@
+{% extends 'base.html'%}
+
+{% block title %} Languages {% endblock title %}
+
+{% block body %}
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Languages – Skills</title>
+
+  <style>
+    :root{
+      --bg:#f5f5f7;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --accent:#10b981; /* green */
+      --radius:18px;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box;}
+
+    body{
+      font-family:system-ui, -apple-system, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    a{text-decoration:none;color:inherit;}
+
+    .page{
+      max-width:1150px;
+      margin:32px auto;
+      padding:0 16px 48px;
+    }
+
+    .page-header{
+      margin-bottom:28px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .eyebrow{
+      font-size:12px;
+      color:var(--accent);
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-weight:600;
+    }
+
+    h1{
+      font-size:32px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .page-header p{
+      max-width:540px;
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    h2{
+      margin:20px 0 14px;
+      font-size:20px;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    /* Grid */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:20px;
+    }
+
+    /* Skill Cards */
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      overflow:hidden;
+      border:1px solid #e5e7eb;
+      box-shadow:0 10px 26px rgba(0,0,0,.12);
+      transition:.15s ease;
+    }
+
+    .card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 18px 40px rgba(0,0,0,.18);
+    }
+
+    .thumb{
+      height:150px;
+      background-size:cover;
+      background-position:center;
+    }
+
+    .card-body{
+      padding:14px 16px 16px;
+    }
+
+    .pill{
+      font-size:11px;
+      padding:3px 12px;
+      border-radius:999px;
+      background:#d1fae5;
+      color:var(--accent);
+      font-weight:500;
+      margin-bottom:6px;
+      display:inline-block;
+    }
+
+    .card-title{
+      font-size:17px;
+      font-weight:600;
+      margin-bottom:4px;
+    }
+
+    .card-body p{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    /* Mentor Card */
+    .mentor-card{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:12px;
+      background:var(--card);
+      border-radius:var(--radius);
+      border:1px solid #e5e7eb;
+      box-shadow:0 8px 22px rgba(0,0,0,.1);
+      margin-bottom:10px;
+    }
+
+    .mentor-name{
+      font-size:14px;
+      font-weight:600;
+    }
+
+    .mentor-meta{
+      font-size:12px;
+      color:var(--muted);
+      text-align:right;
+    }
+
+    .credits{
+      font-size:13px;
+      color:var(--accent);
+      font-weight:600;
+    }
+
+    @media(max-width:620px){
+      .mentor-card{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:8px;
+      }
+      .mentor-meta{text-align:left;}
+    }
+  </style>
+
+</head>
+
+<body>
+<main class="page">
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <span class="eyebrow">Languages</span>
+    <h1>All Language Skills 🌍</h1>
+    <p>Choose a language or speaking skill → see available mentors below 100 credits.</p>
+  </header>
+
+  <!-- SKILLS GRID -->
+  <h2>Skills List</h2>
+  <div class="grid">
+
+    <!-- English -->
+    <a href="#english-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1529070538774-1843cb3265df');"></div>
+      <div class="card-body">
+        <span class="pill">Language</span>
+        <div class="card-title">English</div>
+        <p>Speaking • Grammar • Fluency</p>
+      </div>
+    </a>
+
+    <!-- Hindi -->
+    <a href="#hindi-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1591608513841-42ab59858bbd');"></div>
+      <div class="card-body">
+        <span class="pill">Language</span>
+        <div class="card-title">Hindi</div>
+        <p>Grammar • Writing • Fluent Speaking</p>
+      </div>
+    </a>
+
+    <!-- Communication -->
+    <a href="#comm-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4');"></div>
+      <div class="card-body">
+        <span class="pill">Soft Skill</span>
+        <div class="card-title">Communication Skill</div>
+        <p>Clear speaking • Interaction • Confidence</p>
+      </div>
+    </a>
+
+    <!-- Spoken English -->
+    <a href="#spoken-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1526304640581-d334cdbbf45e');"></div>
+      <div class="card-body">
+        <span class="pill">Language</span>
+        <div class="card-title">Spoken English</div>
+        <p>Daily speaking • Fluency • Accent</p>
+      </div>
+    </a>
+
+    <!-- Vocabulary -->
+    <a href="#vocab-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1511593358241-7eea1f3c84e5');"></div>
+      <div class="card-body">
+        <span class="pill">Skill</span>
+        <div class="card-title">Vocabulary</div>
+        <p>Word power • Usage • Memory tricks</p>
+      </div>
+    </a>
+
+    <!-- Grammar -->
+    <a href="#grammar-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1555949963-aa79dcee981c');"></div>
+      <div class="card-body">
+        <span class="pill">Skill</span>
+        <div class="card-title">Grammar</div>
+        <p>Tenses • Sentence structure • Correct usage</p>
+      </div>
+    </a>
+
+    <!-- French -->
+    <a href="#french-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34');"></div>
+      <div class="card-body">
+        <span class="pill">Language</span>
+        <div class="card-title">French</div>
+        <p>Basics • Speaking • Writing</p>
+      </div>
+    </a>
+
+    <!-- Spanish -->
+    <a href="#spanish-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb');"></div>
+      <div class="card-body">
+        <span class="pill">Language</span>
+        <div class="card-title">Spanish</div>
+        <p>Daily speaking • Vocabulary • Grammar</p>
+      </div>
+    </a>
+
+    <!-- Public Speaking -->
+    <a href="#public-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1515165562835-c4c1b0e1ec7d');"></div>
+      <div class="card-body">
+        <span class="pill">Soft Skill</span>
+        <div class="card-title">Public Speaking</div>
+        <p>Stage confidence • Delivery • Voice control</p>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- MENTORS SECTION -->
+
+  <h2 id="english-mentors">English Mentors</h2>
+  <div class="mentor-card">
+    <div>
+      <div class="mentor-name">Priya Singh</div>
+      <div class="mentor-meta">Fluency • Accent training</div>
+    </div>
+    <div class="mentor-meta">
+      <div class="credits">Credits: 70</div>
+      <div>Can teach & learn</div>
+    </div>
+  </div>
+
+  <h2 id="hindi-mentors">Hindi Mentors</h2>
+  <div class="mentor-card">
+    <div>
+      <div class="mentor-name">Karan Verma</div>
+      <div class="mentor-meta">Grammar • Writing skills</div>
+    </div>
+    <div class="mentor-meta">
+      <div class="credits">Credits: 60</div>
+      <div>Can teach & learn</div>
+    </div>
+  </div>
+
+  <h2 id="public-mentors">Public Speaking Mentors</h2>
+  <div class="mentor-card">
+    <div>
+      <div class="mentor-name">Aarav Khanna</div>
+      <div class="mentor-meta">Confidence • Voice modulation</div>
+    </div>
+    <div class="mentor-meta">
+      <div class="credits">Credits: 90</div>
+      <div>Can teach & learn</div>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
+{%endblock body%}

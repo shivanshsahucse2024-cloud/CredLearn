@@ -1,0 +1,310 @@
+{% extends 'base.html'%}
+
+{% block title %} Design {% endblock title %}
+
+{% block body %}
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design</title>
+  <style>
+    :root{
+      --bg:#f5f5f7;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --accent:#ec4899; /* pink */
+      --radius:18px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:system-ui,-apple-system,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+    a{text-decoration:none;color:inherit;}
+
+    .page{
+      max-width:1150px;
+      margin:32px auto;
+      padding:0 16px 48px;
+    }
+
+    .page-header{
+      margin-bottom:28px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .eyebrow{
+      font-size:12px;
+      color:var(--accent);
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-weight:600;
+    }
+    h1{
+      font-size:32px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .page-header p{
+      max-width:540px;
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    h2{
+      margin:20px 0 14px;
+      font-size:20px;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    /* Grid */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:20px;
+    }
+
+    /* Skill Card */
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      overflow:hidden;
+      border:1px solid #e5e7eb;
+      box-shadow:0 10px 26px rgba(0,0,0,.12);
+      transition:.15s ease;
+    }
+    .card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 18px 40px rgba(0,0,0,.18);
+    }
+
+    .thumb{
+      height:150px;
+      background-size:cover;
+      background-position:center;
+    }
+
+    .card-body{
+      padding:14px 16px 16px;
+    }
+
+    .pill{
+      font-size:11px;
+      padding:3px 12px;
+      border-radius:999px;
+      background:#fdf2f8;
+      color:var(--accent);
+      font-weight:500;
+      margin-bottom:6px;
+      display:inline-block;
+    }
+
+    .card-title{
+      font-size:17px;
+      font-weight:600;
+      margin-bottom:4px;
+    }
+
+    .card-body p{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    /* Mentor Section */
+    .mentor-card{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:12px;
+      background:var(--card);
+      border:1px solid #e5e7eb;
+      border-radius:var(--radius);
+      box-shadow:0 8px 22px rgba(0,0,0,.1);
+      margin-bottom:10px;
+    }
+
+    .mentor-name{
+      font-size:14px;
+      font-weight:600;
+    }
+    .mentor-meta{
+      font-size:12px;
+      color:var(--muted);
+      text-align:right;
+    }
+    .credits{
+      font-size:13px;
+      color:var(--accent);
+      font-weight:600;
+    }
+
+    @media(max-width:620px){
+      .mentor-card{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:6px;
+      }
+      .mentor-meta{text-align:left;}
+    }
+  </style>
+</head>
+
+<body>
+<main class="page">
+  <!-- HEADER -->
+  <header class="page-header">
+    <span class="eyebrow">Design & Arts</span>
+    <h1>Design & Art🎨</h1>
+    <p>
+      <p style="font-size: 20px; font-weight: 400; color: #797575ff;">
+      Select a skill → view mentor list (only mentors under 100 credits).</p>
+  </header>
+
+  <!-- SKILLS GRID -->
+  <h2>Skills List</h2>
+  <div class="grid">
+
+    <!-- Photoshop -->
+    <a href="#photoshop-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1503602642458-232111445657');"></div>
+      <div class="card-body">
+        <span class="pill">Graphic Design</span>
+        <div class="card-title">Photoshop</div>
+        <p>Photo editing • Retouching • Posters</p>
+      </div>
+    </a>
+
+    <!-- Illustrator -->
+    <a href="#illustrator-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1581276879432-15a19d654956');"></div>
+      <div class="card-body">
+        <span class="pill">Graphic Design</span>
+        <div class="card-title">Illustrator / Vector</div>
+        <p>Logo design • Icon sets • Vector Art</p>
+      </div>
+    </a>
+
+    <!-- Poster Design -->
+    <a href="#poster-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1545235617-9465d2a55698');"></div>
+      <div class="card-body">
+        <span class="pill">Graphic Design</span>
+        <div class="card-title">Poster Design</div>
+        <p>Social media banners • Layouts</p>
+      </div>
+    </a>
+
+    <!-- Figma -->
+    <a href="#figma-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1589571894960-20bbe2828d0a');"></div>
+      <div class="card-body">
+        <span class="pill">UI / UX</span>
+        <div class="card-title">Figma</div>
+        <p>UI Design • Wireframes • Prototypes</p>
+      </div>
+    </a>
+
+    <!-- UX -->
+    <a href="#ux-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1587613865520-fc3c7993f790');"></div>
+      <div class="card-body">
+        <span class="pill">UI / UX</span>
+        <div class="card-title">UX Fundamentals</div>
+        <p>User flow • Usability • Research</p>
+      </div>
+    </a>
+
+    <!-- Design Systems -->
+    <a href="#designsystem-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1531403009284-440f080d1e12');"></div>
+      <div class="card-body">
+        <span class="pill">UI / UX</span>
+        <div class="card-title">Design Systems</div>
+        <p>Components • Tokens • Consistency</p>
+      </div>
+    </a>
+
+    <!-- Digital Painting -->
+    <a href="#digitalpaint-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1580136579312-94651dfd596d');"></div>
+      <div class="card-body">
+        <span class="pill">Digital Art</span>
+        <div class="card-title">Digital Painting</div>
+        <p>Brushes • Shading • Lighting</p>
+      </div>
+    </a>
+
+    <!-- Character Design -->
+    <a href="#character-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1601933470928-c1e75c4b0bf4');"></div>
+      <div class="card-body">
+        <span class="pill">Digital Art</span>
+        <div class="card-title">Character Design</div>
+        <p>Poses • Expressions • Styling</p>
+      </div>
+    </a>
+
+    <!-- Color & Composition -->
+    <a href="#color-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1501594907352-04cda38ebc29');"></div>
+      <div class="card-body">
+        <span class="pill">Digital Art</span>
+        <div class="card-title">Color & Composition</div>
+        <p>Color theory • Layout balance</p>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- MENTORS SECTION -->
+
+  <h2 id="photoshop-mentors">Photoshop Mentors</h2>
+  <div class="mentor-card">
+    <div>
+      <div class="mentor-name">Ananya Kapoor</div>
+      <div class="mentor-meta">Retouching • Basic posters</div>
+    </div>
+    <div class="mentor-meta">
+      <div class="credits">Credits: 70</div>
+      <div>Can teach & learn</div>
+    </div>
+  </div>
+
+  <h2 id="illustrator-mentors">Illustrator Mentors</h2>
+  <div class="mentor-card">
+    <div>
+      <div class="mentor-name">Raghav Patel</div>
+      <div class="mentor-meta">Logo design • Vector icons</div>
+    </div>
+    <div class="mentor-meta">
+      <div class="credits">Credits: 80</div>
+      <div>Can teach & learn</div>
+    </div>
+  </div>
+
+  <h2 id="digitalpaint-mentors">Digital Painting Mentors</h2>
+  <div class="mentor-card">
+    <div>
+      <div class="mentor-name">Sneha Roy</div>
+      <div class="mentor-meta">Lighting • Brushes • Shading</div>
+    </div>
+    <div class="mentor-meta">
+      <div class="credits">Credits: 65</div>
+      <div>Can teach & learn</div>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
+
+{%endblock body%}

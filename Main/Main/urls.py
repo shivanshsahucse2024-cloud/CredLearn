@@ -29,5 +29,8 @@ urlpatterns = [
     path('about/',views.about,name='about'),
     path('contact/',views.contact,name='contact'),
     path('services/',views.services,name='services'),
-    path('wallet/', views.wallet, name='wallet'),
-]
+    path('programming/',views.programming,name='programming'),
+    path('Design/',views.Design,name='Design'),
+    path('Music/',views.Music,name='Music'),
+    path('Lang/',views.Lang,name='Lang'),
+    ]
