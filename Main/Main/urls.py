@@ -23,10 +23,11 @@ admin.site.site_title = "Shivansh Admin Portal"
 admin.site.index_title = "Welcome to Shivansh Researcher Portal"
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/',admin.site.urls),
     path('',views.home,name='home'),
     path('explore/',views.Explore,name='explore'),
     path('about/',views.about,name='about'),
     path('contact/',views.contact,name='contact'),
     path('services/',views.services,name='services'),
+    path('wallet/', views.wallet, name='wallet'),
 ]
