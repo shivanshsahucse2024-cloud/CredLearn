@@ -3,13 +3,16 @@
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-6">
-        <div class="card p-4">
-            <h3>Create a New Course</h3>
+        <div class="card p-5 shadow-lg border-0">
+            <h3 class="fw-bold mb-4 text-center text-primary">Create New Course</h3>
+            <p class="text-center text-muted mb-4">Share your knowledge and earn Creds.</p>
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class="btn btn-success">Publish Course</button>
-                <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+                <div class="d-flex gap-2 mt-4">
+                    <button type="submit" class="btn btn-success flex-grow-1 fw-bold">Create Course</button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary flex-grow-1 fw-bold">Cancel</a>
+                </div>
             </form>
         </div>
     </div>

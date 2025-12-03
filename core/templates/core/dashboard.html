@@ -1,15 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row">
+<div class="row g-4">
     <!-- Sidebar / User Info -->
     <div class="col-md-3">
-        <div class="card p-3">
-            <h4>Welcome, {{ user.username }}</h4>
-            <p>{{ user.bio|default:"No bio set." }}</p>
-            <hr>
+        <div class="card p-4 shadow-sm border-0 h-100">
+            <div class="text-center mb-3">
+                <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                    style="width: 64px; height: 64px; font-size: 24px;">
+                    {{ user.username|make_list|first|upper }}
+                </div>
+                <h4 class="fw-bold">{{ user.username }}</h4>
+                <p class="text-muted small">{{ user.email }}</p>
+            </div>
+            <hr class="text-muted">
+            <p class="text-muted">{{ user.bio|default:"No bio set." }}</p>
+
             {% if user.is_teacher %}
-            <a href="{% url 'create_course' %}" class="btn btn-success w-100 mb-2">+ Create Course</a>
+            <div class="mt-auto">
+                <a href="{% url 'create_course' %}" class="btn btn-success w-100 fw-bold shadow-sm">
+                    <span class="me-2">+</span>Create Course
+                </a>
+            </div>
             {% endif %}
         </div>
     </div>
@@ -18,50 +30,61 @@
     <div class="col-md-9">
 
         <!-- Section: Courses I am Enrolled In -->
-        <h3>📚 My Enrolled Courses</h3>
+        <h3 class="fw-bold mb-4 text-primary">📚 My Enrolled Courses</h3>
         {% if my_courses %}
-        <div class="row">
+        <div class="row g-4 mb-5">
             {% for course in my_courses %}
             <div class="col-md-4">
-                <div class="card p-3 h-100 bg-light">
-                    <h5>{{ course.title }}</h5>
-                    <p class="small text-muted">Teacher: {{ course.teacher }}</p>
-                    <button class="btn btn-secondary btn-sm" disabled>Enrolled</button>
+                <div class="card p-4 h-100 border-0 shadow-sm bg-white">
+                    <h5 class="fw-bold">{{ course.title }}</h5>
+                    <p class="small text-muted mb-3">Teacher: {{ course.teacher }}</p>
+                    <div class="mt-auto">
+                        <button class="btn btn-secondary btn-sm w-100" disabled>Enrolled</button>
+                    </div>
                 </div>
             </div>
             {% endfor %}
         </div>
         {% else %}
-        <p class="text-muted">You haven't joined any courses yet.</p>
+        <div class="alert alert-light border-0 shadow-sm mb-5">
+            <p class="mb-0 text-muted">You haven't joined any courses yet.</p>
+        </div>
         {% endif %}
 
-        <hr>
-
         <!-- Section: Courses Available to Join -->
-        <h3>🛒 Available Courses</h3>
-        <div class="row">
+        <h3 class="fw-bold mb-4 text-primary">🛒 Available Courses</h3>
+        <div class="row g-4">
             {% for course in available_courses %}
             <div class="col-md-4">
-                <div class="card p-3 h-100">
-                    <h5>{{ course.title }}</h5>
-                    <p>{{ course.description|truncatechars:50 }}</p>
-                    <p><strong>Price: {{ course.price }} Creds</strong></p>
-                    <a href="{% url 'join_course' course.id %}" class="btn btn-primary btn-sm">Join Class</a>
+                <div class="card p-4 h-100 border-0 shadow-sm">
+                    <h5 class="fw-bold">{{ course.title }}</h5>
+                    <p class="text-muted small mb-3">{{ course.description|truncatechars:80 }}</p>
+                    <div class="mt-auto d-flex justify-content-between align-items-center">
+                        <span class="fw-bold text-warning">{{ course.price }} Creds</span>
+                        <a href="{% url 'join_course' course.id %}" class="btn btn-primary btn-sm px-3">Join Class</a>
+                    </div>
                 </div>
             </div>
             {% empty %}
-            <p class="text-muted">No new courses available right now.</p>
+            <div class="col-12">
+                <p class="text-muted">No new courses available right now.</p>
+            </div>
             {% endfor %}
         </div>
 
         {% if user.is_teacher and teaching_courses %}
-        <hr>
-        <h3>🎓 Courses I Teach</h3>
-        <ul>
-            {% for course in teaching_courses %}
-            <li>{{ course.title }} ({{ course.students.count }} students)</li>
-            {% endfor %}
-        </ul>
+        <hr class="my-5">
+        <h3 class="fw-bold mb-4 text-primary">🎓 Courses I Teach</h3>
+        <div class="card p-4 border-0 shadow-sm">
+            <ul class="list-group list-group-flush">
+                {% for course in teaching_courses %}
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0">
+                    <span class="fw-medium">{{ course.title }}</span>
+                    <span class="badge bg-primary rounded-pill">{{ course.students.count }} students</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
         {% endif %}
     </div>
 </div>

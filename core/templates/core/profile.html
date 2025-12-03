@@ -1,15 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="card p-4">
-    <h2>My Profile</h2>
-    <p><strong>Username:</strong> {{ user.username }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>Role:</strong> {% if user.is_teacher %}Teacher{% else %}Learner{% endif %}</p>
-    <p><strong>Wallet:</strong> {{ user.creds }} Creds</p>
-    <p><strong>Bio:</strong> {{ user.bio }}</p>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card p-5 shadow-lg border-0">
+            <div class="text-center mb-4">
+                <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                    style="width: 80px; height: 80px; font-size: 32px;">
+                    {{ user.username|make_list|first|upper }}
+                </div>
+                <h2 class="fw-bold">{{ user.username }}</h2>
+                <span class="badge bg-light text-dark border">{{ user.email }}</span>
+            </div>
+        </div>
+    </div>
 
-    <a href="{% url 'profile_edit' %}" class="btn btn-primary">Edit Profile</a>
-    <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+    <div class="mb-4">
+        <h5 class="fw-bold border-bottom pb-2">Bio</h5>
+        <p class="text-muted">{{ user.bio|default:"No bio provided yet." }}</p>
+    </div>
+
+    <div class="d-flex gap-2">
+        <a href="{% url 'profile_edit' %}" class="btn btn-primary flex-grow-1 fw-bold">Edit Profile</a>
+        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary flex-grow-1 fw-bold">Back to
+            Dashboard</a>
+    </div>
+</div>
+</div>
 </div>
 {% endblock %}
