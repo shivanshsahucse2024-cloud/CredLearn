@@ -12,20 +12,27 @@
                 <h2 class="fw-bold">{{ user.username }}</h2>
                 <span class="badge bg-light text-dark border">{{ user.email }}</span>
             </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-12">
+                    <div class="p-3 bg-light rounded text-center">
+                        <small class="text-muted d-block uppercase fw-bold" style="font-size: 0.75rem;">WALLET</small>
+                        <span class="fw-bold text-warning">{{ user.creds }} Creds</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <h5 class="fw-bold border-bottom pb-2">Bio</h5>
+                <p class="text-muted">{{ user.bio|default:"No bio provided yet." }}</p>
+            </div>
+
+            <div class="d-flex gap-2">
+                <a href="{% url 'profile_edit' %}" class="btn btn-primary flex-grow-1 fw-bold">Edit Profile</a>
+                <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary flex-grow-1 fw-bold">Back to
+                    Dashboard</a>
+            </div>
         </div>
     </div>
-
-    <div class="mb-4">
-        <h5 class="fw-bold border-bottom pb-2">Bio</h5>
-        <p class="text-muted">{{ user.bio|default:"No bio provided yet." }}</p>
-    </div>
-
-    <div class="d-flex gap-2">
-        <a href="{% url 'profile_edit' %}" class="btn btn-primary flex-grow-1 fw-bold">Edit Profile</a>
-        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary flex-grow-1 fw-bold">Back to
-            Dashboard</a>
-    </div>
-</div>
-</div>
 </div>
 {% endblock %}

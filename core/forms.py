@@ -3,9 +3,12 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import User, Course
 
 class CustomUserCreationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+    bio = forms.CharField(widget=forms.Textarea, required=False)
+
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = UserCreationForm.Meta.fields + ('email', 'is_teacher', 'bio')
+        fields = UserCreationForm.Meta.fields + ('email', 'bio')
 
 class CourseForm(forms.ModelForm):
     class Meta:
@@ -15,4 +18,4 @@ class CourseForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'bio', 'is_teacher']
+        fields = ['first_name', 'last_name', 'bio']

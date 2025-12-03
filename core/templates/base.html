@@ -27,7 +27,6 @@
 
             <div class="ms-auto">
                 {% if user.is_authenticated %}
-                <span class="text-white me-3">Role: {% if user.is_teacher %}Teacher{% else %}Learner{% endif %}</span>
                 <span class="creds-badge me-3">💰 {{ user.creds }} Creds</span>
                 <a href="{% url 'profile' %}" class="btn btn-light btn-sm fw-bold text-primary">
                     <span class="me-1">👤</span> My Profile

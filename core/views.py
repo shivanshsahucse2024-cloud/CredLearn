@@ -60,10 +60,6 @@ def profile_edit(request):
 
 @login_required
 def create_course(request):
-    if not request.user.is_teacher:
-        messages.error(request, "You must be a teacher to create courses.")
-        return redirect('dashboard')
-        
     if request.method == 'POST':
         form = CourseForm(request.POST)
         if form.is_valid():
@@ -101,3 +97,42 @@ def join_course(request, course_id):
         messages.error(request, "Not enough Creds to join this course!")
         
     return redirect('dashboard')
+
+@login_required
+def edit_course(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+    
+    # Security: Only teacher/owner can edit
+    if request.user != course.teacher:
+        messages.error(request, "You are not authorized to edit this course.")
+        return redirect('dashboard')
+        
+    if request.method == 'POST':
+        form = CourseForm(request.POST, instance=course)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Course updated successfully!")
+            return redirect('dashboard')
+    else:
+        form = CourseForm(instance=course)
+    
+    # Reuse course_form.html but pass a flag or context if needed, 
+    # or we can just let the template render the form with values.
+    # To make the title say "Edit Course", we can pass a context variable.
+    return render(request, 'core/course_form.html', {'form': form, 'is_edit': True})
+
+@login_required
+def delete_course(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+    
+    # Security: Only teacher/owner can delete
+    if request.user != course.teacher:
+        messages.error(request, "You are not authorized to delete this course.")
+        return redirect('dashboard')
+        
+    if request.method == 'POST':
+        course.delete()
+        messages.success(request, "Course deleted successfully!")
+        return redirect('dashboard')
+        
+    return render(request, 'core/course_confirm_delete.html', {'course': course})
