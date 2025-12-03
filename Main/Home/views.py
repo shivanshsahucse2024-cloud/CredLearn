@@ -21,8 +21,17 @@ def contact(request):
 def services(request):
     return render(request,'services.html' )
 
+def programming(request):
+    return render(request,'programming.html')
 
-    
+def Design(request):
+    return render(request,'Design.html')
+
+def Music(request):
+    return render(request,'music.html')
+
+def Lang(request):
+    return render(request,'Lang.html')
 
 @login_required
 def wallet(request):

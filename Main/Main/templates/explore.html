@@ -1,6 +1,5 @@
 
 {% extends 'base.html'%}
-{% load static %}
 
 {% block title %} Explore{% endblock title %}
 
@@ -23,7 +22,7 @@
 }
 </style>
 
-
+{% load static %}
 
 <section class="trending-section-wrapper">
 
@@ -158,7 +157,7 @@
     </div>
 </div>-->
 
-<h2 style="text-align:center; margin-top:40px;">Skill Categories</h2>
+<h2 style="text-align:center; margin-top:50px;"><p>Skill Categories</p></h2>
 <section class="pro-featured-categories">
 
     <div class="pro-featured-grid">
@@ -170,17 +169,34 @@
         </div>
 
         <!-- 1 Programming -->
-        <div class="pro-card">
-            <img src="{% static 'images/2.jpg' %}" class="pro-img">
-            <div class="pro-info">
-                <div class="pro-meta">👤 2.4M+</div>
-                <h3>Programming</h3>
-                <span class="pro-arrow">→</span>
-            </div>
-        </div>
+         <div class="pro-card">
+    
+       <a href="{% url 'programming' %}" class="card-link"></a>
 
+       <img src="{% static 'images/2.jpg' %}" class="pro-img">
+
+    <div class="pro-info">
+        <div class="pro-meta">👤 2.4M+</div>
+        <h3>Programming</h3>
+        <span class="pro-arrow">→</span>
+    </div>
+</div>
+        <style>
+       .pro-card {
+    position: relative;
+    cursor: pointer;
+}
+
+/* The overlay link that makes the entire card clickable */
+.card-link {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+}
+</style>
         <!-- 2 Design & Art -->
         <div class="pro-card">
+            <a href="{% url 'Design' %}" class="card-link"></a>
             <img src="{% static 'images/1.jpg' %}" class="pro-img">
             <div class="pro-info">
                 <div class="pro-meta">👤 1.2M+</div>
@@ -188,9 +204,22 @@
                 <span class="pro-arrow">→</span>
             </div>
         </div>
+    <style>
+       .pro-card {
+    position: relative;
+    cursor: pointer;
+    }
 
+    /* The overlay link that makes the entire card clickable */
+    .card-link {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    }
+</style>
         <!-- 3 Music -->
         <div class="pro-card">
+            <a href="{% url 'Music' %}" class="card-link"></a>
             <img src="{% static 'images/music.jpg' %}" class="pro-img">
             <div class="pro-info">
                 <div class="pro-meta">👤 850K+</div>
@@ -198,9 +227,22 @@
                 <span class="pro-arrow">→</span>
             </div>
         </div>
+<style>
+       .pro-card {
+    position: relative;
+    cursor: pointer;
+    }
 
+    /* The overlay link that makes the entire card clickable */
+    .card-link {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    }
+</style>
         <!-- 4 Languages -->
         <div class="pro-card">
+            <a href="{% url 'Lang' %}" class="card-link"></a>
             <img src="{% static 'images/lang.jpg' %}" class="pro-img">
             <div class="pro-info">
                 <div class="pro-meta">👤 1.6M+</div>
@@ -208,7 +250,19 @@
                 <span class="pro-arrow">→</span>
             </div>
         </div>
+        <style>
+       .pro-card {
+        position: relative;
+        cursor: pointer;
+       }
 
+    /* The overlay link that makes the entire card clickable */
+    .card-link {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    }
+</style>
         <!-- 5 Cooking -->
         <div class="pro-card">
             <img src="{% static 'images/cooking.jpg' %}" class="pro-img">
@@ -270,7 +324,7 @@
 </section>
 
 <!--Explore lists-->
-<h2> style="text-align:center; margin-top:40px;"</h2>
+<h2 style="text-align:center; margin-top:40px;"</h2>
 <section class="explore-directory">
     <div class="directory-container">
 
