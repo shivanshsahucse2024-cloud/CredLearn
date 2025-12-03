@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <!-- Sidebar / User Info -->
+    <div class="col-md-3">
+        <div class="card p-3">
+            <h4>Welcome, {{ user.username }}</h4>
+            <p>{{ user.bio|default:"No bio set." }}</p>
+            <hr>
+            {% if user.is_teacher %}
+            <a href="{% url 'create_course' %}" class="btn btn-success w-100 mb-2">+ Create Course</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-9">
+
+        <!-- Section: Courses I am Enrolled In -->
+        <h3>📚 My Enrolled Courses</h3>
+        {% if my_courses %}
+        <div class="row">
+            {% for course in my_courses %}
+            <div class="col-md-4">
+                <div class="card p-3 h-100 bg-light">
+                    <h5>{{ course.title }}</h5>
+                    <p class="small text-muted">Teacher: {{ course.teacher }}</p>
+                    <button class="btn btn-secondary btn-sm" disabled>Enrolled</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-muted">You haven't joined any courses yet.</p>
+        {% endif %}
+
+        <hr>
+
+        <!-- Section: Courses Available to Join -->
+        <h3>🛒 Available Courses</h3>
+        <div class="row">
+            {% for course in available_courses %}
+            <div class="col-md-4">
+                <div class="card p-3 h-100">
+                    <h5>{{ course.title }}</h5>
+                    <p>{{ course.description|truncatechars:50 }}</p>
+                    <p><strong>Price: {{ course.price }} Creds</strong></p>
+                    <a href="{% url 'join_course' course.id %}" class="btn btn-primary btn-sm">Join Class</a>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-muted">No new courses available right now.</p>
+            {% endfor %}
+        </div>
+
+        {% if user.is_teacher and teaching_courses %}
+        <hr>
+        <h3>🎓 Courses I Teach</h3>
+        <ul>
+            {% for course in teaching_courses %}
+            <li>{{ course.title }} ({{ course.students.count }} students)</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
