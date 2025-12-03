@@ -1,0 +1,316 @@
+{% extends 'base.html'%}
+
+{% block title %} Cooking {% endblock title %}
+
+{% block body %}
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cooking – Skills</title>
+
+  <style>
+    :root{
+      --bg:#f5f5f7;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --accent:#f97316; /* orange */
+      --radius:18px;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box;}
+
+    body{
+      font-family:system-ui, -apple-system, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    a{text-decoration:none;color:inherit;}
+
+    .page{
+      max-width:1150px;
+      margin:32px auto;
+      padding:0 16px 48px;
+    }
+
+    .page-header{
+      margin-bottom:28px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .eyebrow{
+      font-size:12px;
+      color:var(--accent);
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-weight:600;
+    }
+
+    h1{
+      font-size:32px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .page-header p{
+      max-width:540px;
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    h2{
+      margin:20px 0 14px;
+      font-size:20px;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    /* Grid */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:20px;
+    }
+
+    /* Cards */
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      overflow:hidden;
+      border:1px solid #e5e7eb;
+      box-shadow:0 10px 26px rgba(0,0,0,.12);
+      transition:.15s ease;
+    }
+    .card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 18px 40px rgba(0,0,0,.18);
+    }
+
+    .thumb{
+      height:150px;
+      background-size:cover;
+      background-position:center;
+    }
+
+    .card-body{
+      padding:14px 16px 16px;
+    }
+
+    .pill{
+      font-size:11px;
+      padding:3px 12px;
+      border-radius:999px;
+      background:#ffedd5;
+      color:var(--accent);
+      font-weight:500;
+      margin-bottom:6px;
+      display:inline-block;
+    }
+
+    .card-title{
+      font-size:17px;
+      font-weight:600;
+      margin-bottom:4px;
+    }
+
+    .card-body p{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    /* Mentor Card */
+    .mentor-card{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:12px;
+      background:var(--card);
+      border-radius:var(--radius);
+      border:1px solid #e5e7eb;
+      box-shadow:0 8px 22px rgba(0,0,0,.1);
+      margin-bottom:10px;
+    }
+
+    .mentor-name{
+      font-size:14px;
+      font-weight:600;
+    }
+
+    .mentor-meta{
+      font-size:12px;
+      color:var(--muted);
+      text-align:right;
+    }
+
+    .credits{
+      font-size:13px;
+      color:var(--accent);
+      font-weight:600;
+    }
+
+    @media(max-width:620px){
+      .mentor-card{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:8px;
+      }
+      .mentor-meta{text-align:left;}
+    }
+  </style>
+</head>
+
+<body>
+<main class="page">
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <span class="eyebrow">Cooking</span>
+    <h1>Cooking Skills 🍳</h1>
+    <p>Choose a cooking skill → see mentors with credits under 100.</p>
+  </header>
+
+  <!-- COOKING SKILLS GRID -->
+  <h2>Skills List</h2>
+  <div class="grid">
+
+    <!-- Indian Cooking -->
+    <a href="#indian-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1603898037225-decc6f9f90de');"></div>
+      <div class="card-body">
+        <span class="pill">Cuisine</span>
+        <div class="card-title">Indian Cooking</div>
+        <p>Masala • Curries • Home-style cooking</p>
+      </div>
+    </a>
+
+    <!-- Baking -->
+    <a href="#baking-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1606851092835-04ec6c8378d0');"></div>
+      <div class="card-body">
+        <span class="pill">Baking</span>
+        <div class="card-title">Baking</div>
+        <p>Cakes • Cookies • Bread</p>
+      </div>
+    </a>
+
+    <!-- Fast Food -->
+    <a href="#fastfood-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1550547660-d9450f859349');"></div>
+      <div class="card-body">
+        <span class="pill">Snacks</span>
+        <div class="card-title">Fast Food</div>
+        <p>Burgers • Momos • Street food</p>
+      </div>
+    </a>
+
+    <!-- Chinese Cooking -->
+    <a href="#chinese-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1553621042-f6e147245754');"></div>
+      <div class="card-body">
+        <span class="pill">Cuisine</span>
+        <div class="card-title">Chinese Cooking</div>
+        <p>Noodles • Fried rice • Manchurian</p>
+      </div>
+    </a>
+
+    <!-- Italian -->
+    <a href="#italian-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1603079847493-b70cbb5fe4b6');"></div>
+      <div class="card-body">
+        <span class="pill">Cuisine</span>
+        <div class="card-title">Italian Cooking</div>
+        <p>Pasta • Pizza • Garlic bread</p>
+      </div>
+    </a>
+
+    <!-- Healthy Meals -->
+    <a href="#healthy-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1498837167922-ddd27525d352');"></div>
+      <div class="card-body">
+        <span class="pill">Healthy</span>
+        <div class="card-title">Healthy Meals</div>
+        <p>Low-oil • High protein • Balanced meals</p>
+      </div>
+    </a>
+
+    <!-- Knife Skills -->
+    <a href="#knife-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1587248720377-1d5cb44c17e0');"></div>
+      <div class="card-body">
+        <span class="pill">Skill</span>
+        <div class="card-title">Knife Skills</div>
+        <p>Chopping • Slicing • Safety</p>
+      </div>
+    </a>
+
+    <!-- Desserts -->
+    <a href="#dessert-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1488477181946-6428a0291777');"></div>
+      <div class="card-body">
+        <span class="pill">Sweet</span>
+        <div class="card-title">Desserts</div>
+        <p>Indian sweets • Puddings • Ice creams</p>
+      </div>
+    </a>
+
+    <!-- Beverages -->
+    <a href="#beverage-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1504674900247-0877df9cc836');"></div>
+      <div class="card-body">
+        <span class="pill">Drinks</span>
+        <div class="card-title">Beverages</div>
+        <p>Mocktails • Shakes • Coffee</p>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- MENTORS SECTION -->
+
+  <h2 id="indian-mentors">Indian Cooking Mentors</h2>
+  <div class="mentor-card">
+    <div>
+      <div class="mentor-name">Meera Sharma</div>
+      <div class="mentor-meta">North Indian • Masala handling</div>
+    </div>
+    <div class="mentor-meta">
+      <div class="credits">Credits: 60</div>
+      <div>Can teach & learn</div>
+    </div>
+  </div>
+
+  <h2 id="baking-mentors">Baking Mentors</h2>
+  <div class="mentor-card">
+    <div>
+      <div class="mentor-name">Aditi Verma</div>
+      <div class="mentor-meta">Cakes • Cupcakes • Breads</div>
+    </div>
+    <div class="mentor-meta">
+      <div class="credits">Credits: 85</div>
+      <div>Can teach & learn</div>
+    </div>
+  </div>
+
+  <h2 id="chinese-mentors">Chinese Cooking Mentors</h2>
+  <div class="mentor-card">
+    <div>
+      <div class="mentor-name">Rohit Sen</div>
+      <div class="mentor-meta">Wok handling • Sauces</div>
+    </div>
+    <div class="mentor-meta">
+      <div class="credits">Credits: 75</div>
+      <div>Can teach & learn</div>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
+{%endblock body%}

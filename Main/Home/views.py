@@ -33,6 +33,16 @@ def Music(request):
 def Lang(request):
     return render(request,'Lang.html')
 
+def cooking(request):
+    return render(request,'cooking.html')
+
+def business(request):
+    return render(request,'business.html')
+
+def dancing(request):
+    return render(request,'dancing.html')
+
+
 @login_required
 def wallet(request):
     profile = request.user.profile

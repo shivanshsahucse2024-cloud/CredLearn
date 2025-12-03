@@ -1,0 +1,317 @@
+{% extends 'base.html'%}
+
+{% block title %} Dancing {% endblock title %}
+
+{% block body %}
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dancing – Skills</title>
+
+  <style>
+    :root{
+      --bg:#f5f5f7;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --accent:#f97316; /* orange for dance vibes */
+      --radius:18px;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box;}
+
+    body{
+      font-family:system-ui, -apple-system, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    a{text-decoration:none;color:inherit;}
+
+    .page{
+      max-width:1150px;
+      margin:32px auto;
+      padding:0 16px 48px;
+    }
+
+    .page-header{
+      margin-bottom:28px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .eyebrow{
+      font-size:12px;
+      color:var(--accent);
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-weight:600;
+    }
+
+    h1{
+      font-size:32px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .page-header p{
+      max-width:540px;
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    h2{
+      margin:20px 0 14px;
+      font-size:20px;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    /* Grid */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:20px;
+    }
+
+    /* Cards */
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      overflow:hidden;
+      border:1px solid #e5e7eb;
+      box-shadow:0 10px 26px rgba(0,0,0,.12);
+      transition:.15s ease;
+    }
+    .card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 18px 40px rgba(0,0,0,.18);
+    }
+
+    .thumb{
+      height:150px;
+      background-size:cover;
+      background-position:center;
+    }
+
+    .card-body{
+      padding:14px 16px 16px;
+    }
+
+    .pill{
+      font-size:11px;
+      padding:3px 12px;
+      border-radius:999px;
+      background:#ffedd5;
+      color:var(--accent);
+      font-weight:500;
+      margin-bottom:6px;
+      display:inline-block;
+    }
+
+    .card-title{
+      font-size:17px;
+      font-weight:600;
+      margin-bottom:4px;
+    }
+
+    .card-body p{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    /* Mentor cards */
+    .mentor-card{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:12px;
+      background:var(--card);
+      border-radius:var(--radius);
+      border:1px solid #e5e7eb;
+      box-shadow:0 8px 22px rgba(0,0,0,.1);
+      margin-bottom:10px;
+    }
+
+    .mentor-name{
+      font-size:14px;
+      font-weight:600;
+    }
+
+    .mentor-meta{
+      font-size:12px;
+      color:var(--muted);
+      text-align:right;
+    }
+
+    .credits{
+      font-size:13px;
+      color:var(--accent);
+      font-weight:600;
+    }
+
+    @media(max-width:620px){
+      .mentor-card{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:8px;
+      }
+      .mentor-meta{text-align:left;}
+      h1{font-size:28px;}
+    }
+  </style>
+</head>
+
+<body>
+<main class="page">
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <span class="eyebrow">Dancing</span>
+    <h1>Dancing Skills 💃🕺</h1>
+    <p>Choose a dance style → see mentors with credits under 100. Learn, practice & perform.</p>
+  </header>
+
+  <!-- SKILLS GRID -->
+  <h2>Skills List</h2>
+  <div class="grid">
+
+    <!-- Bollywood -->
+    <a href="#bolly-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552');"></div>
+      <div class="card-body">
+        <span class="pill">Style</span>
+        <div class="card-title">Bollywood Dance</div>
+        <p>Filmy steps • Expressions • Hook steps</p>
+      </div>
+    </a>
+
+    <!-- Hip Hop -->
+    <a href="#hiphop-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1514846326710-096e4a8035e1');"></div>
+      <div class="card-body">
+        <span class="pill">Style</span>
+        <div class="card-title">Hip Hop</div>
+        <p>Grooves • Isolation • Urban moves</p>
+      </div>
+    </a>
+
+    <!-- Freestyle -->
+    <a href="#freestyle-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1508804185872-d7badad00f7d');"></div>
+      <div class="card-body">
+        <span class="pill">Style</span>
+        <div class="card-title">Freestyle</div>
+        <p>Flow • Confidence • Own style</p>
+      </div>
+    </a>
+
+    <!-- Contemporary -->
+    <a href="#contemporary-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552');"></div>
+      <div class="card-body">
+        <span class="pill">Art</span>
+        <div class="card-title">Contemporary</div>
+        <p>Lines • Floor work • Emotions</p>
+      </div>
+    </a>
+
+    <!-- Classical / Kathak -->
+    <a href="#classical-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1616161610269-c8613a8a185e');"></div>
+      <div class="card-body">
+        <span class="pill">Indian</span>
+        <div class="card-title">Classical (Kathak / Bharatnatyam)</div>
+        <p>Posture • Mudras • Footwork</p>
+      </div>
+    </a>
+
+    <!-- Garba / Bhangra -->
+    <a href="#folk-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1524504388940-b1c1722653e1');"></div>
+      <div class="card-body">
+        <span class="pill">Indian</span>
+        <div class="card-title">Garba / Bhangra</div>
+        <p>Energy • Steps • Cultural style</p>
+      </div>
+    </a>
+
+    <!-- Choreography -->
+    <a href="#choreo-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1533107862482-0e6974b06ec4');"></div>
+      <div class="card-body">
+        <span class="pill">Skill</span>
+        <div class="card-title">Choreography</div>
+        <p>Song selection • Formations • Transitions</p>
+      </div>
+    </a>
+
+    <!-- Couple Dance -->
+    <a href="#couple-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1469371670807-013ccf25f16c');"></div>
+      <div class="card-body">
+        <span class="pill">Special</span>
+        <div class="card-title">Couple Dance</div>
+        <p>Duet performances • Wedding dance</p>
+      </div>
+    </a>
+
+    <!-- K-Pop -->
+    <a href="#kpop-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1514846326710-096e4a8035e1');"></div>
+      <div class="card-body">
+        <span class="pill">Style</span>
+        <div class="card-title">K-Pop Dance</div>
+        <p>Covers • Formations • Sync</p>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- MENTOR SECTIONS -->
+
+  <h2 id="bolly-mentors">Bollywood Dance Mentors</h2>
+  <div class="mentor-card">
+    <div>
+      <div class="mentor-name">Ananya Rao</div>
+      <div class="mentor-meta">Hooks steps • Bollywood routines</div>
+    </div>
+    <div class="mentor-meta">
+      <div class="credits">Credits: 70</div>
+      <div>Can teach & learn</div>
+    </div>
+  </div>
+
+  <h2 id="hiphop-mentors">Hip Hop Mentors</h2>
+  <div class="mentor-card">
+    <div>
+      <div class="mentor-name">Kabir Singh</div>
+      <div class="mentor-meta">Grooves • Isolation • Urban style</div>
+    </div>
+    <div class="mentor-meta">
+      <div class="credits">Credits: 80</div>
+      <div>Can teach & learn</div>
+    </div>
+  </div>
+
+  <h2 id="choreo-mentors">Choreography Mentors</h2>
+  <div class="mentor-card">
+    <div>
+      <div class="mentor-name">Riya Mehta</div>
+      <div class="mentor-meta">Event / sangeet choreography</div>
+    </div>
+    <div class="mentor-meta">
+      <div class="credits">Credits: 95</div>
+      <div>Can teach & learn</div>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
+{%endblock body%}

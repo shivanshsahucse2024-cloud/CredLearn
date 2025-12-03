@@ -3,8 +3,7 @@
 
 {% block title %} Explore{% endblock title %}
 
-{% block body %}+
-
+{% block body %}
 <div class="explore-header">
     <h1>Explore Skills</h1>
     <p>Your gateway to learning, teaching, and earning credits</p>
@@ -63,7 +62,6 @@
                     <span class="trend-rating">★ 4.6</span>
                 </div>
             </div>
-
         </div>
 
         <!-- COLUMN 2 — WEEKLY SPOTLIGHT -->
@@ -265,6 +263,7 @@
 </style>
         <!-- 5 Cooking -->
         <div class="pro-card">
+            <a href="{% url 'cooking' %}" class="card-link"></a>
             <img src="{% static 'images/cooking.jpg' %}" class="pro-img">
             <div class="pro-info">
                 <div class="pro-meta">👤 700K+</div>
@@ -272,9 +271,22 @@
                 <span class="pro-arrow">→</span>
             </div>
         </div>
+        <style>
+       .pro-card {
+        position: relative;
+        cursor: pointer;
+       }
 
+         /* The overlay link that makes the entire card clickable */
+        .card-link {
+         position: absolute;
+        inset: 0;
+        z-index: 5;
+        }
+</style>
         <!-- 6 Business -->
         <div class="pro-card">
+            <a href="{% url 'business' %}" class="card-link"></a>
             <img src="{% static 'images/business.jpg' %}" class="pro-img">
             <div class="pro-info">
                 <div class="pro-meta">👤 3M+</div>
@@ -282,7 +294,19 @@
                 <span class="pro-arrow">→</span>
             </div>
         </div>
+ <style>
+       .pro-card {
+        position: relative;
+        cursor: pointer;
+       }
 
+         /* The overlay link that makes the entire card clickable */
+        .card-link {
+         position: absolute;
+        inset: 0;
+        z-index: 5;
+        }
+</style>
         <!-- 7 Personal Development -->
         <div class="pro-card">
             <img src="{% static 'images/pd.jpg' %}" class="pro-img">
@@ -295,6 +319,7 @@
 
         <!-- 8 Dancing -->
         <div class="pro-card">
+            <a href="{% url 'dancing' %}" class="card-link"></a>
             <img src="{% static 'images/pst.jpg' %}" class="pro-img">
             <div class="pro-info">
                 <div class="pro-meta">👤 620K+</div>
@@ -302,7 +327,19 @@
                 <span class="pro-arrow">→</span>
             </div>
         </div>
+<style>
+       .pro-card {
+        position: relative;
+        cursor: pointer;
+       }
 
+         /* The overlay link that makes the entire card clickable */
+        .card-link {
+         position: absolute;
+        inset: 0;
+        z-index: 5;
+        }
+</style>
         <!-- 9 AI & Machine Learning -->
         <div class="pro-card">
             <img src="{% static 'images/Ai.jpg' %}" class="pro-img">
@@ -315,11 +352,11 @@
 
     </div>
 
-    <div class="pro-slider-dots">
+    <!--<div class="pro-slider-dots">
         <span class="dot"></span>
         <span class="dot active-dot"></span>
         <span class="dot"></span>
-    </div>
+    </div>-->
 
 </section>
 
@@ -368,7 +405,7 @@
         </div>
 
         <div class="directory-col">
-            <h3>Trending Skills</h3>
+            <h3>Trending Skills</h3>            
             <a href="#">Python</a>
             <a href="#">AI</a>
             <a href="#">Excel</a>

@@ -1,0 +1,316 @@
+{% extends 'base.html'%}
+
+{% block title %} Business {% endblock title %}
+
+{% block body %}
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Business – Skills</title>
+
+  <style>
+    :root{
+      --bg:#f5f5f7;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --accent:#2563eb; /* blue */
+      --radius:18px;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box;}
+
+    body{
+      font-family:system-ui, -apple-system, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    a{text-decoration:none;color:inherit;}
+
+    .page{
+      max-width:1150px;
+      margin:32px auto;
+      padding:0 16px 48px;
+    }
+
+    .page-header{
+      margin-bottom:28px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .eyebrow{
+      font-size:12px;
+      color:var(--accent);
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-weight:600;
+    }
+
+    h1{
+      font-size:32px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .page-header p{
+      max-width:540px;
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    h2{
+      margin:20px 0 14px;
+      font-size:20px;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    /* Grid */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:20px;
+    }
+
+    /* Cards */
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      overflow:hidden;
+      border:1px solid #e5e7eb;
+      box-shadow:0 10px 26px rgba(0,0,0,.12);
+      transition:.15s ease;
+    }
+    .card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 18px 40px rgba(0,0,0,.18);
+    }
+
+    .thumb{
+      height:150px;
+      background-size:cover;
+      background-position:center;
+    }
+
+    .card-body{
+      padding:14px 16px 16px;
+    }
+
+    .pill{
+      font-size:11px;
+      padding:3px 12px;
+      border-radius:999px;
+      background:#dbeafe;
+      color:var(--accent);
+      font-weight:500;
+      margin-bottom:6px;
+      display:inline-block;
+    }
+
+    .card-title{
+      font-size:17px;
+      font-weight:600;
+      margin-bottom:4px;
+    }
+
+    .card-body p{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    /* Mentor Cards */
+    .mentor-card{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:12px;
+      background:var(--card);
+      border-radius:var(--radius);
+      border:1px solid #e5e7eb;
+      box-shadow:0 8px 22px rgba(0,0,0,.1);
+      margin-bottom:10px;
+    }
+
+    .mentor-name{
+      font-size:14px;
+      font-weight:600;
+    }
+
+    .mentor-meta{
+      font-size:12px;
+      color:var(--muted);
+      text-align:right;
+    }
+
+    .credits{
+      font-size:13px;
+      color:var(--accent);
+      font-weight:600;
+    }
+
+    @media(max-width:620px){
+      .mentor-card{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:8px;
+      }
+      .mentor-meta{text-align:left;}
+    }
+  </style>
+</head>
+
+<body>
+<main class="page">
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <span class="eyebrow">Business</span>
+    <h1>Business Skills 💼</h1>
+    <p>Choose a business skill → see mentors under 100 credits.</p>
+  </header>
+
+  <!-- SKILLS GRID -->
+  <h2>Skills List</h2>
+  <div class="grid">
+
+    <!-- Marketing -->
+    <a href="#marketing-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40');"></div>
+      <div class="card-body">
+        <span class="pill">Business</span>
+        <div class="card-title">Marketing</div>
+        <p>Digital marketing • Branding • Social media</p>
+      </div>
+    </a>
+
+    <!-- Sales -->
+    <a href="#sales-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e');"></div>
+      <div class="card-body">
+        <span class="pill">Business</span>
+        <div class="card-title">Sales</div>
+        <p>Pitching • Negotiation • Closing deals</p>
+      </div>
+    </a>
+
+    <!-- Entrepreneurship -->
+    <a href="#startup-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1518604666860-9ed37c06a8b1');"></div>
+      <div class="card-body">
+        <span class="pill">Startups</span>
+        <div class="card-title">Entrepreneurship</div>
+        <p>Startup basics • Idea validation • Growth</p>
+      </div>
+    </a>
+
+    <!-- Finance -->
+    <a href="#finance-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1554224154-22dec7ec8818');"></div>
+      <div class="card-body">
+        <span class="pill">Finance</span>
+        <div class="card-title">Finance Basics</div>
+        <p>Profit • Loss • Accounting terms</p>
+      </div>
+    </a>
+
+    <!-- Stock Market -->
+    <a href="#stock-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1569025690938-a00729c9e1ea');"></div>
+      <div class="card-body">
+        <span class="pill">Investing</span>
+        <div class="card-title">Stock Market</div>
+        <p>Trading • Investing • Indicators</p>
+      </div>
+    </a>
+
+    <!-- Leadership -->
+    <a href="#leader-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1531497865144-0464f76c9a2d');"></div>
+      <div class="card-body">
+        <span class="pill">Soft Skill</span>
+        <div class="card-title">Leadership</div>
+        <p>Team handling • Motivation • Decision making</p>
+      </div>
+    </a>
+
+    <!-- Management -->
+    <a href="#manage-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d');"></div>
+      <div class="card-body">
+        <span class="pill">Business</span>
+        <div class="card-title">Management</div>
+        <p>Planning • Execution • Time management</p>
+      </div>
+    </a>
+
+    <!-- Communication -->
+    <a href="#comm-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1553877522-43269d4ea984');"></div>
+      <div class="card-body">
+        <span class="pill">Skill</span>
+        <div class="card-title">Business Communication</div>
+        <p>Professional speaking • Email writing</p>
+      </div>
+    </a>
+
+    <!-- Public Speaking -->
+    <a href="#public-mentors" class="card">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1515165562835-c4c1b0e1ec7d');"></div>
+      <div class="card-body">
+        <span class="pill">Skill</span>
+        <div class="card-title">Public Speaking</div>
+        <p>Presentations • Confidence • Voice control</p>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- MENTOR SECTIONS -->
+
+  <h2 id="marketing-mentors">Marketing Mentors</h2>
+  <div class="mentor-card">
+    <div>
+      <div class="mentor-name">Riya Mehta</div>
+      <div class="mentor-meta">Digital marketing • Social media</div>
+    </div>
+    <div class="mentor-meta">
+      <div class="credits">Credits: 70</div>
+      <div>Can teach & learn</div>
+    </div>
+  </div>
+
+  <h2 id="sales-mentors">Sales Mentors</h2>
+  <div class="mentor-card">
+    <div>
+      <div class="mentor-name">Aman Kapoor</div>
+      <div class="mentor-meta">Pitching • Client closing</div>
+    </div>
+    <div class="mentor-meta">
+      <div class="credits">Credits: 90</div>
+      <div>Can teach & learn</div>
+    </div>
+  </div>
+
+  <h2 id="startup-mentors">Entrepreneurship Mentors</h2>
+  <div class="mentor-card">
+    <div>
+      <div class="mentor-name">Kunal Sharma</div>
+      <div class="mentor-meta">Startup basics • Growth strategy</div>
+    </div>
+    <div class="mentor-meta">
+      <div class="credits">Credits: 85</div>
+      <div>Can teach & learn</div>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
+{%endblock body%}

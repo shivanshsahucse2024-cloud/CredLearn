@@ -33,4 +33,7 @@ urlpatterns = [
     path('Design/',views.Design,name='Design'),
     path('Music/',views.Music,name='Music'),
     path('Lang/',views.Lang,name='Lang'),
-    ]
+    path('cooking/',views.cooking,name='cooking'),
+    path('business/',views.business,name='business'),
+    path('dancing/',views.dancing,name='dancing'),
+]  
