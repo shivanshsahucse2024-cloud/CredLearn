@@ -18,6 +18,11 @@ def register(request):
         form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
+# --- Landing Page ---
+
+def landing_page(request):
+    return render(request, 'core/landing.html')
+
 # --- Main Dashboard ---
 
 @login_required
