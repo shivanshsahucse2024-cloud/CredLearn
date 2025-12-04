@@ -14,6 +14,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        # -------------------------
+        # PROFILE MODEL
+        # -------------------------
         migrations.CreateModel(
             name='Profile',
             fields=[
@@ -22,27 +25,40 @@ class Migration(migrations.Migration):
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
+
+        # -------------------------
+        # LIVE SESSION MODEL
+        # -------------------------
         migrations.CreateModel(
-            name='Video',
+            name='LiveSession',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=200)),
-                ('description', models.TextField(blank=True)),
-                ('file', models.FileField(upload_to='videos/')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='videos', to=settings.AUTH_USER_MODEL)),
+                ('title', models.CharField(max_length=255)),
+                ('scheduled_at', models.DateTimeField()),
+                ('credit_reward', models.IntegerField(default=10)),
+                ('host', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                           related_name='hosted_sessions',
+                                           to=settings.AUTH_USER_MODEL)),
             ],
         ),
+
+        # -------------------------
+        # SESSION ATTENDANCE MODEL
+        # -------------------------
         migrations.CreateModel(
-            name='VideoView',
+            name='SessionAttendance',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('watched_at', models.DateTimeField(auto_now_add=True)),
-                ('video', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='views', to='Home.video')),
-                ('viewer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='video_views', to=settings.AUTH_USER_MODEL)),
+                ('credit_cost', models.IntegerField(default=2)),
+                ('attendee', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                               related_name='attended_sessions',
+                                               to=settings.AUTH_USER_MODEL)),
+                ('session', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                              related_name='attendances',
+                                              to='Home.livesession')),
             ],
             options={
-                'unique_together': {('video', 'viewer')},
+                'unique_together': {('session', 'attendee')},
             },
         ),
     ]

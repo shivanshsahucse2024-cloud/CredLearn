@@ -71,7 +71,21 @@
         </button>
         <ul class="search-suggestions" id="searchSuggestions"></ul>
       </form>
+          <!-- RIGHT SIDE: Wallet button + Referral link -->
+      <ul class="navbar-nav ms-3 d-flex align-items-center">
+        <li class="nav-item me-2">
+          <a class="btn btn-outline-info btn-sm d-flex align-items-center" href="/wallet/">
+            <i class="bi bi-wallet2 me-1"></i> Wallet
+          </a>
+        </li>
 
+        <!--<li class="nav-item">
+          <a class="nav-link" href="/referral/">
+            <i class="bi bi-link-45deg me-1"></i> Referral
+          </a>
+        </li>-->
+      </ul>
+    
     </div>
   </div>
 </nav>
@@ -84,7 +98,7 @@
 <style>
 .search-wrapper {
     position: relative;
-    width: 260px;
+    width: 290px;
 }
 
 .search-nav-input {
@@ -92,7 +106,7 @@
     padding: 8px 45px 8px 15px;
     border-radius: 25px;
     border: 1px solid #444;
-    background: #1c1c1c;
+    background: #1c1c1cff;
     color: #fff;
     transition: 0.25s;
 }
@@ -102,7 +116,7 @@
 }
 
 .search-nav-input:focus {
-    border-color: #0d6efd;
+    border-color: #e5e7eaff;
     background: #222;
     outline: none;
 }

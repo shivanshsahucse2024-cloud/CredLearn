@@ -1,0 +1,122 @@
+{% extends 'base.html'%}
+
+{% block title %} Browse session {% endblock title %}
+
+{% block body %}
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse session</title>
+<style>
+    body {
+    background: linear-gradient(135deg, #5a4bff, #7f4dff, #9c46ff);
+    font-family: 'Poppins', sans-serif;
+}
+
+.browse-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 42px;
+    color: white;
+    font-weight: 700;
+}
+
+.subtitle {
+    text-align: center;
+    color: #eaeaea;
+    margin-bottom: 40px;
+}
+
+.session-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+.session-card {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    color: #fff;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.session-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+}
+
+.session-header h3 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.session-body p {
+    margin: 6px 0;
+    font-size: 15px;
+}
+
+.cost {
+    color: #ffd86b;
+    font-weight: 700;
+}
+
+.join-btn {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    background: #ffd86b;
+    color: #000;
+    padding: 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.join-btn:hover {
+    background: #ffcc3b;
+}
+</style>
+</head>
+<body>
+    <div class="browse-container">
+    <h1 class="page-title">Browse Live Sessions</h1>
+    <p class="subtitle">Join sessions hosted by community mentors</p>
+
+    <div class="session-grid">
+        {% for s in sessions %}
+        <div class="session-card">
+            <div class="session-header">
+                <h3>{{ s.title }}</h3>
+            </div>
+
+            <div class="session-body">
+                <p><strong>Host:</strong> {{ s.host.username }}</p>
+                <p><strong>Date:</strong> {{ s.scheduled_at|date:"M d, Y" }}</p>
+                <p><strong>Time:</strong> {{ s.scheduled_at|time:"h:i A" }}</p>
+                <p><strong>Credits Required:</strong> <span class="cost">{{ s.credit_reward }}</span></p>
+            </div>
+
+            <a href="{% url 'join_session' s.id %}" class="join-btn">
+                Join Session
+            </a>
+        </div>
+        {% empty %}
+        <p class="no-session">No live sessions are available right now.</p>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>
+{%endblock body%}

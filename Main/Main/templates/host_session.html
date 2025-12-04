@@ -1,0 +1,152 @@
+{% extends 'base.html'%}
+
+{% block title %} Host {% endblock title %}
+
+{% block body %}
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Host session</title>
+<style>
+    body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #5a4bff, #8250ff, #9b48ff);
+        background-size: 200% 200%;
+        animation: gradientMove 12s infinite alternate;
+        padding-top: 0px;
+    }
+
+    @keyframes gradientMove {
+        0% { background-position: left; }
+        100% { background-position: right; }
+    }
+
+    .host-container {
+        max-width: 650px;
+        margin: auto;
+        margin-top: 80px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(15px);
+        border-radius: 25px;
+        padding: 35px 45px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        color: #fff;
+        animation: fadeIn 0.7s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .host-container h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 32px;
+        font-weight: 700;
+    }
+
+    .input-group {
+        margin-bottom: 22px;
+    }
+
+    .input-group label {
+        display: block;
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 7px;
+    }
+
+    .input-group input {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.25);
+        border: none;
+        padding: 14px;
+        border-radius: 12px;
+        color: #fff;
+        font-size: 15px;
+        outline: none;
+        transition: 0.2s;
+    }
+
+    .input-group input:focus {
+        background: rgba(255, 255, 255, 0.35);
+        transform: scale(1.02);
+    }
+
+    .btn-create {
+        width: 100%;
+        padding: 14px;
+        background: #ffffff;
+        color: #5a4bff;
+        border: none;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+        margin-top: 10px;
+    }
+
+    .btn-create:hover {
+        background: #ece9ff;
+        transform: scale(1.03);
+    }
+
+    .back-link {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 15px;
+    }
+
+    .back-link a {
+        color: #fff;
+        text-decoration: underline;
+        opacity: 0.85;
+        transition: 0.2s;
+    }
+
+    .back-link a:hover {
+        opacity: 1;
+    }
+
+    @media (max-width: 600px) {
+        .host-container {
+            padding: 30px 25px;
+        }
+        .host-container h2 {
+            font-size: 26px;
+        }
+    }
+</style>
+</head>
+<body>
+<div class="host-container">
+    <h2>Host a Live Session</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="input-group">
+            <label>Session Title</label>
+            <input type="text" name="title" placeholder="Enter the topic you want to teach" required>
+        </div>
+
+        <div class="input-group">
+            <label>Schedule</label>
+            <input type="datetime-local" name="schedule" required>
+        </div>
+
+        <button type="submit" class="btn-create">Create Session</button>
+    </form>
+
+    <div class="back-link">
+        <a href="/sessions/">← Back to Sessions</a>
+    </div>
+</div>
+</body>
+</html>
+{%endblock body%}

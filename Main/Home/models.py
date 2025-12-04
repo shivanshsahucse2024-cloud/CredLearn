@@ -2,9 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-# -------------------------
-# User Profile (Credits)
-# -------------------------
+
+
+# ==========================================================
+# USER PROFILE (Credits System)
+# ==========================================================
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     credits = models.IntegerField(default=0)
@@ -13,38 +15,68 @@ class Profile(models.Model):
         return f"{self.user.username} - {self.credits} credits"
 
 
-# -------------------------
-# Uploaded Videos
-# -------------------------
-class Video(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='videos')
-    title = models.CharField(max_length=200)
+# ==========================================================
+# LIVE SESSION MODEL (Main Teaching System)
+# ==========================================================
+class LiveSession(models.Model):
+    host = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="hosted_sessions"
+    )
+
+    title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    file = models.FileField(upload_to='videos/')
+
+    scheduled_at = models.DateTimeField()
+    duration_minutes = models.PositiveIntegerField(default=60)
+
+    credit_reward = models.IntegerField(default=10)  # Credits teacher earns
+    max_attendees = models.PositiveIntegerField(null=True, blank=True)
+
+    is_cancelled = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title
+        return f"{self.title} by {self.host.username}"
 
+    @property
+    def attendee_count(self):
+        return self.attendances.count()
 
-# -------------------------
-# Video Views (Track who watched what)
-# -------------------------
-class VideoView(models.Model):
-    video = models.ForeignKey(Video, on_delete=models.CASCADE, related_name='views')
-    viewer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='video_views')
-    watched_at = models.DateTimeField(auto_now_add=True)
+# ==========================================================
+# SESSION ATTENDANCE (When a student joins a session)
+# ==========================================================
+class SessionAttendance(models.Model):
+    session = models.ForeignKey(
+        LiveSession,
+        on_delete=models.CASCADE,
+        related_name="attendances"
+    )
+    attendee = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="attended_sessions"
+    )
+
+    credit_cost = models.IntegerField(default=2)
+    joined_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('video', 'viewer')   # Prevent double-charging
+        unique_together = ("session", "attendee")  # 1 user cannot join twice
 
     def __str__(self):
-        return f"{self.viewer.username} watched {self.video.title}"
+        return f"{self.attendee.username} attended {self.session.title}"
 
+
+# ==========================================================
+# AUTO CREATE PROFILE WHEN USER IS CREATED
+# ========================================================== 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
+
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):

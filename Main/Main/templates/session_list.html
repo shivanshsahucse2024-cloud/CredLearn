@@ -1,0 +1,146 @@
+{% extends 'base.html'%}
+
+{% block title %} session list{% endblock title %}
+
+{% block body %}
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>session list</title>
+    <style>
+        body {
+    background: linear-gradient(135deg, #5a4bff, #7b4dff, #a046ff);
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+.session-page-container {
+    max-width: 1250px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 42px;
+    font-weight: 700;
+}
+
+.page-subtitle {
+    text-align: center;
+    font-size: 18px;
+    opacity: 0.85;
+    margin-bottom: 40px;
+}
+
+.session-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 25px;
+}
+
+.session-card {
+    background: rgba(255, 255, 255, 0.12);
+    padding: 22px;
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    transition: 0.25s ease-in-out;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.session-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+}
+
+.session-header {
+    margin-bottom: 10px;
+}
+
+.session-title {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.session-info p {
+    margin: 6px 0;
+    font-size: 15px;
+}
+
+.label {
+    opacity: 0.8;
+    font-weight: 500;
+}
+
+.reward {
+    color: #ffeb7f;
+    font-weight: 700;
+}
+
+.join-btn {
+    margin-top: 15px;
+    display: block;
+    text-align: center;
+    padding: 12px;
+    background: #ffeb7f;
+    color: #000;
+    font-weight: 700;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: 0.25s ease;
+}
+
+.join-btn:hover {
+    background: #ffe25b;
+}
+
+.empty-msg {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 20px;
+    opacity: 0.8;
+}
+</style>
+</head>
+
+<body>
+<div class="session-page-container">
+    
+    <h1 class="page-title">Live Sessions</h1>
+    <p class="page-subtitle">Join a session to learn new skills from real mentors.</p>
+
+    <div class="session-grid">
+        {% for s in sessions %}
+        <div class="session-card">
+
+            <div class="session-header">
+                <h3 class="session-title">{{ s.title }}</h3>
+            </div>
+
+            <div class="session-info">
+                <p><span class="label">Host:</span> {{ s.host.username }}</p>
+                <p><span class="label">Date:</span> {{ s.scheduled_at|date:"M d, Y" }}</p>
+                <p><span class="label">Time:</span> {{ s.scheduled_at|time:"h:i A" }}</p>
+                <p><span class="label">Reward:</span> 
+                    <span class="reward">+{{ s.credit_reward }} credits</span>
+                </p>
+            </div>
+
+            <a href="{% url 'join_session' s.id %}" class="join-btn">
+                Join Session
+            </a>
+
+        </div>
+        {% empty %}
+        <p class="empty-msg">No live sessions are available at the moment.</p>
+        {% endfor %}
+    </div>
+
+</div>
+</body>
+</html>
+{% endblock %}
