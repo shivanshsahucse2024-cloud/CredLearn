@@ -1,0 +1,48 @@
+{% extends 'base.html'%}
+{%load static%}
+{% block title %} wallet {% endblock title %}
+
+{% block body %}
+{%load static%}
+<head>
+    <link rel="stylesheet" href="{% static 'css/wallet.css' %}">
+</head>
+<div class="wallet-container">
+
+    <div class="balance-box">
+        <h2>Wallet Balance</h2>
+        <h1>{{ profile.credits }} Credits</h1>
+    </div>
+
+    <div class="section">
+        <h3>Credits Earned (Uploads)</h3>
+
+        {% if uploads %}
+            {% for video in uploads %}
+            <div class="entry">
+                <b>{{ video.title }}</b>  
+                <span style="float:right;">+5 credits</span>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="empty">No uploads yet.</p>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <h3>Credits Spent (Watching Videos)</h3>
+
+        {% if spent %}
+            {% for view in spent %}
+            <div class="entry">
+                <b>{{ view.video.title }}</b>
+                <span style="float:right;">-1 credit</span>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="empty">You haven't spent any credits yet.</p>
+        {% endif %}
+    </div>
+
+</div>
+{%endblock body%}

@@ -1,0 +1,826 @@
+{% extends 'base.html'%}
+
+{% block title %} Music{% endblock title %}
+
+{% block body %}
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillExchange - Become a Mentor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #223995 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 28px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+            font-size: 1em;
+        }
+
+        label .required {
+            color: #dc3545;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .file-upload-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload-input {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 16px;
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            background: #f8f9ff;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #737787;
+            font-weight: 600;
+        }
+
+        .file-upload-label:hover {
+            background: #e7edff;
+            border-color: #764ba2;
+        }
+
+        .file-upload-label svg {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+
+        .file-name {
+            margin-top: 10px;
+            padding: 10px;
+            background: #e7f0ff;
+            border-radius: 6px;
+            color: #667eea;
+            font-size: 0.9em;
+            display: none;
+        }
+
+        .file-name.show {
+            display: block;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #5e78c3 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 35px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.15em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .skill-input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .skill-input-group input {
+            flex: 1;
+        }
+
+        .skill-input-group button {
+            padding: 14px 25px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .skill-input-group button:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, #e7f0ff 0%, #f0e7ff 100%);
+            color: #667eea;
+            padding: 10px 18px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .skill-tag button {
+            background: rgba(102, 126, 234, 0.2);
+            border: none;
+            color: #667eea;
+            cursor: pointer;
+            font-size: 1.3em;
+            padding: 0;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .skill-tag button:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #5767cf 0%, #78529f 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-card h3 {
+            font-size: 3em;
+            margin-bottom: 12px;
+        }
+
+        .stat-card p {
+            font-size: 1.15em;
+            opacity: 0.95;
+        }
+
+        .request-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #6c80d7;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .request-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .request-info h4 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.2em;
+        }
+
+        .request-info p {
+            color: #666;
+            font-size: 0.95em;
+            margin: 3px 0;
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .btn-accept {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            flex: 1;
+            transition: all 0.3s;
+        }
+
+        .btn-accept:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-decline {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            flex: 1;
+            transition: all 0.3s;
+        }
+
+        .btn-decline:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(220, 53, 69, 0.3);
+        }
+
+        .profile-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 35px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .profile-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .profile-section p {
+            margin-bottom: 12px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .profile-section strong {
+            color: #4862be;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+
+        .empty-state p {
+            font-size: 1.15em;
+        }
+
+        .section-title {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.6em;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .help-text {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .certificate-preview {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f8ff;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+        }
+
+        .certificate-preview.show {
+            display: block;
+        }
+
+        .certificate-preview p {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .certificate-preview small {
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>SkillExchange</h1>
+            <p>Become a Mentor - Share Your Expertise</p>
+        </div>
+
+        <div class="content">
+            <!-- Registration Page -->
+            <div id="registerPage" class="page active">
+                <h2 class="section-title">Mentor Registration</h2>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label>Full Name <span class="required">*</span></label>
+                        <input type="text" id="regName" required placeholder="Enter your full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address <span class="required">*</span></label>
+                        <input type="email" id="regEmail" required placeholder="your.email@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="regPhone" required placeholder="+91 XXXXX XXXXX">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Professional Title <span class="required">*</span></label>
+                        <input type="text" id="regTitle" required placeholder="e.g., Senior Software Engineer, UX Designer">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Years of Experience <span class="required">*</span></label>
+                        <select id="regExperience" required>
+                            <option value="">Select your experience level</option>
+                            <option value="1-2">1-2 years</option>
+                            <option value="3-5">3-5 years</option>
+                            <option value="5-10">5-10 years</option>
+                            <option value="10-15">10-15 years</option>
+                            <option value="15+">15+ years</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Skills You Want to Teach <span class="required">*</span></label>
+                        <div class="skill-input-group">
+                            <input type="text" id="skillInput" placeholder="Enter a skill (e.g., Python, Web Design)">
+                            <button type="button" onclick="addSkill()">+ Add Skill</button>
+                        </div>
+                        <p class="help-text">Add all the skills you're confident teaching to others</p>
+                        <div class="skills-list" id="skillsList"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>About You / Teaching Philosophy <span class="required">*</span></label>
+                        <textarea id="regBio" required placeholder="Tell us about your expertise, teaching style, and what motivates you to mentor others..."></textarea>
+                        <p class="help-text">Share your background and approach to teaching (min. 100 characters)</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Education / Highest Qualification <span class="required">*</span></label>
+                        <input type="text" id="regEducation" required placeholder="e.g., Bachelor's in Computer Science, MBA">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upload Certificates / Credentials</label>
+                        <p class="help-text">Upload relevant certifications, diplomas, or credentials (PDF, JPG, PNG - Max 5MB)</p>
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="certificateUpload" class="file-upload-input" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileUpload(this)">
+                            <label for="certificateUpload" class="file-upload-label">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                                </svg>
+                                Click to Upload Certificate
+                            </label>
+                        </div>
+                        <div id="fileName" class="file-name"></div>
+                        <div id="certificatePreview" class="certificate-preview"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>LinkedIn Profile (Optional)</label>
+                        <input type="url" id="regLinkedIn" placeholder="https://linkedin.com/in/yourprofile">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Portfolio / Website (Optional)</label>
+                        <input type="url" id="regPortfolio" placeholder="https://yourportfolio.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Available Hours Per Week <span class="required">*</span></label>
+                        <select id="regAvailability" required>
+                            <option value="">Select your availability</option>
+                            <option value="1-3">1-3 hours (Casual mentoring)</option>
+                            <option value="3-5">3-5 hours (Part-time mentoring)</option>
+                            <option value="5-10">5-10 hours (Active mentoring)</option>
+                            <option value="10-20">10-20 hours (Dedicated mentoring)</option>
+                            <option value="20+">20+ hours (Full-time mentoring)</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn">Submit Application</button>
+                </form>
+            </div>
+
+            <!-- Dashboard Page -->
+            <div id="dashboardPage" class="page">
+                <h2 class="section-title">Welcome, <span id="mentorName"></span>!</h2>
+                
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <h3 id="totalRequests">8</h3>
+                        <p>Pending Requests</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="activeStudents">12</h3>
+                        <p>Active Learners</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="completedSessions">45</h3>
+                        <p>Sessions Completed</p>
+                    </div>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Your Mentor Profile</h3>
+                    <p><strong>Professional Title:</strong> <span id="dashTitle"></span></p>
+                    <p><strong>Experience:</strong> <span id="dashExperience"></span></p>
+                    <p><strong>Education:</strong> <span id="dashEducation"></span></p>
+                    <p><strong>Skills Teaching:</strong> <span id="dashSkills"></span></p>
+                    <p><strong>Availability:</strong> <span id="dashAvailability"></span></p>
+                    <p><strong>Certificate Status:</strong> <span id="dashCertificate"></span></p>
+                </div>
+
+                <h3 class="section-title">Learning Requests</h3>
+                <div id="requestsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+
+    let skills = [];
+    let mentorData = {};
+    let uploadedFile = null;
+    let requests = [
+        {
+            id: 1,
+            learner: "Priya Sharma",
+            skill: "Web Development",
+            message: "I'm a complete beginner and would love to learn HTML, CSS, and JavaScript from scratch. I'm available on weekends.",
+            date: "2 hours ago",
+            email: "priya.sharma@email.com"
+        },
+        {
+            id: 2,
+            learner: "Rahul Kumar",
+            skill: "Python Programming",
+            message: "I want to learn Python for data science and machine learning. I have basic programming knowledge.",
+            date: "5 hours ago",
+            email: "rahul.kumar@email.com"
+        },
+        {
+            id: 3,
+            learner: "Ananya Patel",
+            skill: "UI/UX Design",
+            message: "Looking to transition into UX design. Need help with portfolio building and design principles.",
+            date: "1 day ago",
+            email: "ananya.patel@email.com"
+        },
+        {
+            id: 4,
+            learner: "Vikram Singh",
+            skill: "Digital Marketing",
+            message: "I run a small business and want to learn SEO and social media marketing strategies.",
+            date: "1 day ago",
+            email: "vikram.singh@email.com"
+        }
+    ];
+
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(page => {
+            page.classList.remove('active');
+        });
+        document.getElementById(pageId).classList.add('active');
+    }
+
+    function addSkill() {
+        const input = document.getElementById('skillInput');
+        const skill = input.value.trim();
+        
+        if (skill && !skills.includes(skill)) {
+            skills.push(skill);
+            updateSkillsList();
+            input.value = '';
+        } else if (skills.includes(skill)) {
+            alert('This skill is already added!');
+        }
+    }
+
+    function removeSkill(skill) {
+        skills = skills.filter(s => s !== skill);
+        updateSkillsList();
+    }
+
+    function updateSkillsList() {
+        const container = document.getElementById('skillsList');
+        if (skills.length === 0) {
+            container.innerHTML = '<p class="help-text" style="margin-top: 10px;">No skills added yet. Add at least one skill.</p>';
+            return;
+        }
+        container.innerHTML = skills.map(skill => `
+            <div class="skill-tag">
+                ${skill}
+                <button onclick="removeSkill('${skill.replace(/'/g, "\\'")}')">×</button>
+            </div>
+        `).join('');
+    }
+
+    function handleFileUpload(input) {
+        const file = input.files[0];
+        if (file) {
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File size should not exceed 5MB');
+                input.value = '';
+                return;
+            }
+            
+            uploadedFile = file;
+            const fileNameDiv = document.getElementById('fileName');
+            const previewDiv = document.getElementById('certificatePreview');
+            
+            // Use a template literal (backticks)
+            fileNameDiv.textContent = `✓ ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+            fileNameDiv.classList.add('show');
+            
+            previewDiv.innerHTML = `
+                <p>✓ Certificate Uploaded Successfully</p>
+                <small>File: ${file.name}</small>
+            `;
+            previewDiv.classList.add('show');
+        }
+    }
+
+    document.getElementById('skillInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            addSkill();
+        }
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (skills.length === 0) {
+            alert('Please add at least one skill you want to teach.');
+            document.getElementById('skillInput').focus();
+            return;
+        }
+
+        const bio = document.getElementById('regBio').value;
+        if (bio.length < 100) {
+            alert('Please write a more detailed bio (minimum 100 characters).');
+            document.getElementById('regBio').focus();
+            return;
+        }
+        
+        mentorData = {
+            name: document.getElementById('regName').value,
+            email: document.getElementById('regEmail').value,
+            phone: document.getElementById('regPhone').value,
+            title: document.getElementById('regTitle').value,
+            experience: document.getElementById('regExperience').value,
+            education: document.getElementById('regEducation').value,
+            skills: [...skills],
+            bio: bio,
+            linkedin: document.getElementById('regLinkedIn').value,
+            portfolio: document.getElementById('regPortfolio').value,
+            availability: document.getElementById('regAvailability').value,
+            certificate: uploadedFile ? uploadedFile.name : 'Not uploaded'
+        };
+        
+        alert('🎉 Registration Successful!\n\nWelcome to SkillExchange! Your mentor profile has been created. Start accepting learning requests now!');
+        loadDashboard();
+    });
+
+    function loadDashboard() {
+        document.getElementById('mentorName').textContent = mentorData.name || 'Mentor';
+        document.getElementById('dashTitle').textContent = mentorData.title || '-';
+        document.getElementById('dashExperience').textContent = mentorData.experience || '-';
+        document.getElementById('dashEducation').textContent = mentorData.education || '-';
+        document.getElementById('dashSkills').textContent = mentorData.skills ? mentorData.skills.join(', ') : '-';
+        document.getElementById('dashAvailability').textContent = mentorData.availability || '-';
+        document.getElementById('dashCertificate').textContent = mentorData.certificate && mentorData.certificate !== 'Not uploaded' 
+            ? '✓ Verified' 
+            : '⚠ Not Uploaded';
+        
+        renderRequests();
+        showPage('dashboardPage');
+    }
+
+    function renderRequests() {
+        const container = document.getElementById('requestsList');
+        
+        if (requests.length === 0) {
+            container.innerHTML = '<div class="empty-state"><p>🎯 No pending requests at the moment. Great job managing your learners!</p></div>';
+            return;
+        }
+        
+        container.innerHTML = requests.map(request => `
+            <div class="request-card">
+                <div class="request-header">
+                    <div class="request-info">
+                        <h4>${request.learner}</h4>
+                        <p>📧 ${request.email}</p>
+                        <p>📚 Wants to learn: <strong>${request.skill}</strong></p>
+                        <p style="margin-top: 5px; color: #999;">🕒 ${request.date}</p>
+                    </div>
+                    <span class="status-badge status-pending">Pending</span>
+                </div>
+                <p style="color: #555; margin: 15px 0; line-height: 1.6;">"${request.message}"</p>
+                <div class="request-actions">
+                    <button class="btn-accept" onclick="acceptRequest(${request.id})">✓ Accept Request</button>
+                    <button class="btn-decline" onclick="declineRequest(${request.id})">✗ Decline</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function acceptRequest(id) {
+        const request = requests.find(r => r.id === id);
+        if (!request) return;
+        // use template literal for confirm + alert
+        if (confirm(`Accept learning request from ${request.learner}?\n\nSkill: ${request.skill}\nEmail: ${request.email}`)) {
+            requests = requests.filter(r => r.id !== id);
+            document.getElementById('activeStudents').textContent = 
+                parseInt(document.getElementById('activeStudents').textContent) + 1;
+            document.getElementById('totalRequests').textContent = requests.length;
+            renderRequests();
+            alert(`✅ Request Accepted!\n\n${request.learner} has been notified and will receive your contact details. You can now coordinate the learning sessions.`);
+        }
+    }
+
+    function declineRequest(id) {
+        const request = requests.find(r => r.id === id);
+        if (!request) return;
+        if (confirm(`Decline learning request from ${request.learner}?\n\nThis action cannot be undone.`)) {
+            requests = requests.filter(r => r.id !== id);
+            document.getElementById('totalRequests').textContent = requests.length;
+            renderRequests();
+            alert(`Request from ${request.learner} has been declined.`);
+        }
+    }
+
+    // Initialize
+    updateSkillsList();
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
+
+
+
+{%endblock body%}

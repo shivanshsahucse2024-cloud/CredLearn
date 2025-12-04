@@ -1,0 +1,688 @@
+{% extends 'base.html'%}
+
+{% block title %} Home | CredLearn {% endblock title %}
+
+{% block body %}
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Skill Exchange Platform | SIH 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4F46E5;
+            --secondary: #10B981;
+            --accent: #F59E0B;
+            --dark: #1F2937;
+            --light: #F9FAFB;
+            --white: #FFFFFF;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            top: -250px;
+            right: -250px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        /* Value Proposition */
+        .value-prop {
+            padding: 80px 0;
+            text-align: center;
+            background: var(--light);
+        }
+
+        .value-prop h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+
+        .value-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .highlight-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .highlight-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--dark);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 0;
+            background: var(--light);
+        }
+
+        .journey-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .journey-step {
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            position: relative;
+        }
+
+        .journey-step::after {
+            content: '→';
+            position: absolute;
+            right: -30px;
+            top: 30px;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .journey-step:last-child::after {
+            content: '';
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            padding: 80px 0;
+        }
+
+        .tech-icons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .tech-item {
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .tech-item:hover {
+            transform: scale(1.1);
+        }
+
+        .tech-icon {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Impact Section */
+        .impact {
+            padding: 80px 0;
+            background: var(--light);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .impact-column h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .impact-list {
+            list-style: none;
+        }
+
+        .impact-list li {
+            padding: 1rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .impact-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .stars {
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer CTA */
+        .footer-cta {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .footer-cta h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .journey-step::after {
+                content: '↓';
+                right: 50%;
+                top: 100%;
+                transform: translateX(50%);
+            }
+
+            .journey-flow {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">SkillExchange</div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#impact">Impact</a></li>
+                <li><a href="#tech">Tech Stack</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Learn. Teach. Grow — A Community Skill Exchange Platform</h1>
+                <p>Many can't afford to learn new skills, while others want to teach but can't find eager learners or a place to connect. We're bridging that gap through a community-driven, credit-based learning ecosystem.</p>
+                <div class="cta-buttons">
+                    <a href="mentor/" class="btn btn-primary">Join as Mentor</a>
+                    <a href="explore/" class="btn btn-secondary">Explore Skills</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Proposition -->
+    <section class="value-prop">
+        <div class="container">
+            <h2>A platform where knowledge becomes a shared currency<br>bridging gaps across skills, regions, and generations</h2>
+            <div class="value-highlights">
+                <div class="highlight-card">
+                    <div class="highlight-icon">🎓</div>
+                    <h3>Free Learning</h3>
+                    <p>Access quality education without financial barriers</p>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon">💰</div>
+                    <h3>Credit-Based Exchange</h3>
+                    <p>Earn credits by teaching, spend them learning</p>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon">🤖</div>
+                    <h3>AI Mentor Matching</h3>
+                    <p>Smart algorithms connect you with perfect mentors</p>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon">🌐</div>
+                    <h3>Community-Driven</h3>
+                    <p>Built by learners, for learners worldwide</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Powerful Features for Modern Learning</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>🎯 SkillMatch AI</h3>
+                    <p>Advanced AI algorithms match learners with the most suitable mentors based on skills, learning style, and availability.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>💡 Teach to Earn Credits</h3>
+                    <p>Share your knowledge and earn credits that you can use to learn new skills from others in the community.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📚 Learn with Credits</h3>
+                    <p>Use your earned credits to access premium courses and one-on-one mentoring sessions.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>✅ Profile Verification & Ratings</h3>
+                    <p>Trust and transparency through verified profiles and community-driven ratings system.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🖊️ LiveBoard & Collaborative Whiteboard</h3>
+                    <p>Interactive real-time whiteboard for seamless collaboration during learning sessions.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>⚡ QuickStart Micro-Skills</h3>
+                    <p>15-minute focused modules for quick skill acquisition and busy schedules.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🌏 MultiLingua Mode</h3>
+                    <p>Regional language support to break down language barriers in education.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>👥 OpenCircle Sessions</h3>
+                    <p>Community rooms for group learning, discussions, and knowledge sharing.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📥 Offline Access & Recording</h3>
+                    <p>Download sessions for offline viewing and review anytime, anywhere.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Your Learning Journey</h2>
+            <div class="journey-flow">
+                <div class="journey-step">
+                    <div class="step-number">1</div>
+                    <h4>Sign Up</h4>
+                    <p>Create your account</p>
+                </div>
+                <div class="journey-step">
+                    <div class="step-number">2</div>
+                    <h4>Verify Account</h4>
+                    <p>Complete verification</p>
+                </div>
+                <div class="journey-step">
+                    <div class="step-number">3</div>
+                    <h4>Explore Interests</h4>
+                    <p>Choose your skills</p>
+                </div>
+                <div class="journey-step">
+                    <div class="step-number">4</div>
+                    <h4>Match with Mentors</h4>
+                    <p>AI finds perfect fit</p>
+                </div>
+                <div class="journey-step">
+                    <div class="step-number">5</div>
+                    <h4>Join Sessions</h4>
+                    <p>Start learning</p>
+                </div>
+                <div class="journey-step">
+                    <div class="step-number">6</div>
+                    <h4>Earn Credits</h4>
+                    <p>Teach & grow</p>
+                </div>
+                <div class="journey-step">
+                    <div class="step-number">7</div>
+                    <h4>Update Portfolio</h4>
+                    <p>Showcase skills</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section id="tech" class="tech-stack">
+        <div class="container">
+            <h2 class="section-title">Built with Modern Technology</h2>
+            <div class="tech-icons">
+                <div class="tech-item">
+                    <div class="tech-icon">⚛️</div>
+                    <p><strong>React</strong></p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🟢</div>
+                    <p><strong>Node.js</strong></p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🍃</div>
+                    <p><strong>MongoDB</strong></p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🐍</div>
+                    <p><strong>Python</strong></p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">📹</div>
+                    <p><strong>WebRTC</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section id="impact" class="impact">
+        <div class="container">
+            <h2 class="section-title">Creating Real Impact</h2>
+            <div class="impact-grid">
+                <div class="impact-column">
+                    <h3>📊 Impacts</h3>
+                    <ul class="impact-list">
+                        <li>Bridging the educational gap across communities</li>
+                        <li>Sustainable learning ecosystem without monetary barriers</li>
+                        <li>Promoting lifelong learning culture</li>
+                        <li>Empowering individuals through knowledge sharing</li>
+                        <li>Building stronger, connected communities</li>
+                    </ul>
+                </div>
+                <div class="impact-column">
+                    <h3>🎯 Benefits</h3>
+                    <ul class="impact-list">
+                        <li>Innovation in education delivery and access</li>
+                        <li>Flexible learning adapted to individual schedules</li>
+                        <li>Cultural knowledge preservation and sharing</li>
+                        <li>Entrepreneurship opportunities for educators</li>
+                        <li>Reduced educational inequality nationwide</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">Trusted by Learners & Mentors</h2>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"This platform transformed my learning journey. I taught web development and learned graphic design in return. Amazing community!"</p>
+                <strong>— Priya S., Web Developer</strong>
+            </div>
+            <p style="margin-top: 2rem; font-size: 1.2rem; color: var(--dark);">
+                <strong>Trusted by learners, mentors, and communities nationwide</strong>
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <section class="footer-cta">
+        <div class="container">
+            <h2>Start Learning or Teaching Today</h2>
+            <p style="margin-bottom: 2rem;">Build Skills, Earn Credits, and Grow Together</p>
+            <a href="#" class="btn btn-primary">Get Started Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Community Skill Exchange Platform | Smart India Hackathon 2025</p>
+            <p style="margin-top: 1rem;">Empowering Communities Through Knowledge Sharing</p>
+        </div>
+    </footer>
+</body>
+</html>
+</style>
+{%endblock body%}

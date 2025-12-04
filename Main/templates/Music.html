@@ -1,0 +1,342 @@
+{% extends 'base.html'%}
+
+{% block title %} Music{% endblock title %}
+
+{% block body %}
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Music – Skill Tracks</title>
+  <style>
+    :root{
+      --bg:#f8fafc;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --accent:#3b82f6;
+      --radius:18px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:system-ui, -apple-system, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+    a{text-decoration:none;color:inherit;}
+
+    .page{
+      max-width:1150px;
+      margin:32px auto;
+      padding:0 16px 50px;
+    }
+    .page-header{
+      margin-bottom:30px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .eyebrow{
+      font-size:12px;
+      color:var(--accent);
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-weight:600;
+    }
+    h1{
+      font-size:34px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    
+    .page-header p{
+      max-width:520px;
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    h2{
+      margin:18px 0 14px;
+      font-size:20px;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    /* Grid */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:20px;
+    }
+
+    /* Card */
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:0 8px 22px rgba(0,0,0,.10);
+      transition:transform .15s ease, box-shadow .15s ease;
+      border:1px solid #e5e7eb;
+    }
+    .card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 14px 32px rgba(0,0,0,.12);
+    }
+
+    .thumb{
+      height:150px;
+      background:#ddd;
+      background-size:cover;
+      background-position:center;
+    }
+
+    .card-body{
+      padding:14px 16px 16px;
+    }
+
+    .card-title{
+      font-size:17px;
+      font-weight:600;
+      margin-bottom:4px;
+    }
+
+    .card-body p{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .pill{
+      font-size:11px;
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      padding:3px 12px;
+      background:#eff6ff;
+      color:var(--accent);
+      border-radius:999px;
+      margin-bottom:6px;
+      font-weight:500;
+    }
+
+    /* Mentor section */
+    .mentor-card{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:14px;
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:0 6px 18px rgba(0,0,0,.06);
+      border:1px solid #e5e7eb;
+      margin-bottom:10px;
+    }
+
+    .mentor-name{
+      font-weight:600;
+      font-size:14px;
+    }
+
+    .mentor-meta{
+      font-size:12px; color:var(--muted);
+      text-align:right;
+    }
+
+    .credits{
+      font-size:13px;
+      color:var(--accent);
+      font-weight:600;
+    }
+
+    @media(max-width:620px){
+      .mentor-card{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:6px;
+      }
+      .mentor-meta{text-align:left;}
+      h1{font-size:28px;}
+    }
+
+  </style>
+</head>
+<body>
+<main class="page">
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <span class="eyebrow">Skill Category</span>
+    <h1>Music 🎵</h1>
+    <p>
+      Explore tracks → choose a skill → find a mentor within 100 credits.
+      Learn or teach easily on our platform.
+    </p>
+  </header>
+
+  <!-- TRACKS -->
+  <h2>Tracks 🎼</h2>
+  <div class="grid">
+
+    <!-- Track 1 -->
+    <a class="card" href="#skills">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1511379938547-c1f69419868d');"></div>
+      <div class="card-body">
+        <div class="card-title">🎸 Instruments</div>
+        <p>Guitar, piano, drums & more.</p>
+      </div>
+    </a>
+
+    <!-- Track 2 -->
+    <a class="card" href="#skills">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4');"></div>
+      <div class="card-body">
+        <div class="card-title">🎤 Vocals</div>
+        <p>Singing, Bollywood & western styles.</p>
+      </div>
+    </a>
+
+    <!-- Track 3 -->
+    <a class="card" href="#skills">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1511376777868-611b54f68947');"></div>
+      <div class="card-body">
+        <div class="card-title">🎧 Production</div>
+        <p>Beat making, DAWs, mixing & mastering.</p>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- SKILLS -->
+  <h2 id="skills">Skills 🎚</h2>
+  <div class="grid">
+
+    <!-- Skills under Instruments -->
+    <a class="card" href="#guitar-mentors">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1514894780887-121968d00567');"></div>
+      <div class="card-body">
+        <div class="pill">🎸 Instruments</div>
+        <div class="card-title">Guitar Basics</div>
+        <p>Chords, strumming & beginner songs.</p>
+      </div>
+    </a>
+
+    <a class="card" href="#keys-mentors">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1513883049090-d0b7439799bf');"></div>
+      <div class="card-body">
+        <div class="pill">🎹 Instruments</div>
+        <div class="card-title">Keyboard / Piano</div>
+        <p>Scales, melodies & chords.</p>
+      </div>
+    </a>
+
+    <a class="card" href="#drums-mentors">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1507838153414-b4b713384a76');"></div>
+      <div class="card-body">
+        <div class="pill">🥁 Instruments</div>
+        <div class="card-title">Drums & Rhythm</div>
+        <p>Timing, grooves & simple fills.</p>
+      </div>
+    </a>
+
+    <!-- Vocals -->
+    <a class="card" href="#vocals-basic">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91');"></div>
+      <div class="card-body">
+        <div class="pill">🎤 Vocals</div>
+        <div class="card-title">Singing Basics</div>
+        <p>Breathing, warmups & pitch.</p>
+      </div>
+    </a>
+
+    <a class="card" href="#bolly-mentors">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1585328393046-6011b85708d0');"></div>
+      <div class="card-body">
+        <div class="pill">🇮🇳 Vocals</div>
+        <div class="card-title">Bollywood Vocals</div>
+        <p>Expressions & filmy tone.</p>
+      </div>
+    </a>
+
+    <a class="card" href="#western-mentors">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1497032628192-86f99bcd76bc');"></div>
+      <div class="card-body">
+        <div class="pill">🎶 Vocals</div>
+        <div class="card-title">Western Vocals</div>
+        <p>Pop tone, harmony.</p>
+      </div>
+    </a>
+
+    <!-- Production -->
+    <a class="card" href="#daw-mentors">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819');"></div>
+      <div class="card-body">
+        <div class="pill">🎧 Production</div>
+        <div class="card-title">DAW Basics</div>
+        <p>FL Studio, Logic Pro basics.</p>
+      </div>
+    </a>
+
+    <a class="card" href="#beat-mentors">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1515378791036-0648a3ef77b2');"></div>
+      <div class="card-body">
+        <div class="pill">🎛 Production</div>
+        <div class="card-title">Beat Making</div>
+        <p>Drums, 808s & arrangements.</p>
+      </div>
+    </a>
+
+    <a class="card" href="#mix-mentors">
+      <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1497032628192-86f99bcd76bc');"></div>
+      <div class="card-body">
+        <div class="pill">🧪 Production</div>
+        <div class="card-title">Mixing & Mastering</div>
+        <p>EQ, compression & vocal clarity.</p>
+      </div>
+    </a>
+  </div>
+
+  <!-- MENTORS (Example – plug into Django later) -->
+
+  <h2 id="guitar-mentors">🎸 Guitar Mentors</h2>
+  <div class="mentor-card">
+    <div>
+      <div class="mentor-name">Arjun Mehta</div>
+      <div class="mentor-meta">Beginner chords & covers</div>
+    </div>
+    <div class="mentor-meta">
+      <div class="credits">Credits: 70</div>
+      <div>Can teach & learn</div>
+    </div>
+  </div>
+
+  <h2 id="keys-mentors">🎹 Piano Mentors</h2>
+  <div class="mentor-card">
+    <div>
+      <div class="mentor-name">Sara Daniel</div>
+      <div class="mentor-meta">Scales, chords & melodies</div>
+    </div>
+    <div class="mentor-meta">
+      <div class="credits">Credits: 82</div>
+      <div>Can teach & learn</div>
+    </div>
+  </div>
+
+  <h2 id="mix-mentors">🧪 Mixing Mentors</h2>
+  <div class="mentor-card">
+    <div>
+      <div class="mentor-name">Mehak Gill</div>
+      <div class="mentor-meta">Vocals, EQ, compression</div>
+    </div>
+    <div class="mentor-meta">
+      <div class="credits">Credits: 88</div>
+      <div>Can teach & learn</div>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
+
+{%endblock body%}
