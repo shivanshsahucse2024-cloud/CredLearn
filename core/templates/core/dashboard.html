@@ -49,25 +49,22 @@
         </div>
         {% endif %}
 
-        <!-- Section: Courses Available to Join -->
-        <h3 class="fw-bold mb-4 text-primary">🛒 Available Courses</h3>
-        <div class="row g-4">
-            {% for course in available_courses %}
-            <div class="col-md-4">
-                <div class="card p-4 h-100 border-0 shadow-sm">
-                    <h5 class="fw-bold">{{ course.title }}</h5>
-                    <p class="text-muted small mb-3">{{ course.description|truncatechars:80 }}</p>
-                    <div class="mt-auto d-flex justify-content-between align-items-center">
-                        <span class="fw-bold text-warning">{{ course.price }} Creds</span>
-                        <a href="{% url 'join_course' course.id %}" class="btn btn-primary btn-sm px-3">Join Class</a>
-                    </div>
-                </div>
+        <!-- Section: Explore -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold text-primary mb-0">🛒 Find New Courses</h3>
+            <a href="{% url 'category_list' %}" class="btn btn-primary fw-bold shadow-sm">
+                Explore Categories →
+            </a>
+        </div>
+
+        <div class="card border-0 shadow-sm bg-primary text-white mb-5">
+            <div class="card-body p-5 text-center">
+                <h2 class="fw-bold mb-3">Ready to learn something new?</h2>
+                <p class="lead mb-4">Browse our catalog of courses across various categories.</p>
+                <a href="{% url 'category_list' %}" class="btn btn-light btn-lg fw-bold text-primary px-5">
+                    Browse Categories
+                </a>
             </div>
-            {% empty %}
-            <div class="col-12">
-                <p class="text-muted">No new courses available right now.</p>
-            </div>
-            {% endfor %}
         </div>
 
         <!-- Section: Courses I Teach (Visible to all) -->

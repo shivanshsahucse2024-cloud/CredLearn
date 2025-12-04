@@ -13,7 +13,10 @@ class CustomUserCreationForm(UserCreationForm):
 class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
-        fields = ['title', 'description', 'price']
+        fields = ['title', 'description', 'category', 'price', 'duration', 'image']
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': 4}),
+        }
         
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:

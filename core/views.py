@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib import messages
-from .models import Course, User
+from .models import Course, User, Transaction, Category
 from .forms import CustomUserCreationForm, CourseForm, ProfileUpdateForm
 
 # --- Authentication ---
@@ -95,6 +95,20 @@ def join_course(request, course_id):
         
         student.save()
         course.teacher.save()
+
+        # Create Transaction Records
+        Transaction.objects.create(
+            user=student,
+            amount=-course.price,
+            description=f"Joined course: {course.title}",
+            course=course
+        )
+        Transaction.objects.create(
+            user=course.teacher,
+            amount=course.price,
+            description=f"Student joined course: {course.title}",
+            course=course
+        )
         
         course.students.add(student)
         messages.success(request, f"Successfully joined {course.title}!")
@@ -141,3 +155,36 @@ def delete_course(request, course_id):
         return redirect('dashboard')
         
     return render(request, 'core/course_confirm_delete.html', {'course': course})
+
+@login_required
+def wallet(request):
+    transactions = request.user.transactions.all().order_by('-timestamp')
+    earned = transactions.filter(amount__gt=0)
+    spent = transactions.filter(amount__lt=0)
+    
+    return render(request, 'core/wallet.html', {
+        'profile': request.user,
+        'uploads': earned,
+        'spent': spent
+    })
+
+
+# --- Discovery Flow ---
+
+@login_required
+def category_list(request):
+    categories = Category.objects.all()
+    return render(request, 'core/category_list.html', {'categories': categories})
+
+@login_required
+def course_list_by_category(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    courses = Course.objects.filter(category=category)
+    return render(request, 'core/course_list.html', {'category': category, 'courses': courses})
+
+@login_required
+def course_detail(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+    is_enrolled = request.user in course.students.all()
+    return render(request, 'core/course_detail.html', {'course': course, 'is_enrolled': is_enrolled})
+

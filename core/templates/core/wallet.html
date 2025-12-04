@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Wallet | CredLearn {% endblock title %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'core/css/wallet.css' %}">
+
+<div class="wallet-container">
+
+    <div class="balance-box">
+        <h2>Wallet Balance</h2>
+        <h1>{{ user.creds }} Credits</h1>
+    </div>
+
+    <div class="section">
+        <h3>Credits Earned (Teaching)</h3>
+
+        {% if uploads %}
+        {% for tx in uploads %}
+        <div class="entry">
+            <div>
+                <b>{{ tx.course.title }}</b>
+                <small>{{ tx.timestamp|date:"M d, Y" }}</small>
+            </div>
+            <span class="amount-plus">+{{ tx.amount }} credits</span>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p class="empty">No earnings yet. Create a course to start earning!</p>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <h3>Credits Spent (Learning)</h3>
+
+        {% if spent %}
+        {% for tx in spent %}
+        <div class="entry">
+            <div>
+                <b>{{ tx.course.title }}</b>
+                <small>{{ tx.timestamp|date:"M d, Y" }}</small>
+            </div>
+            <span class="amount-minus">{{ tx.amount }} credits</span>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p class="empty">You haven't spent any credits yet.</p>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock content %}

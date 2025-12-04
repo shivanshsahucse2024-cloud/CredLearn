@@ -7,6 +7,7 @@ from . import views
 urlpatterns = [
     path('', views.landing_page, name='landing_page'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('wallet/', views.wallet, name='wallet'),
     path('register/', views.register, name='register'),
     path('profile/', views.profile_view, name='profile'),
     path('profile/edit/', views.profile_edit, name='profile_edit'),
@@ -14,4 +15,9 @@ urlpatterns = [
     path('join/<int:course_id>/', views.join_course, name='join_course'),
     path('course/edit/<int:course_id>/', views.edit_course, name='edit_course'),
     path('course/delete/<int:course_id>/', views.delete_course, name='delete_course'),
+    
+    # Discovery
+    path('explore/', views.category_list, name='category_list'),
+    path('category/<int:category_id>/', views.course_list_by_category, name='course_list_by_category'),
+    path('course/<int:course_id>/', views.course_detail, name='course_detail'),
 ]

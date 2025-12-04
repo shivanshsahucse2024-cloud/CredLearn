@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ course.title }} | CredLearn {% endblock title %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'category_list' %}">Explore</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'course_list_by_category' course.category.id %}">{{
+                            course.category.name }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ course.title }}</li>
+                </ol>
+            </nav>
+
+            <img src="{{ course.image }}" class="img-fluid rounded mb-4 w-100" alt="{{ course.title }}"
+                style="max-height: 400px; object-fit: cover;">
+
+            <h1 class="fw-bold mb-3">{{ course.title }}</h1>
+
+            <div class="d-flex align-items-center mb-4">
+                <div class="me-4">
+                    <span class="text-muted">Instructor:</span>
+                    <span class="fw-bold">{{ course.teacher.username }}</span>
+                </div>
+                <div class="me-4">
+                    <span class="text-muted">Duration:</span>
+                    <span class="fw-bold">{{ course.duration }}</span>
+                </div>
+                <div>
+                    <span class="text-muted">Category:</span>
+                    <span class="badge bg-secondary">{{ course.category.name }}</span>
+                </div>
+            </div>
+
+            <div class="mb-5">
+                <h3 class="fw-bold mb-3">About This Course</h3>
+                <p class="lead">{{ course.description|linebreaks }}</p>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0 sticky-top" style="top: 100px;">
+                <div class="card-body p-4">
+                    <h2 class="card-title fw-bold text-primary mb-4">{{ course.price }} Creds</h2>
+
+                    {% if is_enrolled %}
+                    <div class="alert alert-success">
+                        <h5 class="alert-heading">✅ Enrolled</h5>
+                        <p class="mb-0">You are already learning this course.</p>
+                    </div>
+                    <button class="btn btn-primary w-100 btn-lg mb-3" disabled>Book Session</button>
+                    {% elif user == course.teacher %}
+                    <div class="alert alert-info">
+                        <h5 class="alert-heading">👨‍🏫 Instructor</h5>
+                        <p class="mb-0">You are teaching this course.</p>
+                    </div>
+                    <a href="{% url 'edit_course' course.id %}" class="btn btn-outline-primary w-100 mb-2">Edit
+                        Course</a>
+                    {% else %}
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'join_course' course.id %}" class="btn btn-primary btn-lg">
+                            Book Session
+                        </a>
+                    </div>
+                    <p class="text-muted small text-center mt-3">
+                        Clicking "Book Session" will deduct {{ course.price }} creds from your wallet.
+                    </p>
+                    {% endif %}
+
+                    <hr>
+
+                    <ul class="list-unstyled">
+                        <li class="mb-2">✅ Full Lifetime Access</li>
+                        <li class="mb-2">✅ Access on Mobile and PC</li>
+                        <li class="mb-2">✅ Certificate of Completion</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,99 @@
+.wallet-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.balance-box {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 15px;
+    margin-bottom: 3rem;
+    box-shadow: 0 10px 20px rgba(118, 75, 162, 0.3);
+}
+
+.balance-box h2 {
+    font-size: 1.5rem;
+    opacity: 0.9;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.balance-box h1 {
+    font-size: 4rem;
+    margin: 0;
+    font-weight: 700;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.section {
+    margin-bottom: 3rem;
+}
+
+.section h3 {
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem;
+    border-bottom: 1px solid #f5f5f5;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+}
+
+.entry:hover {
+    background: #f8f9fa;
+    transform: translateX(5px);
+}
+
+.entry b {
+    display: block;
+    font-size: 1.1rem;
+    color: #1f2937;
+    margin-bottom: 0.2rem;
+}
+
+.entry small {
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+.amount-plus {
+    color: #10B981;
+    font-weight: bold;
+    font-size: 1.1rem;
+    background: rgba(16, 185, 129, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+}
+
+.amount-minus {
+    color: #EF4444;
+    font-weight: bold;
+    font-size: 1.1rem;
+    background: rgba(239, 68, 68, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+}
+
+.empty {
+    color: #9ca3af;
+    font-style: italic;
+    text-align: center;
+    padding: 2rem;
+    background: #f9fafb;
+    border-radius: 10px;
+}
