@@ -6,6 +6,7 @@
 {%load static%}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,7 +44,7 @@
         /* Navigation */
         nav {
             background: var(--white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -51,8 +52,13 @@
         }
 
         @keyframes slideDown {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
+            from {
+                transform: translateY(-100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
         }
 
         nav .container {
@@ -102,7 +108,7 @@
             position: absolute;
             width: 500px;
             height: 500px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             top: -250px;
             right: -250px;
@@ -110,8 +116,15 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
         }
 
         .hero-content {
@@ -126,6 +139,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -173,7 +187,7 @@
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
         .btn-secondary {
@@ -211,14 +225,19 @@
             background: var(--white);
             padding: 2rem;
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
             animation: fadeIn 0.6s ease;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .highlight-card:hover {
@@ -253,13 +272,13 @@
             padding: 2rem;
             border-radius: 15px;
             border-left: 4px solid var(--primary);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: all 0.3s;
         }
 
         .feature-card:hover {
             transform: translateX(10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
 
         .feature-card h3 {
@@ -392,7 +411,7 @@
             background: var(--white);
             padding: 2rem;
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             margin: 2rem auto;
         }
@@ -445,8 +464,70 @@
                 flex-direction: column;
             }
         }
+
+        /* Professional Section Headers */
+        .badge-pill {
+            background-color: rgba(79, 70, 229, 0.1);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+
+        .display-4 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--dark) 0%, #4a5568 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .divider {
+            height: 4px;
+            width: 60px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .my-3 {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .mt-2 {
+            margin-top: 0.5rem;
+        }
+
+        .mb-5 {
+            margin-bottom: 3rem;
+        }
+
+        .lead {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: #555;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav>
@@ -466,7 +547,9 @@
         <div class="container">
             <div class="hero-content">
                 <h1>Learn. Teach. Grow — A Community Skill Exchange Platform</h1>
-                <p>Many can't afford to learn new skills, while others want to teach but can't find eager learners or a place to connect. We're bridging that gap through a community-driven, credit-based learning ecosystem.</p>
+                <p>Many can't afford to learn new skills, while others want to teach but can't find eager learners or a
+                    place to connect. We're bridging that gap through a community-driven, credit-based learning
+                    ecosystem.</p>
                 <div class="cta-buttons">
                     <a href="mentor/" class="btn btn-primary">Join as Mentor</a>
                     <a href="explore/" class="btn btn-secondary">Explore Skills</a>
@@ -478,7 +561,13 @@
     <!-- Value Proposition -->
     <section class="value-prop">
         <div class="container">
-            <h2>A platform where knowledge becomes a shared currency<br>bridging gaps across skills, regions, and generations</h2>
+            <div class="section-header text-center mb-5">
+                <span class="badge-pill">OUR MISSION</span>
+                <h2 class="display-4 mt-2">Knowledge as a Shared Currency</h2>
+                <div class="divider mx-auto my-3"></div>
+                <p class="lead">Bridging gaps across skills, regions, and generations through community-driven learning
+                </p>
+            </div>
             <div class="value-highlights">
                 <div class="highlight-card">
                     <div class="highlight-icon">🎓</div>
@@ -511,11 +600,13 @@
             <div class="features-grid">
                 <div class="feature-card">
                     <h3>🎯 SkillMatch AI</h3>
-                    <p>Advanced AI algorithms match learners with the most suitable mentors based on skills, learning style, and availability.</p>
+                    <p>Advanced AI algorithms match learners with the most suitable mentors based on skills, learning
+                        style, and availability.</p>
                 </div>
                 <div class="feature-card">
                     <h3>💡 Teach to Earn Credits</h3>
-                    <p>Share your knowledge and earn credits that you can use to learn new skills from others in the community.</p>
+                    <p>Share your knowledge and earn credits that you can use to learn new skills from others in the
+                        community.</p>
                 </div>
                 <div class="feature-card">
                     <h3>📚 Learn with Credits</h3>
@@ -657,7 +748,8 @@
             <h2 class="section-title">Trusted by Learners & Mentors</h2>
             <div class="testimonial-card">
                 <div class="stars">★★★★★</div>
-                <p>"This platform transformed my learning journey. I taught web development and learned graphic design in return. Amazing community!"</p>
+                <p>"This platform transformed my learning journey. I taught web development and learned graphic design
+                    in return. Amazing community!"</p>
                 <strong>— Priya S., Web Developer</strong>
             </div>
             <p style="margin-top: 2rem; font-size: 1.2rem; color: var(--dark);">
@@ -683,6 +775,7 @@
         </div>
     </footer>
 </body>
+
 </html>
 </style>
 {%endblock body%}

@@ -1,25 +1,26 @@
-
 {% extends 'base.html'%}
 
 {% block title %} Explore{% endblock title %}
 
-{% block body %}+
+{% block body %}
 
 <div class="explore-header">
     <h1>Explore Skills</h1>
     <p>Your gateway to learning, teaching, and earning credits</p>
     <!-- SEARCH BAR -->
-            <div class="search-box d-flex mb-4">
-              <input type="text" class="form-control hero-search" placeholder="Search skills, mentors, topics…">
-              <button class="btn btn-primary ms-2 px-4">Search</button>
-            </div>
+    <div class="search-box d-flex mb-4">
+        <input type="text" class="form-control hero-search" placeholder="Search skills, mentors, topics…">
+        <button class="btn btn-primary ms-2 px-4">Search</button>
+    </div>
 </div>
 <style>
-.search-box {
-    max-width: 500px;   /* control how short you want it */
-    width: 100%;
-    margin: 0 auto;     /* center it */
-}
+    .search-box {
+        max-width: 500px;
+        /* control how short you want it */
+        width: 100%;
+        margin: 0 auto;
+        /* center it */
+    }
 </style>
 
 {% load static %}
@@ -157,7 +158,9 @@
     </div>
 </div>-->
 
-<h2 style="text-align:center; margin-top:50px;"><p>Skill Categories</p></h2>
+<h2 style="text-align:center; margin-top:50px;">
+    <p>Skill Categories</p>
+</h2>
 <section class="pro-featured-categories">
 
     <div class="pro-featured-grid">
@@ -169,31 +172,31 @@
         </div>
 
         <!-- 1 Programming -->
-         <div class="pro-card">
-    
-       <a href="{% url 'programming' %}" class="card-link"></a>
+        <div class="pro-card">
 
-       <img src="{% static 'images/2.jpg' %}" class="pro-img">
+            <a href="{% url 'programming' %}" class="card-link"></a>
 
-    <div class="pro-info">
-        <div class="pro-meta">👤 2.4M+</div>
-        <h3>Programming</h3>
-        <span class="pro-arrow">→</span>
-    </div>
-</div>
+            <img src="{% static 'images/2.jpg' %}" class="pro-img">
+
+            <div class="pro-info">
+                <div class="pro-meta">👤 2.4M+</div>
+                <h3>Programming</h3>
+                <span class="pro-arrow">→</span>
+            </div>
+        </div>
         <style>
-       .pro-card {
-    position: relative;
-    cursor: pointer;
-}
+            .pro-card {
+                position: relative;
+                cursor: pointer;
+            }
 
-/* The overlay link that makes the entire card clickable */
-.card-link {
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-}
-</style>
+            /* The overlay link that makes the entire card clickable */
+            .card-link {
+                position: absolute;
+                inset: 0;
+                z-index: 5;
+            }
+        </style>
         <!-- 2 Design & Art -->
         <div class="pro-card">
             <a href="{% url 'Design' %}" class="card-link"></a>
@@ -204,19 +207,19 @@
                 <span class="pro-arrow">→</span>
             </div>
         </div>
-    <style>
-       .pro-card {
-    position: relative;
-    cursor: pointer;
-    }
+        <style>
+            .pro-card {
+                position: relative;
+                cursor: pointer;
+            }
 
-    /* The overlay link that makes the entire card clickable */
-    .card-link {
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-    }
-</style>
+            /* The overlay link that makes the entire card clickable */
+            .card-link {
+                position: absolute;
+                inset: 0;
+                z-index: 5;
+            }
+        </style>
         <!-- 3 Music -->
         <div class="pro-card">
             <a href="{% url 'Music' %}" class="card-link"></a>
@@ -227,19 +230,19 @@
                 <span class="pro-arrow">→</span>
             </div>
         </div>
-<style>
-       .pro-card {
-    position: relative;
-    cursor: pointer;
-    }
+        <style>
+            .pro-card {
+                position: relative;
+                cursor: pointer;
+            }
 
-    /* The overlay link that makes the entire card clickable */
-    .card-link {
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-    }
-</style>
+            /* The overlay link that makes the entire card clickable */
+            .card-link {
+                position: absolute;
+                inset: 0;
+                z-index: 5;
+            }
+        </style>
         <!-- 4 Languages -->
         <div class="pro-card">
             <a href="{% url 'Lang' %}" class="card-link"></a>
@@ -251,18 +254,18 @@
             </div>
         </div>
         <style>
-       .pro-card {
-        position: relative;
-        cursor: pointer;
-       }
+            .pro-card {
+                position: relative;
+                cursor: pointer;
+            }
 
-    /* The overlay link that makes the entire card clickable */
-    .card-link {
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-    }
-</style>
+            /* The overlay link that makes the entire card clickable */
+            .card-link {
+                position: absolute;
+                inset: 0;
+                z-index: 5;
+            }
+        </style>
         <!-- 5 Cooking -->
         <div class="pro-card">
             <img src="{% static 'images/cooking.jpg' %}" class="pro-img">
@@ -324,223 +327,226 @@
 </section>
 
 <!--Explore lists-->
-<h2 style="text-align:center; margin-top:40px;"</h2>
-<section class="explore-directory">
-    <div class="directory-container">
+<h2 style="text-align:center; margin-top:40px;" </h2>
+    <section class="explore-directory">
+        <div class="directory-container">
 
-        <div class="directory-col">
-            <h3>Explore Roles</h3>
-            <a href="#">Data Analyst</a>
-            <a href="#">Project Manager</a>
-            <a href="#">Cyber Security Analyst</a>
-            <a href="#">Data Scientist</a>
-            <a href="#">UI / UX Designer</a>
-            <a href="#">Machine Learning Engineer</a>
-            <a href="#" class="view-all">View all</a>
+            <div class="directory-col">
+                <h3>Explore Roles</h3>
+                <a href="#">Data Analyst</a>
+                <a href="#">Project Manager</a>
+                <a href="#">Cyber Security Analyst</a>
+                <a href="#">Data Scientist</a>
+                <a href="#">UI / UX Designer</a>
+                <a href="#">Machine Learning Engineer</a>
+                <a href="#" class="view-all">View all</a>
+            </div>
+
+            <div class="directory-col">
+                <h3>Explore Categories</h3>
+                <a href="#">Artificial Intelligence</a>
+                <a href="#">Business</a>
+                <a href="#">Computer Science</a>
+                <a href="#">Healthcare</a>
+                <a href="#">Physical Science</a>
+                <a href="#">Personal Development</a>
+                <a href="#" class="view-all">View all</a>
+            </div>
+
+            <div class="directory-col">
+                <h3>Professional Certificates</h3>
+                <a href="#">Business</a>
+                <a href="#">Computer Science</a>
+                <a href="#">Data Science</a>
+                <a href="#">Information Technology</a>
+                <a href="#" class="view-all">View all</a>
+            </div>
+
+            <div class="directory-col">
+                <h3>Online Degrees</h3>
+                <a href="#">Bachelor's Degrees</a>
+                <a href="#">Master's Degrees</a>
+                <a href="#">Postgraduate Programs</a>
+                <a href="#" class="view-all">View all</a>
+            </div>
+
+            <div class="directory-col">
+                <h3>Trending Skills</h3>
+                <a href="#">Python</a>
+                <a href="#">AI</a>
+                <a href="#">Excel</a>
+                <a href="#">Machine Learning</a>
+                <a href="#">SQL</a>
+                <a href="#">Marketing</a>
+                <a href="#" class="view-all">View all</a>
+            </div>
+
         </div>
+    </section>
 
-        <div class="directory-col">
-            <h3>Explore Categories</h3>
-            <a href="#">Artificial Intelligence</a>
-            <a href="#">Business</a>
-            <a href="#">Computer Science</a>
-            <a href="#">Healthcare</a>
-            <a href="#">Physical Science</a>
-            <a href="#">Personal Development</a>
-            <a href="#" class="view-all">View all</a>
-        </div>
+    <style>
+        .trending-section {
+            margin: 20px auto;
+            width: 90%;
+            max-width: 1100px;
+        }
 
-        <div class="directory-col">
-            <h3>Professional Certificates</h3>
-            <a href="#">Business</a>
-            <a href="#">Computer Science</a>
-            <a href="#">Data Science</a>
-            <a href="#">Information Technology</a>
-            <a href="#" class="view-all">View all</a>
-        </div>
+        .trending-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-        <div class="directory-col">
-            <h3>Online Degrees</h3>
-            <a href="#">Bachelor's Degrees</a>
-            <a href="#">Master's Degrees</a>
-            <a href="#">Postgraduate Programs</a>
-            <a href="#" class="view-all">View all</a>
-        </div>
+        .trending-skills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
 
-        <div class="directory-col">
-            <h3>Trending Skills</h3>
-            <a href="#">Python</a>
-            <a href="#">AI</a>
-            <a href="#">Excel</a>
-            <a href="#">Machine Learning</a>
-            <a href="#">SQL</a>
-            <a href="#">Marketing</a>
-            <a href="#" class="view-all">View all</a>
-        </div>
+        .trending-tag {
+            background: #3e4955ff;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 16px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
 
-    </div>
-</section>
+        .trending-tag:hover {
+            background: #2f57d4;
+            transform: translateY(-3px);
+        }
 
-<style>
-    .trending-section {
-        margin: 20px auto;
-        width: 90%;
-        max-width: 1100px;
-    }
+        /*explore*/
 
-    .trending-title {
-        font-size: 28px;
-        font-weight: 600;
-        margin-bottom: 20px;
-        text-align: center;
-    }
+        .explore-header {
+            text-align: center;
+            padding: 40px 0;
+        }
 
-    .trending-skills {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-    }
+        .explore-header h1 {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
 
-    .trending-tag {
-        background: #3e4955ff;
-        color: white;
-        padding: 10px 18px;
-        border-radius: 20px;
-        font-size: 16px;
-        transition: 0.3s;
-        cursor: pointer;
-    }
+        .explore-header p {
+            font-size: 18px;
+            color: #555;
+        }
 
-    .trending-tag:hover {
-        background: #2f57d4;
-        transform: translateY(-3px);
-    }
+        .pro-featured-categories {
+            padding: 80px 60px;
+            background: #fff;
+        }
 
-        /*explore*/ 
+        /* GRID */
+        .pro-featured-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr 1fr;
+            gap: 30px;
+        }
 
-    .explore-header{
-        text-align:center;
-        padding:40px 0;
-    }
+        /* LEFT TEXT */
+        .pro-left-text h2 {
+            font-size: 38px;
+            font-weight: 700;
+        }
 
-    .explore-header h1{
-        font-size:40px;
-        font-weight:700;
-        margin-bottom:10px;
-    }
+        .pro-left-text p {
+            font-size: 18px;
+            color: #555;
+            margin-top: 10px;
+        }
 
-    .explore-header p{
-        font-size:18px;
-        color:#555;
-    }
-    .pro-featured-categories {
-    padding: 80px 60px;
-    background: #fff;
-}
+        /* CARD */
+        .pro-card {
+            background: #fff;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            transition: 0.3s ease;
+        }
 
-/* GRID */
-.pro-featured-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr 1fr 1fr;
-    gap: 30px;
-}
+        .pro-card:hover {
+            transform: translateY(-8px) scale(1.01);
+        }
 
-/* LEFT TEXT */
-.pro-left-text h2 {
-    font-size: 38px;
-    font-weight: 700;
-}
+        /* IMAGE */
+        .pro-img {
+            width: 100%;
+            height: 230px;
+            object-fit: cover;
+        }
 
-.pro-left-text p {
-    font-size: 18px;
-    color: #555;
-    margin-top: 10px;
-}
+        /* INFO */
+        .pro-info {
+            padding: 20px;
+            position: relative;
+        }
 
-/* CARD */
-.pro-card {
-    background: #fff;
-    border-radius: 22px;
-    overflow: hidden;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-    transition: 0.3s ease;
-}
+        .pro-meta {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 6px;
+        }
 
-.pro-card:hover {
-    transform: translateY(-8px) scale(1.01);
-}
+        .pro-info h3 {
+            font-size: 20px;
+            font-weight: 600;
+        }
 
-/* IMAGE */
-.pro-img {
-    width: 100%;
-    height: 230px;
-    object-fit: cover;
-}
+        .pro-arrow {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            font-size: 26px;
+            color: #555;
+        }
 
-/* INFO */
-.pro-info {
-    padding: 20px;
-    position: relative;
-}
+        /* DOTS */
+        .pro-slider-dots {
+            text-align: center;
+            margin-top: 25px;
+        }
 
-.pro-meta {
-    font-size: 14px;
-    color: #777;
-    margin-bottom: 6px;
-}
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: #ddd;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 6px;
+        }
 
-.pro-info h3 {
-    font-size: 20px;
-    font-weight: 600;
-}
+        .active-dot {
+            background: #a855f7;
+            width: 16px;
+            height: 16px;
+        }
 
-.pro-arrow {
-    position: absolute;
-    right: 20px;
-    bottom: 20px;
-    font-size: 26px;
-    color: #555;
-}
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .pro-featured-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
 
-/* DOTS */
-.pro-slider-dots {
-    text-align: center;
-    margin-top: 25px;
-}
+        @media (max-width: 800px) {
+            .pro-featured-grid {
+                grid-template-columns: 1fr;
+            }
 
-.dot {
-    width: 12px;
-    height: 12px;
-    background: #ddd;
-    border-radius: 50%;
-    display: inline-block;
-    margin: 0 6px;
-}
-
-.active-dot {
-    background: #a855f7;
-    width: 16px;
-    height: 16px;
-}
-
-/* RESPONSIVE */
-@media (max-width: 1200px) {
-    .pro-featured-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-@media (max-width: 800px) {
-    .pro-featured-grid {
-        grid-template-columns: 1fr;
-    }
-    .pro-left-text {
-        margin-bottom: 20px;
-    }
-}
+            .pro-left-text {
+                margin-bottom: 20px;
+            }
+        }
 
 
-    /*.categories{
+        /*.categories{
         display:flex;
         flex-wrap:wrap;
         justify-content:center;
@@ -574,130 +580,130 @@
         color:#4a76fd;
     }*/
 
-    
- <!--Directory section-->
-.explore-directory {
-    padding: 80px 40px;
-    background: #fafafa;
-    border-top: 1px solid #eee;
-    margin-top: 80px;
-}
 
-.directory-container {
-    max-width: 1300px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 50px;
-}
+        /* Directory section */
+        .explore-directory {
+            padding: 80px 40px;
+            background: #fafafa;
+            border-top: 1px solid #eee;
+            margin-top: 80px;
+        }
 
-.directory-col h3 {
-    font-size: 18px;
-    margin-bottom: 20px;
-    font-weight: 700;
-}
+        .directory-container {
+            max-width: 1300px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 50px;
+        }
 
-.directory-col a {
-    display: block;
-    color: #444;
-    font-size: 15px;
-    margin-bottom: 10px;
-    text-decoration: none;
-}
+        .directory-col h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
 
-.directory-col a:hover {
-    color: #4f46e5;
-}
+        .directory-col a {
+            display: block;
+            color: #444;
+            font-size: 15px;
+            margin-bottom: 10px;
+            text-decoration: none;
+        }
 
-.view-all {
-    margin-top: 8px;
-    font-weight: 600;
-    color: #4f46e5 !important;
-}
+        .directory-col a:hover {
+            color: #4f46e5;
+        }
+
+        .view-all {
+            margin-top: 8px;
+            font-weight: 600;
+            color: #4f46e5 !important;
+        }
 
 
-                       <!--Trending skills  css-->
-/* WRAPPER */
-.trending-section-wrapper {
-    padding: 60px 40px;
-    margin-top: 40px;
-}
+        /* Trending skills css */
 
-/* MAIN TITLE */
-.section-main-title {
-    font-size: 32px;
-    font-weight: 700;
-    text-align: left;
-    margin-bottom: 25px;
-}
+        /* WRAPPER */
+        .trending-section-wrapper {
+            padding: 60px 40px;
+            margin-top: 40px;
+        }
 
-/* GRID LAYOUT */
-.trending-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
-}
+        /* MAIN TITLE */
+        .section-main-title {
+            font-size: 32px;
+            font-weight: 700;
+            text-align: left;
+            margin-bottom: 25px;
+        }
 
-/* COLUMN TITLE */
-.column-title {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 15px;
-    color: #222;
-}
+        /* GRID LAYOUT */
+        .trending-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
 
-/* CARD */
-.trend-card {
-    display: flex;
-    gap: 12px;
-    background: #f5f8ff;
-    border-radius: 14px;
-    padding: 14px;
-    margin-bottom: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-    transition: 0.2s;
-}
+        /* COLUMN TITLE */
+        .column-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #222;
+        }
 
-.trend-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-}
+        /* CARD */
+        .trend-card {
+            display: flex;
+            gap: 12px;
+            background: #f5f8ff;
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            transition: 0.2s;
+        }
 
-/* ICON */
-.trend-icon {
-    width: 55px;
-    height: 55px;
-    border-radius: 8px;
-    object-fit: cover;
-}
+        .trend-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
 
-/* INFO TEXT */
-.trend-info h4 {
-    font-size: 16px;
-    font-weight: 600;
-    margin: 2px 0 4px;
-}
+        /* ICON */
+        .trend-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
 
-.trend-info p {
-    font-size: 14px;
-    color: #555;
-    margin: 0;
-}
+        /* INFO TEXT */
+        .trend-info h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 2px 0 4px;
+        }
 
-.trend-rating {
-    font-size: 14px;
-    font-weight: 600;
-    color: #333;
-    margin-top: 4px;
-}
+        .trend-info p {
+            font-size: 14px;
+            color: #555;
+            margin: 0;
+        }
 
-/* RESPONSIVE */
-@media (max-width: 992px) {
-    .trending-grid {
-        grid-template-columns: 1fr;
-    }
-}
+        .trend-rating {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-top: 4px;
+        }
 
-</style>
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .trending-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 
-{%endblock body%}
+    {%endblock body%}

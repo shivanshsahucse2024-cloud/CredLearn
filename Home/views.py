@@ -36,6 +36,15 @@ def Lang(request):
 def mentor(request):
     return render(request,'mentor.html')
 
+def mentors_available(request):
+    mentors = [
+        {'name': 'Riya Sharma', 'skill': 'HTML, CSS', 'status': 'Available', 'credits': 60},
+        {'name': 'Aman Verma', 'skill': 'CSS, Animations', 'status': 'Busy', 'credits': 75},
+        {'name': 'Aditya Rao', 'skill': 'Python, Django', 'status': 'Available', 'credits': 85},
+        {'name': 'Sneha Patel', 'skill': 'React, JS', 'status': 'Offline', 'credits': 90},
+    ]
+    return render(request, 'mentors_available.html', {'mentors': mentors})
+
 @login_required
 def wallet(request):
     profile = request.user.profile

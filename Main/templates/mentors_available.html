@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+
+{% block title %} Mentors Available {% endblock title %}
+
+{% block body %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentors Available - Web Development</title>
+    <style>
+        :root {
+            --bg: #f5f5f7;
+            --card: #ffffff;
+            --text: #111827;
+            --muted: #6b7280;
+            --accent: #4f46e5;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --radius: 12px;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        /* GRID LAYOUT */
+        .mentor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* CARD STYLE */
+        .mentor-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border: 1px solid #e5e7eb;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .mentor-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .mentor-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .mentor-name {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .mentor-skill {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        .status-badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 999px;
+            text-transform: uppercase;
+        }
+
+        .status-available {
+            background: #d1fae5;
+            color: var(--success);
+        }
+
+        .status-busy {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .status-offline {
+            background: #f3f4f6;
+            color: var(--muted);
+        }
+
+        .credits {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text);
+            margin-top: auto;
+            padding-top: 10px;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        /* CALL BUTTON */
+        .call-btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background: var(--accent);
+            color: white;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .call-btn:hover {
+            background: #4338ca;
+        }
+
+        .call-btn:disabled,
+        .call-btn.disabled {
+            background: #e5e7eb;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Web Development Mentors</h1>
+            <p>Connect with top mentors instantly. Clean code, clear concepts.</p>
+        </div>
+
+        <div class="mentor-grid">
+            {% for mentor in mentors %}
+            <div class="mentor-card">
+                <div class="mentor-info">
+                    <div>
+                        <div class="mentor-name">{{ mentor.name }}</div>
+                        <div class="mentor-skill">Skill: {{ mentor.skill }}</div>
+                    </div>
+
+                    {% if mentor.status == 'Available' %}
+                    <span class="status-badge status-available">Available</span>
+                    {% elif mentor.status == 'Busy' %}
+                    <span class="status-badge status-busy">Busy</span>
+                    {% else %}
+                    <span class="status-badge status-offline">Offline</span>
+                    {% endif %}
+                </div>
+
+                <div class="credits">
+                    Credits required: <strong>{{ mentor.credits }}</strong>
+                </div>
+
+                {% if mentor.status == 'Available' %}
+                <button class="call-btn" onclick="alert('Calling {{ mentor.name }}...')">
+                    📞 Join with Call
+                </button>
+                {% else %}
+                <button class="call-btn disabled" disabled>
+                    📞 Call ({{ mentor.status }})
+                </button>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+
+</html>
+{% endblock body %}

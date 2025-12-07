@@ -34,4 +34,5 @@ urlpatterns = [
     path('Music/',views.Music,name='Music'),
     path('Lang/',views.Lang,name='Lang'),
     path('mentor/',views.mentor,name='mentor'),
+    path('mentors_available/',views.mentors_available,name='mentors_available'),
     ]

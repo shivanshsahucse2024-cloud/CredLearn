@@ -1,423 +1,453 @@
 {% extends 'base.html'%}
 
-{% block title %} Programming  {% endblock title %}
+{% block title %} Programming {% endblock title %}
 
 {% block body %}
 {%load static%}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programming</title>
-<style>
-    :root{
-      --bg:#f5f5f7;
-      --card:#ffffff;
-      --text:#111827;
-      --muted:#6b7280;
-      --accent:#4f46e5;
-      --radius:18px;
-    }
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{
-      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background:var(--bg);
-      color:var(--text);
-    }
-    a{text-decoration:none;color:inherit;}
-
-    .page{
-      max-width:1150px;
-      margin:32px auto;
-      padding:0 16px 48px;
-    }
-    .page-header{
-      margin-bottom:28px;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-    }
-    .eyebrow{
-      font-size:12px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      color:var(--accent);
-      font-weight:600;
-    }
-    h1{
-      font-size:34px;
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-    .page-header p{
-      color:var(--muted);
-      max-width:540px;
-      font-size:14px;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programming</title>
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --accent: #4f46e5;
+      --radius: 18px;
     }
 
-    h2.section-title{
-      margin:18px 0 14px;
-      font-size:20px;
-      display:flex;
-      align-items:center;
-      gap:6px;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .page {
+      max-width: 1150px;
+      margin: 32px auto;
+      padding: 0 16px 48px;
+    }
+
+    .page-header {
+      margin-bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 34px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .page-header p {
+      color: var(--muted);
+      max-width: 540px;
+      font-size: 14px;
+    }
+
+    h2.section-title {
+      margin: 18px 0 14px;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     /* GRID */
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-      gap:20px;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
     }
 
     /* CARD BASE */
-    .card{
-      background:var(--card);
-      border-radius:var(--radius);
-      overflow:hidden;
-      box-shadow:0 10px 26px rgba(15,23,42,.12);
-      border:1px solid #e5e7eb;
-      transition:transform .15s ease,box-shadow .15s ease;
-    }
-    .card:hover{
-      transform:translateY(-4px);
-      box-shadow:0 16px 36px rgba(15,23,42,.18);
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, .12);
+      border: 1px solid #e5e7eb;
+      transition: transform .15s ease, box-shadow .15s ease;
     }
 
-    .thumb{
-      height:150px;
-      background-size:cover;
-      background-position:center;
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px rgba(15, 23, 42, .18);
     }
 
-    .card-body{
-      padding:14px 16px 16px;
-    }
-    .card-title{
-      font-size:17px;
-      font-weight:600;
-      margin-bottom:4px;
-    }
-    .card-body p{
-      font-size:13px;
-      color:var(--muted);
+    .thumb {
+      height: 150px;
+      background-size: cover;
+      background-position: center;
     }
 
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:3px 12px;
-      border-radius:999px;
-      font-size:11px;
-      font-weight:500;
-      background:#EEF2FF;
-      color:var(--accent);
-      margin-bottom:6px;
+    .card-body {
+      padding: 14px 16px 16px;
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .card-body p {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 500;
+      background: #EEF2FF;
+      color: var(--accent);
+      margin-bottom: 6px;
     }
 
     /* SKILL CARDS – with small image */
-    .skill-inner{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
+    .skill-inner {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
     }
-    .skill-thumb{
-      width:46px;
-      height:46px;
-      border-radius:14px;
-      background-size:cover;
-      background-position:center;
-      flex-shrink:0;
+
+    .skill-thumb {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
     }
-    .skill-text{
-      flex:1;
+
+    .skill-text {
+      flex: 1;
     }
 
     /* MENTORS */
-    .mentor-card{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:12px 14px;
-      background:var(--card);
-      border-radius:var(--radius);
-      box-shadow:0 8px 22px rgba(15,23,42,.12);
-      border:1px solid #e5e7eb;
-      margin-bottom:10px;
-    }
-    .mentor-name{
-      font-size:14px;
-      font-weight:600;
-    }
-    .mentor-meta{
-      font-size:12px;
-      color:var(--muted);
-      text-align:right;
-    }
-    .credits{
-      font-size:13px;
-      color:var(--accent);
-      font-weight:600;
+    .mentor-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .12);
+      border: 1px solid #e5e7eb;
+      margin-bottom: 10px;
     }
 
-    @media(max-width:700px){
-      h1{font-size:28px;}
+    .mentor-name {
+      font-size: 14px;
+      font-weight: 600;
     }
-    @media(max-width:620px){
-      .mentor-card{
-        flex-direction:column;
-        align-items:flex-start;
-        gap:6px;
+
+    .mentor-meta {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .credits {
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    @media(max-width:700px) {
+      h1 {
+        font-size: 28px;
       }
-      .mentor-meta{text-align:left;}
     }
-</style>
+
+    @media(max-width:620px) {
+      .mentor-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+
+      .mentor-meta {
+        text-align: left;
+      }
+    }
+  </style>
 </head>
 
 <body>
-<main class="page">
-  <!-- HEADER -->
-  <header class="page-header">
-    <span class="eyebrow">Skill Category</span>
-    <h1>Programming 💻</h1>
-    <p>
-      Start from a track → pick a skill → choose a mentor with credits under 100.
-      Learn or teach programming with real people.
-    </p>
-  </header>
+  <main class="page">
+    <!-- HEADER -->
+    <header class="page-header">
+      <span class="eyebrow">Skill Category</span>
+      <h1>Programming 💻</h1>
+      <p>
+        Start from a track → pick a skill → choose a mentor with credits under 100.
+        Learn or teach programming with real people.
+      </p>
+    </header>
 
-  <!-- TRACKS -->
-  <section>
-    <h2 class="section-title">Tracks</h2>
-    <div class="grid">
-      <!-- Web Design -->
-      <a href="#skills" class="card">
-        <div class="thumb" style="
+    <!-- TRACKS -->
+    <section>
+      <h2 class="section-title">Tracks</h2>
+      <div class="grid">
+        <!-- Web Design -->
+        <a href="{% url 'mentors_available' %}" target="_blank" class="card">
+          <div class="thumb" style="
           background-image:url('https://images.unsplash.com/photo-1522199822220-3e84c2de0c89');
         "></div>
-        <div class="card-body">
-          <div class="card-title">Web Design 🌈</div>
-          <p>Design beautiful, responsive websites using HTML & CSS.</p>
-        </div>
-      </a>
+          <div class="card-body">
+            <div class="card-title">Web Design 🌈</div>
+            <p>Design beautiful, responsive websites using HTML & CSS.</p>
+          </div>
+        </a>
 
-      <!-- Web Development -->
-      <a href="#skills" class="card">
-        <div class="thumb" style="
+        <!-- Web Development -->
+        <a href="{% url 'mentors_available' %}" target="_blank" class="card">
+          <div class="thumb" style="
           background-image:url('https://images.unsplash.com/photo-1518770660439-4636190af475');
         "></div>
-        <div class="card-body">
-          <div class="card-title">Web Development ⚙</div>
-          <p>Build full-stack apps using Java, C and Python backends.</p>
-        </div>
-      </a>
+          <div class="card-body">
+            <div class="card-title">Web Development ⚙</div>
+            <p>Build full-stack apps using Java, C and Python backends.</p>
+          </div>
+        </a>
 
-      <!-- Programming Core -->
-      <a href="#skills" class="card">
-        <div class="thumb" style="
+        <!-- Programming Core -->
+        <a href="{% url 'mentors_available' %}" target="_blank" class="card">
+          <div class="thumb" style="
           background-image:url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4');
         "></div>
-        <div class="card-body">
-          <div class="card-title">Programming Core 🧠</div>
-          <p>Logic, data structures and algorithms for strong base.</p>
-        </div>
-      </a>
-    </div>
-  </section>
+          <div class="card-body">
+            <div class="card-title">Programming Core 🧠</div>
+            <p>Logic, data structures and algorithms for strong base.</p>
+          </div>
+        </a>
+      </div>
+    </section>
 
-  <!-- SKILLS -->
-  <section id="skills" style="margin-top:26px;">
-    <h2 class="section-title">Choose a Skill</h2>
-    <div class="grid">
-      <!-- Web Design Skills -->
-      <a href="#html-mentors" class="card">
-        <div class="card-body">
-          <span class="pill">Web Design</span>
-          <div class="skill-inner">
-            <div class="skill-thumb" style="
+    <!-- SKILLS -->
+    <section id="skills" style="margin-top:26px;">
+      <h2 class="section-title">Choose a Skill</h2>
+      <div class="grid">
+        <!-- Web Design Skills -->
+        <a href="#html-mentors" class="card">
+          <div class="card-body">
+            <span class="pill">Web Design</span>
+            <div class="skill-inner">
+              <div class="skill-thumb" style="
               background-image:url('https://images.unsplash.com/photo-1518770660439-4636190af475');
             "></div>
-            <div class="skill-text">
-              <div class="card-title">HTML</div>
-              <p>Structure of web pages & semantic tags.</p>
+              <div class="skill-text">
+                <div class="card-title">HTML</div>
+                <p>Structure of web pages & semantic tags.</p>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
+        </a>
 
-      <a href="#css-mentors" class="card">
-        <div class="card-body">
-          <span class="pill">Web Design</span>
-          <div class="skill-inner">
-            <div class="skill-thumb" style="
+        <a href="#css-mentors" class="card">
+          <div class="card-body">
+            <span class="pill">Web Design</span>
+            <div class="skill-inner">
+              <div class="skill-thumb" style="
               background-image:url('https://images.unsplash.com/photo-1519389950473-47ba0277781c');
             "></div>
-            <div class="skill-text">
-              <div class="card-title">CSS</div>
-              <p>Layouts, colors and animations for UI.</p>
+              <div class="skill-text">
+                <div class="card-title">CSS</div>
+                <p>Layouts, colors and animations for UI.</p>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
+        </a>
 
-      <a href="#ui-mentors" class="card">
-        <div class="card-body">
-          <span class="pill">Web Design</span>
-          <div class="skill-inner">
-            <div class="skill-thumb" style="
+        <a href="#ui-mentors" class="card">
+          <div class="card-body">
+            <span class="pill">Web Design</span>
+            <div class="skill-inner">
+              <div class="skill-thumb" style="
               background-image:url('https://images.unsplash.com/photo-1587613864521-9ef8dfe617cc');
             "></div>
-            <div class="skill-text">
-              <div class="card-title">UI Basics</div>
-              <p>Spacing, typography & components.</p>
+              <div class="skill-text">
+                <div class="card-title">UI Basics</div>
+                <p>Spacing, typography & components.</p>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
+        </a>
 
-      <!-- Web Development Skills -->
-      <a href="#java-mentors" class="card">
-        <div class="card-body">
-          <span class="pill">Web Development</span>
-          <div class="skill-inner">
-            <div class="skill-thumb" style="
+        <!-- Web Development Skills -->
+        <a href="#java-mentors" class="card">
+          <div class="card-body">
+            <span class="pill">Web Development</span>
+            <div class="skill-inner">
+              <div class="skill-thumb" style="
               background-image:url('https://images.unsplash.com/photo-1518770660439-4636190af475');
             "></div>
-            <div class="skill-text">
-              <div class="card-title">Java</div>
-              <p>APIs, backend logic & enterprise apps.</p>
+              <div class="skill-text">
+                <div class="card-title">Java</div>
+                <p>APIs, backend logic & enterprise apps.</p>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
+        </a>
 
-      <a href="#c-mentors" class="card">
-        <div class="card-body">
-          <span class="pill">Web Development</span>
-          <div class="skill-inner">
-            <div class="skill-thumb" style="
+        <a href="#c-mentors" class="card">
+          <div class="card-body">
+            <span class="pill">Web Development</span>
+            <div class="skill-inner">
+              <div class="skill-thumb" style="
               background-image:url('https://images.unsplash.com/photo-1526379879527-8559ecfcaec0');
             "></div>
-            <div class="skill-text">
-              <div class="card-title">C Language</div>
-              <p>Low-level concepts & fast programs.</p>
+              <div class="skill-text">
+                <div class="card-title">C Language</div>
+                <p>Low-level concepts & fast programs.</p>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
+        </a>
 
-      <a href="#python-mentors" class="card">
-        <div class="card-body">
-          <span class="pill">Web Development</span>
-          <div class="skill-inner">
-            <div class="skill-thumb" style="
+        <a href="#python-mentors" class="card">
+          <div class="card-body">
+            <span class="pill">Web Development</span>
+            <div class="skill-inner">
+              <div class="skill-thumb" style="
               background-image:url('https://images.unsplash.com/photo-1518770660439-4636190af475');
             "></div>
-            <div class="skill-text">
-              <div class="card-title">Python</div>
-              <p>Django, automation & scripting.</p>
+              <div class="skill-text">
+                <div class="card-title">Python</div>
+                <p>Django, automation & scripting.</p>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
+        </a>
 
-      <!-- Core Programming Skills -->
-      <a href="#dsa-mentors" class="card">
-        <div class="card-body">
-          <span class="pill">Programming Core</span>
-          <div class="skill-inner">
-            <div class="skill-thumb" style="
+        <!-- Core Programming Skills -->
+        <a href="#dsa-mentors" class="card">
+          <div class="card-body">
+            <span class="pill">Programming Core</span>
+            <div class="skill-inner">
+              <div class="skill-thumb" style="
               background-image:url('https://images.unsplash.com/photo-1517430816045-df4b7de11d1d');
             "></div>
-            <div class="skill-text">
-              <div class="card-title">Data Structures</div>
-              <p>Arrays, stacks, queues & trees.</p>
+              <div class="skill-text">
+                <div class="card-title">Data Structures</div>
+                <p>Arrays, stacks, queues & trees.</p>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
+        </a>
 
-      <a href="#algo-mentors" class="card">
-        <div class="card-body">
-          <span class="pill">Programming Core</span>
-          <div class="skill-inner">
-            <div class="skill-thumb" style="
+        <a href="#algo-mentors" class="card">
+          <div class="card-body">
+            <span class="pill">Programming Core</span>
+            <div class="skill-inner">
+              <div class="skill-thumb" style="
               background-image:url('https://images.unsplash.com/photo-1555949963-aa79dcee981c');
             "></div>
-            <div class="skill-text">
-              <div class="card-title">Algorithms</div>
-              <p>Sorting, searching & complexity.</p>
+              <div class="skill-text">
+                <div class="card-title">Algorithms</div>
+                <p>Sorting, searching & complexity.</p>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
+        </a>
 
-      <a href="#oop-mentors" class="card">
-        <div class="card-body">
-          <span class="pill">Programming Core</span>
-          <div class="skill-inner">
-            <div class="skill-thumb" style="
+        <a href="#oop-mentors" class="card">
+          <div class="card-body">
+            <span class="pill">Programming Core</span>
+            <div class="skill-inner">
+              <div class="skill-thumb" style="
               background-image:url('https://images.unsplash.com/photo-1518770660439-4636190af475');
             "></div>
-            <div class="skill-text">
-              <div class="card-title">OOP</div>
-              <p>Classes, objects, inheritance & more.</p>
+              <div class="skill-text">
+                <div class="card-title">OOP</div>
+                <p>Classes, objects, inheritance & more.</p>
+              </div>
             </div>
           </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- MENTORS (examples – later use Django loop + filter credits<100) -->
+
+    <section style="margin-top:28px;" id="html-mentors">
+      <h2 class="section-title">HTML Mentors</h2>
+      <div class="mentor-card">
+        <div>
+          <div class="mentor-name">Riya Sharma</div>
+          <div class="mentor-meta">Teaches basic tags & page layout</div>
         </div>
-      </a>
-    </div>
-  </section>
+        <div class="mentor-meta">
+          <div class="credits">Credits: 60</div>
+          <div>Can teach & learn</div>
+        </div>
+      </div>
+    </section>
 
-  <!-- MENTORS (examples – later use Django loop + filter credits<100) -->
+    <section id="css-mentors">
+      <h2 class="section-title">CSS Mentors</h2>
+      <div class="mentor-card">
+        <div>
+          <div class="mentor-name">Aman Verma</div>
+          <div class="mentor-meta">Flexbox, grid & animations</div>
+        </div>
+        <div class="mentor-meta">
+          <div class="credits">Credits: 75</div>
+          <div>Can teach & learn</div>
+        </div>
+      </div>
+    </section>
 
-  <section style="margin-top:28px;" id="html-mentors">
-    <h2 class="section-title">HTML Mentors</h2>
-    <div class="mentor-card">
-      <div>
-        <div class="mentor-name">Riya Sharma</div>
-        <div class="mentor-meta">Teaches basic tags & page layout</div>
+    <section id="python-mentors">
+      <h2 class="section-title">Python Mentors</h2>
+      <div class="mentor-card">
+        <div>
+          <div class="mentor-name">Aditya Rao</div>
+          <div class="mentor-meta">Python basics & Django</div>
+        </div>
+        <div class="mentor-meta">
+          <div class="credits">Credits: 85</div>
+          <div>Can teach & learn</div>
+        </div>
       </div>
-      <div class="mentor-meta">
-        <div class="credits">Credits: 60</div>
-        <div>Can teach & learn</div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="css-mentors">
-    <h2 class="section-title">CSS Mentors</h2>
-    <div class="mentor-card">
-      <div>
-        <div class="mentor-name">Aman Verma</div>
-        <div class="mentor-meta">Flexbox, grid & animations</div>
-      </div>
-      <div class="mentor-meta">
-        <div class="credits">Credits: 75</div>
-        <div>Can teach & learn</div>
-      </div>
-    </div>
-  </section>
-
-  <section id="python-mentors">
-    <h2 class="section-title">Python Mentors</h2>
-    <div class="mentor-card">
-      <div>
-        <div class="mentor-name">Aditya Rao</div>
-        <div class="mentor-meta">Python basics & Django</div>
-      </div>
-      <div class="mentor-meta">
-        <div class="credits">Credits: 85</div>
-        <div>Can teach & learn</div>
-      </div>
-    </div>
-  </section>
-
-</main>
+  </main>
 </body>
+
 </html>
 
 {%endblock body%}
