@@ -1,0 +1,500 @@
+{% extends 'base.html'%}
+
+{% block title %} Languages {% endblock title %}
+
+{% block body %}
+{%load static%}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentor Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 40px;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 40px;
+            background: #f8f9fa;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .content-area {
+            padding: 40px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            color: #6b7280;
+            font-size: 16px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: #1f2937;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .request-card {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .request-info {
+            flex: 1;
+        }
+
+        .request-student {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .request-topic {
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .request-details {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-accept {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-decline {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .btn-cancel {
+            background: #e5e7eb;
+            color: #374151;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .request-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .request-actions {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome back, Dr. Sarah Johnson!</h1>
+            <p>Manage your mentoring sessions and connect with students</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-value">4.8</div>
+                <div class="stat-label">Average Rating</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-value">127</div>
+                <div class="stat-label">Total Sessions</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-value">89</div>
+                <div class="stat-label">Students Mentored</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-value">98%</div>
+                <div class="stat-label">Response Rate</div>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('requests')">Pending Requests (3)</button>
+                <button class="tab" onclick="showTab('upcoming')">Upcoming Sessions (2)</button>
+                <button class="tab" onclick="showTab('history')">Session History</button>
+            </div>
+
+            <div id="requests" class="tab-content active">
+                <div class="section-header">
+                    <h2 class="section-title">Session Requests</h2>
+                    <button class="btn-primary" onclick="openModal()">+ Create Session</button>
+                </div>
+
+                <div class="request-card">
+                    <div class="request-info">
+                        <div class="request-student">Sarah Johnson</div>
+                        <div class="request-topic">React Hooks Deep Dive</div>
+                        <div class="request-details">
+                            <span>📅 Dec 10, 2024</span>
+                            <span>🕐 2:00 PM</span>
+                            <span>⏱️ 60 min</span>
+                        </div>
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn-accept">✓ Accept</button>
+                        <button class="btn-decline">✗ Decline</button>
+                    </div>
+                </div>
+
+                <div class="request-card">
+                    <div class="request-info">
+                        <div class="request-student">Michael Chen</div>
+                        <div class="request-topic">Career Guidance in Tech</div>
+                        <div class="request-details">
+                            <span>📅 Dec 12, 2024</span>
+                            <span>🕐 4:00 PM</span>
+                            <span>⏱️ 45 min</span>
+                        </div>
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn-accept">✓ Accept</button>
+                        <button class="btn-decline">✗ Decline</button>
+                    </div>
+                </div>
+
+                <div class="request-card">
+                    <div class="request-info">
+                        <div class="request-student">Emily Davis</div>
+                        <div class="request-topic">Portfolio Review</div>
+                        <div class="request-details">
+                            <span>📅 Dec 15, 2024</span>
+                            <span>🕐 10:00 AM</span>
+                            <span>⏱️ 30 min</span>
+                        </div>
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn-accept">✓ Accept</button>
+                        <button class="btn-decline">✗ Decline</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="upcoming" class="tab-content">
+                <div class="section-header">
+                    <h2 class="section-title">Upcoming Sessions</h2>
+                </div>
+
+                <div class="request-card">
+                    <div class="request-info">
+                        <div class="request-student">Alex Martinez</div>
+                        <div class="request-topic">JavaScript Fundamentals</div>
+                        <div class="request-details">
+                            <span>📅 Dec 08, 2024</span>
+                            <span>🕐 3:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="request-card">
+                    <div class="request-info">
+                        <div class="request-student">Jordan Lee</div>
+                        <div class="request-topic">System Design Interview</div>
+                        <div class="request-details">
+                            <span>📅 Dec 09, 2024</span>
+                            <span>🕐 1:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="history" class="tab-content">
+                <div class="section-header">
+                    <h2 class="section-title">Session History</h2>
+                </div>
+                <p style="text-align: center; color: #6b7280; padding: 40px;">Your completed sessions will appear here</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 30px;">Create New Session</h2>
+            <form>
+                <div class="form-group">
+                    <label class="form-label">Session Title</label>
+                    <input type="text" class="form-input" placeholder="e.g., React Fundamentals Workshop" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" placeholder="Describe what this session will cover..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Date</label>
+                    <input type="date" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Time</label>
+                    <input type="time" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Duration</label>
+                    <select class="form-select" required>
+                        <option value="30">30 minutes</option>
+                        <option value="45">45 minutes</option>
+                        <option value="60">60 minutes</option>
+                        <option value="90">90 minutes</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Session Type</label>
+                    <select class="form-select" required>
+                        <option value="one-on-one">One-on-One</option>
+                        <option value="group">Group Session</option>
+                        <option value="workshop">Workshop</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Create Session</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            var tabs = document.querySelectorAll('.tab-content');
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+
+            var buttons = document.querySelectorAll('.tab');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active');
+            }
+
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function openModal() {
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+{%endblock body%}

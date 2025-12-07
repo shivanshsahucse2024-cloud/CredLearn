@@ -1,0 +1,333 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mentor Registration{% endblock title %}
+
+{% block body %}
+
+<style>
+/* GLOBAL RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* FIX NAVBAR (same as homepage) */
+body {
+    padding-top: 0px; /* Prevent navbar overlap */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* FIXED NAVBAR */
+/*.navbar-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10000;
+    background: #1e2227;
+    padding: 15px 0;
+}
+*/
+
+/* CONTAINER */
+.container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 900px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+/* HEADER */
+.header {
+    background: linear-gradient(135deg, #223995 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 30px;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 2.8em;
+    margin-bottom: 10px;
+}
+
+.header p {
+    font-size: 1.2em;
+    opacity: 0.95;
+}
+
+/* CONTENT */
+.content {
+    padding: 50px 40px;
+}
+
+/* FORM */
+.page { display: none; }
+.page.active { display: block; animation: fadeIn 0.5s; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.form-group {
+    margin-bottom: 28px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.required { color: #dc3545; }
+
+input, textarea, select {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 2px solid #e0e0e0;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #667eea;
+    outline: none;
+}
+
+/* FILE UPLOAD */
+.file-upload-label {
+    padding: 14px 16px;
+    border: 2px dashed #667eea;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #f8f9ff;
+}
+
+.file-name {
+    display: none;
+    margin-top: 10px;
+    background: #e7f0ff;
+    padding: 10px;
+}
+
+.file-name.show { display: block; }
+
+/* ADD SKILL BUTTON */
+.skill-input-group {
+    display: flex;
+    gap: 12px;
+}
+
+.skill-tag {
+    background: #e7f0ff;
+    padding: 10px 16px;
+    border-radius: 20px;
+    display: inline-flex;
+    margin: 5px;
+}
+
+/* BUTTON */
+.btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 16px;
+    font-size: 1.2em;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #5e78c3 0%, #764ba2 100%);
+    color: white;
+    border: none;
+}
+
+/* DASHBOARD */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.stat-card {
+    padding: 25px;
+    background: linear-gradient(135deg, #5767cf 0%, #78529f 100%);
+    color: white;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.request-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-left: 5px solid #667eea;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+</style>
+
+
+
+<!-- ========================= -->
+<!-- FIXED NAVBAR -->
+<!-- ========================= -->
+<nav class="navbar-fixed">
+    <div class="container" style="background:none; box-shadow:none; border-radius:0;">
+        <div class="logo" style="color:white; font-size:1.6rem; font-weight:bold;">CredLearn</div>
+    </div>
+</nav>
+
+
+
+<!-- ========================= -->
+<!-- MAIN CARD -->
+<!-- ========================= -->
+<div class="container">
+
+    <div class="header">
+        <h1>SkillExchange</h1>
+        <p>Become a Mentor - Share Your Expertise</p>
+    </div>
+
+    <div class="content">
+
+        <!-- REGISTRATION PAGE -->
+        <div id="registerPage" class="page active">
+            <h2 class="section-title">Mentor Registration</h2>
+
+            <form id="registerForm">
+
+                <div class="form-group">
+                    <label>Full Name <span class="required">*</span></label>
+                    <input type="text" id="regName" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email <span class="required">*</span></label>
+                    <input type="email" id="regEmail" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="regPhone" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Professional Title <span class="required">*</span></label>
+                    <input type="text" id="regTitle" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Years of Experience <span class="required">*</span></label>
+                    <select id="regExperience" required>
+                        <option value="">Select Experience</option>
+                        <option value="1–2">1–2 years</option>
+                        <option value="3–5">3–5 years</option>
+                        <option value="5–10">5–10 years</option>
+                    </select>
+                </div>
+
+                <!-- SKILLS -->
+                <div class="form-group">
+                    <label>Skills You Teach <span class="required">*</span></label>
+
+                    <div class="skill-input-group">
+                        <input type="text" id="skillInput" placeholder="Enter a skill">
+                        <button type="button" onclick="addSkill()">Add</button>
+                    </div>
+
+                    <div id="skillsList"></div>
+                </div>
+
+                <!-- BIO -->
+                <div class="form-group">
+                    <label>About You <span class="required">*</span></label>
+                    <textarea id="regBio" required></textarea>
+                </div>
+
+                <!-- CERTIFICATE -->
+                <div class="form-group">
+                    <label>Upload Certificate</label>
+                    
+                    <input type="file" id="certificateUpload" onchange="handleFileUpload(this)" style="display:none;">
+                    <label for="certificateUpload" class="file-upload-label">Click to Upload</label>
+
+                    <div id="fileName" class="file-name"></div>
+                </div>
+
+                <button class="btn">Submit Application</button>
+            </form>
+        </div>
+
+
+
+        <!-- DASHBOARD PAGE -->
+        <div id="dashboardPage" class="page">
+            <h2 class="section-title">Welcome, <span id="mentorName"></span>!</h2>
+
+            <div class="dashboard-grid">
+                <div class="stat-card"><h3 id="totalRequests">8</h3><p>Pending Requests</p></div>
+                <div class="stat-card"><h3 id="activeStudents">12</h3><p>Active Students</p></div>
+                <div class="stat-card"><h3 id="completedSessions">45</h3><p>Completed Sessions</p></div>
+            </div>
+
+            <h3 class="section-title">Requests</h3>
+            <div id="requestsList"></div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- ========================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================= -->
+<script>
+let skills = [];
+let mentorData = {};
+let uploadedFile = null;
+
+function addSkill() {
+    let input = document.getElementById("skillInput");
+    let val = input.value.trim();
+    if (!val) return;
+
+    skills.push(val);
+    updateSkillsList();
+    input.value = "";
+}
+
+function updateSkillsList() {
+    let box = document.getElementById("skillsList");
+    box.innerHTML = skills.map(s => `
+        <div class="skill-tag">${s}</div>
+    `).join("");
+}
+
+function handleFileUpload(input) {
+    const file = input.files[0];
+    if (!file) return;
+
+    uploadedFile = file;
+    let nameDiv = document.getElementById("fileName");
+    nameDiv.textContent = "Uploaded: " + file.name;
+    nameDiv.classList.add("show");
+}
+
+document.getElementById("registerForm").addEventListener("submit", e => {
+    e.preventDefault();
+
+    mentorData.name = document.getElementById("regName").value;
+    document.getElementById("mentorName").textContent = mentorData.name;
+
+    showPage("dashboardPage");
+});
+
+function showPage(page) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById(page).classList.add("active");
+}
+</script>
+
+{% endblock body %}

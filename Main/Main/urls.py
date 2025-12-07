@@ -41,9 +41,10 @@ urlpatterns = [
     path('dancing/',views.dancing,name='dancing'),
     #path('login/',views.login,name='login'),
     path('register/',views.register,name='register'),
+    path('mentor/',views.mentor,name='mentor'),
      # Wallet
     path('wallet/', views.wallet, name='wallet'),
-
+    
     # Live Session
     path('host-session/', views.host_session, name='host_session'),
     path('join-session/<int:session_id>/', views.join_session, name='join_session'),

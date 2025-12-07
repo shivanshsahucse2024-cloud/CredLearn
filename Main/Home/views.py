@@ -50,6 +50,9 @@ def dancing(request):
 def register(request):
     return render(request, 'register.html')
 
+def mentor(request):
+    return render(request, 'mentor.html')
+
 
 # ==========================================================
 # LOGOUT
