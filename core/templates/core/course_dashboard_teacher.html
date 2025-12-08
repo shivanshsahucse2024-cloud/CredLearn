@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+
+{% block title %} Manage {{ course.title }} | CredLearn {% endblock title %}
+
+{% block content %}
+<div class="job-header pt-5 pb-5 text-white" style="background: linear-gradient(135deg, #198754 0%, #20c997 100%);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <span class="badge bg-light text-success mb-2">Instructor View</span>
+                <h1 class="fw-bold mb-2">{{ course.title }}</h1>
+                <p class="lead opacity-75 mb-0">Manage schedule and students</p>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="bg-white text-dark rounded-3 p-3 d-inline-block shadow-sm">
+                    <div class="small text-muted text-uppercase fw-bold">Total Students</div>
+                    <div class="h2 fw-bold mb-0">{{ course.students.count }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-n5 pb-5" style="margin-top: -30px;">
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+
+            {% if active_slot %}
+            <div class="card shadow-sm border-0 mb-4 border-start border-5 border-success">
+                <div class="card-body p-4 d-flex align-items-center justify-content-between">
+                    <div>
+                        <h4 class="fw-bold text-success mb-1">🔴 Class is LIVE!</h4>
+                        <p class="mb-0">You have a session with <strong>{{ active_slot.booked_by.username }}</strong>
+                            right now.</p>
+                    </div>
+                    <a href="https://meet.jit.si/CredLearn_Slot_{{ active_slot.id }}" target="_blank"
+                        class="btn btn-dark btn-lg fw-bold pulse-animation">
+                        🎥 START CLASS
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="card shadow-sm border-0 mb-4">
+                <div
+                    class="card-header bg-white border-0 pt-4 px-4 pb-0 d-flex justify-content-between align-items-center">
+                    <h4 class="fw-bold mb-0">📅 Schedule Management</h4>
+                    <a href="{% url 'edit_course' course.id %}" class="btn btn-sm btn-outline-primary">Add Slots /
+                        Edit</a>
+                </div>
+                <div class="card-body p-4">
+                    {% if slots %}
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Date & Time</th>
+                                    <th>Status</th>
+                                    <th>Student</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for slot in slots %}
+                                <tr>
+                                    <td>
+                                        <div class="fw-bold">{{ slot.start_time|date:"M j, Y" }}</div>
+                                        <small class="text-muted">{{ slot.start_time|date:"g:i A" }} - {{
+                                            slot.end_time|date:"g:i A" }}</small>
+                                    </td>
+                                    <td>
+                                        {% if slot.is_booked %}
+                                        <span class="badge bg-success">Booked</span>
+                                        {% else %}
+                                        <span class="badge bg-secondary">Open</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if slot.booked_by %}
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-light rounded-circle text-center me-2 small fw-bold"
+                                                style="width: 24px; height: 24px; line-height: 24px;">
+                                                {{ slot.booked_by.username|make_list|first|upper }}
+                                            </div>
+                                            {{ slot.booked_by.username }}
+                                        </div>
+                                        {% else %}
+                                        <span class="text-muted">-</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if slot.is_booked %}
+                                        <a href="https://meet.jit.si/CredLearn_Slot_{{ slot.id }}" target="_blank"
+                                            class="btn btn-sm btn-outline-primary">Join Link</a>
+                                        {% else %}
+                                        <span class="text-muted small">No link</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted text-center py-4">No slots created yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3">Course Actions</h5>
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'edit_course' course.id %}" class="btn btn-outline-primary">Edit Course
+                            Details</a>
+                        <a href="{% url 'delete_course' course.id %}" class="btn btn-outline-danger">Delete Course</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3">Enrolled Students</h5>
+                    <ul class="list-group list-group-flush">
+                        {% for student in course.students.all %}
+                        <li class="list-group-item px-0 d-flex align-items-center">
+                            <div class="bg-light rounded-circle text-center me-3"
+                                style="width: 32px; height: 32px; line-height: 32px;">
+                                {{ student.username|make_list|first|upper }}
+                            </div>
+                            <span>{{ student.username }}</span>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item px-0 text-muted">No students yet.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0 rgba(25, 135, 84, 0.7);
+        }
+
+        70% {
+            transform: scale(1.05);
+            box-shadow: 0 0 0 10px rgba(25, 135, 84, 0);
+        }
+
+        100% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0 rgba(25, 135, 84, 0);
+        }
+    }
+
+    .pulse-animation {
+        animation: pulse 2s infinite;
+    }
+</style>
+{% endblock content %}

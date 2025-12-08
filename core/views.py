@@ -6,6 +6,7 @@ from .models import Course, User, Transaction, Category, TimeSlot
 from .forms import CustomUserCreationForm, CourseForm, ProfileUpdateForm
 import json
 from django.utils.dateparse import parse_datetime
+from django.utils import timezone
 
 # --- Authentication ---
 
@@ -245,6 +246,65 @@ def course_list_by_category(request, category_id):
 @login_required
 def course_detail(request, course_id):
     course = get_object_or_404(Course, id=course_id)
-    is_enrolled = request.user in course.students.all()
-    slots = course.slots.filter(is_booked=False).order_by('start_time')
-    return render(request, 'core/course_detail.html', {'course': course, 'is_enrolled': is_enrolled, 'slots': slots})
+
+# --- Enhanced Dashboards ---
+
+@login_required
+def my_learning(request):
+    my_courses = request.user.enrolled_courses.all()
+    return render(request, 'core/my_learning.html', {'courses': my_courses})
+
+@login_required
+def my_teaching(request):
+    teaching_courses = request.user.teaching_courses.all()
+    return render(request, 'core/my_teaching.html', {'courses': teaching_courses})
+
+@login_required
+def course_dashboard_student(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+    if request.user not in course.students.all():
+        messages.error(request, "You are not enrolled in this course.")
+        return redirect('course_detail', course_id=course.id)
+    
+    # Get booked slots
+    booked_slots = course.slots.filter(booked_by=request.user).order_by('start_time')
+    
+    # Check for active slot
+    now = timezone.now()
+    active_slot = None
+    for slot in booked_slots:
+        if slot.start_time <= now <= slot.end_time:
+            active_slot = slot
+            break
+            
+    return render(request, 'core/course_dashboard_student.html', {
+        'course': course,
+        'booked_slots': booked_slots,
+        'active_slot': active_slot,
+        'now': now # For debugging or UI logic
+    })
+
+@login_required
+def course_dashboard_teacher(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+    if request.user != course.teacher:
+        messages.error(request, "You are not the teacher of this course.")
+        return redirect('dashboard')
+        
+    slots = course.slots.all().order_by('start_time')
+    
+    # Check for active slot
+    now = timezone.now()
+    active_slot = None
+    # We want to find if ANY booked slot is active right now
+    for slot in slots:
+        if slot.is_booked and slot.start_time <= now <= slot.end_time:
+            active_slot = slot
+            break
+            
+    return render(request, 'core/course_dashboard_teacher.html', {
+        'course': course,
+        'slots': slots,
+        'active_slot': active_slot,
+        'now': now
+    })

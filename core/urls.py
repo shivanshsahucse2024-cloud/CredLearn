@@ -21,4 +21,10 @@ urlpatterns = [
     path('explore/', views.category_list, name='category_list'),
     path('category/<int:category_id>/', views.course_list_by_category, name='course_list_by_category'),
     path('course/<int:course_id>/', views.course_detail, name='course_detail'),
+
+    # Expanded Dashboards
+    path('learning/', views.my_learning, name='my_learning'),
+    path('teaching/', views.my_teaching, name='my_teaching'),
+    path('course/learn/<int:course_id>/', views.course_dashboard_student, name='course_dashboard_student'),
+    path('course/teach/<int:course_id>/', views.course_dashboard_teacher, name='course_dashboard_teacher'),
 ]
