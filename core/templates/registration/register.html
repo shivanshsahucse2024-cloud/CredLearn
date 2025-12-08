@@ -10,6 +10,12 @@
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button type="submit" class="btn btn-primary w-100 py-2 fw-bold mt-3">Sign Up</button>
+                <div class="text-center mt-3">
+                    {% load socialaccount %}
+                    <a href="{% provider_login_url 'linkedin' %}" class="btn btn-outline-primary w-100 py-2 fw-bold">
+                        Sign up with LinkedIn
+                    </a>
+                </div>
             </form>
             <p class="mt-4 text-center text-muted">
                 Already have an account? <a href="{% url 'login' %}" class="text-decoration-none fw-bold">Login here</a>

@@ -7,14 +7,6 @@
             <div class="text-center mb-4">
                 <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
                     style="width: 80px; height: 80px; font-size: 32px;">
-                    {{ user.username|make_list|first|upper }}
-                </div>
-                <h2 class="fw-bold">{{ user.username }}</h2>
-                <span class="badge bg-light text-dark border">{{ user.email }}</span>
-            </div>
-
-            <div class="row g-3 mb-4">
-                <div class="col-12">
                     <div class="p-3 bg-light rounded text-center">
                         <small class="text-muted d-block uppercase fw-bold" style="font-size: 0.75rem;">WALLET</small>
                         <span class="fw-bold text-warning">{{ user.creds }} Creds</span>
