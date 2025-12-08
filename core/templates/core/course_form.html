@@ -12,8 +12,9 @@
                     </h2>
                 </div>
                 <div class="card-body p-4">
-                    <form method="post">
+                    <form method="post" id="courseForm">
                         {% csrf_token %}
+                        <input type="hidden" name="slots_json" id="slots_json">
 
                         {% for field in form %}
                         <div class="mb-3">
@@ -28,6 +29,38 @@
                         </div>
                         {% endfor %}
 
+                        <!-- Availability Slots Section -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Availability Slots</label>
+                            <div class="card bg-light border-0 p-3">
+                                <div class="row g-2 align-items-end">
+                                    <div class="col-md-5">
+                                        <label class="small text-muted mb-1">Date & Start Time</label>
+                                        <input type="datetime-local" id="slotStart" class="form-control">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label class="small text-muted mb-1">Date & End Time</label>
+                                        <input type="datetime-local" id="slotEnd" class="form-control">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-outline-primary w-100"
+                                            id="addSlotBtn">Add</button>
+                                    </div>
+                                </div>
+                                <div id="slotError" class="text-danger small mt-2 d-none">Please select valid start and
+                                    end times. End time must be after start time.</div>
+                            </div>
+
+                            <div class="mt-3">
+                                <h6>Scheduled Slots:</h6>
+                                <ul class="list-group" id="slotsList">
+                                    <!-- Slots will be added here dynamically -->
+                                    <li class="list-group-item text-muted small fst-italic" id="noSlotsMsg">No slots
+                                        added yet.</li>
+                                </ul>
+                            </div>
+                        </div>
+
                         <div class="d-grid gap-2 mt-4">
                             <button type="submit" class="btn btn-primary btn-lg">
                                 {% if is_edit %}Update Course{% else %}Create Course{% endif %}
@@ -40,6 +73,102 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const slots = [];
+        const slotsJsonInput = document.getElementById('slots_json');
+        const slotsList = document.getElementById('slotsList');
+        const noSlotsMsg = document.getElementById('noSlotsMsg');
+        const slotStart = document.getElementById('slotStart');
+        const slotEnd = document.getElementById('slotEnd');
+        const addSlotBtn = document.getElementById('addSlotBtn');
+        const slotError = document.getElementById('slotError');
+
+        addSlotBtn.addEventListener('click', function () {
+            const start = slotStart.value;
+            const end = slotEnd.value;
+
+            if (!start || !end) {
+                showError("Please fill in both fields.");
+                return;
+            }
+
+            if (new Date(end) <= new Date(start)) {
+                showError("End time must be after start time.");
+                return;
+            }
+
+            // Clear error
+            slotError.classList.add('d-none');
+
+            // Add to array
+            const slotObj = { start: start, end: end };
+            slots.push(slotObj);
+
+            // Update hidden input
+            updateHiddenInput();
+
+            // Render list
+            renderSlot(slotObj, slots.length - 1);
+
+            // Reset inputs
+            slotStart.value = '';
+            slotEnd.value = '';
+        });
+
+        function showError(msg) {
+            slotError.textContent = msg;
+            slotError.classList.remove('d-none');
+        }
+
+        function updateHiddenInput() {
+            slotsJsonInput.value = JSON.stringify(slots);
+        }
+
+        function renderSlot(slot, index) {
+            if (noSlotsMsg) noSlotsMsg.style.display = 'none';
+
+            const li = document.createElement('li');
+            li.className = 'list-group-item d-flex justify-content-between align-items-center';
+
+            const startDate = new Date(slot.start).toLocaleString();
+            const endDate = new Date(slot.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            li.innerHTML = `
+                <span>${startDate} - ${endDate}</span>
+                <button type="button" class="btn btn-sm btn-danger remove-slot" data-index="${index}">&times;</button>
+            `;
+
+            slotsList.appendChild(li);
+
+            // Re-attach event listeners for dynamic remove buttons
+            const removeBtns = document.querySelectorAll('.remove-slot');
+            removeBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const idx = this.getAttribute('data-index');
+                    removeSlot(idx);
+                });
+            });
+        }
+
+        function removeSlot(index) {
+            slots.splice(index, 1);
+            updateHiddenInput();
+
+            // Re-render entire list to keep indices correct
+            slotsList.innerHTML = '';
+            if (slots.length === 0) {
+                if (noSlotsMsg) {
+                    noSlotsMsg.style.display = 'block';
+                    slotsList.appendChild(noSlotsMsg);
+                }
+            } else {
+                slots.forEach((s, i) => renderSlot(s, i));
+            }
+        }
+    });
+</script>
 
 <style>
     /* Style Django form widgets to look like Bootstrap inputs */

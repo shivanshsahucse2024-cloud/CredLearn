@@ -9,6 +9,14 @@ class User(AbstractUser):
     creds = models.IntegerField(default=100) # Everyone starts with 100 creds
     bio = models.TextField(blank=True, null=True)
 
+    # Extended Profile Fields (Manual Entry/LinkedIn Sync Placeholder)
+    skills = models.TextField(blank=True, null=True, help_text="List your skills (one per line)")
+    experience = models.TextField(blank=True, null=True, help_text="Describe your work experience")
+    education = models.TextField(blank=True, null=True, help_text="Describe your education")
+    certification = models.TextField(blank=True, null=True, help_text="List your certifications")
+    
+    linkedin_profile_url = models.URLField(blank=True, null=True, help_text="URL to your public LinkedIn Profile")
+
     groups = models.ManyToManyField(
         'auth.Group',
         verbose_name='groups',
@@ -63,4 +71,14 @@ class Transaction(models.Model):
 
     def __str__(self):
         return f'{self.user.username}: {self.amount} ({self.description})'
+
+class TimeSlot(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='slots')
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    is_booked = models.BooleanField(default=False)
+    booked_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='booked_slots')
+
+    def __str__(self):
+        return f"{self.course.title} - {self.start_time.strftime('%Y-%m-%d %H:%M')}"
 

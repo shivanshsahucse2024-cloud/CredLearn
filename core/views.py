@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib import messages
-from .models import Course, User, Transaction, Category
+from .models import Course, User, Transaction, Category, TimeSlot
 from .forms import CustomUserCreationForm, CourseForm, ProfileUpdateForm
+import json
+from django.utils.dateparse import parse_datetime
 
 # --- Authentication ---
 
@@ -71,6 +73,24 @@ def create_course(request):
             course = form.save(commit=False)
             course.teacher = request.user
             course.save()
+            
+            # Handle Time Slots
+            slots_json = request.POST.get('slots_json')
+            if slots_json:
+                try:
+                    slots_data = json.loads(slots_json)
+                    for slot in slots_data:
+                        start = parse_datetime(slot['start'])
+                        end = parse_datetime(slot['end'])
+                        if start and end:
+                            TimeSlot.objects.create(
+                                course=course,
+                                start_time=start,
+                                end_time=end
+                            )
+                except json.JSONDecodeError:
+                    pass # Handle error gracefully or log it
+
             messages.success(request, "Course created! Earn creds when students join.")
             return redirect('dashboard')
     else:
@@ -118,6 +138,49 @@ def join_course(request, course_id):
     return redirect('dashboard')
 
 @login_required
+def book_slot(request, slot_id):
+    slot = get_object_or_404(TimeSlot, id=slot_id)
+    course = slot.course
+    student = request.user
+    
+    if slot.is_booked:
+        messages.error(request, "This slot is already booked.")
+        return redirect('course_detail', course_id=course.id)
+
+    if student.creds >= course.price:
+        student.creds -= course.price
+        course.teacher.creds += course.price
+        student.save()
+        course.teacher.save()
+        
+        slot.is_booked = True
+        slot.booked_by = student
+        slot.save()
+        
+        # Ensure student is in course list too
+        if student not in course.students.all():
+            course.students.add(student)
+
+        Transaction.objects.create(
+            user=student, 
+            amount=-course.price, 
+            description=f"Booked session for {course.title}", 
+            course=course
+        )
+        Transaction.objects.create(
+            user=course.teacher, 
+            amount=course.price, 
+            description=f"Student booked session: {course.title}", 
+            course=course
+        )
+        
+        messages.success(request, f"Successfully booked session at {slot.start_time.strftime('%Y-%m-%d %H:%M')}!")
+    else:
+        messages.error(request, "Not enough Creds to book this session!")
+
+    return redirect('dashboard')
+
+@login_required
 def edit_course(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     
@@ -135,9 +198,6 @@ def edit_course(request, course_id):
     else:
         form = CourseForm(instance=course)
     
-    # Reuse course_form.html but pass a flag or context if needed, 
-    # or we can just let the template render the form with values.
-    # To make the title say "Edit Course", we can pass a context variable.
     return render(request, 'core/course_form.html', {'form': form, 'is_edit': True})
 
 @login_required
@@ -186,5 +246,5 @@ def course_list_by_category(request, category_id):
 def course_detail(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     is_enrolled = request.user in course.students.all()
-    return render(request, 'core/course_detail.html', {'course': course, 'is_enrolled': is_enrolled})
-
+    slots = course.slots.filter(is_booked=False).order_by('start_time')
+    return render(request, 'core/course_detail.html', {'course': course, 'is_enrolled': is_enrolled, 'slots': slots})

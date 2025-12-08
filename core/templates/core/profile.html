@@ -1,29 +1,127 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card p-5 shadow-lg border-0">
-            <div class="text-center mb-4">
-                <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                    style="width: 80px; height: 80px; font-size: 32px;">
-                    <div class="p-3 bg-light rounded text-center">
-                        <small class="text-muted d-block uppercase fw-bold" style="font-size: 0.75rem;">WALLET</small>
-                        <span class="fw-bold text-warning">{{ user.creds }} Creds</span>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Header Card -->
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body p-4 text-center">
+                    {% load socialaccount %}
+                    {% if user.socialaccount_set.all %}
+                    {% for account in user.socialaccount_set.all %}
+                    {% if account.provider == 'linkedin' %}
+                    {% if account.extra_data.picture %}
+                    <img src="{{ account.extra_data.picture }}" alt="Profile"
+                        class="rounded-circle mb-3 border border-4 border-light shadow-sm"
+                        style="width: 120px; height: 120px; object-fit: cover;">
+                    {% else %}
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow-sm"
+                        style="width: 120px; height: 120px; font-size: 48px;">
+                        {{ user.username|make_list|first|upper }}
+                    </div>
+                    {% endif %}
+                    <div class="mb-2">
+                        <span class="badge bg-primary"><i class="bi bi-linkedin"></i> LinkedIn Verified</span>
+                    </div>
+                    {% if user.linkedin_profile_url %}
+                    <div class="mb-3">
+                        <a href="{{ user.linkedin_profile_url }}" target="_blank"
+                            class="btn btn-sm btn-outline-primary fw-bold">
+                            <i class="bi bi-linkedin"></i> View Profile
+                        </a>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    {% else %}
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow-sm"
+                        style="width: 120px; height: 120px; font-size: 48px;">
+                        {{ user.username|make_list|first|upper }}
+                    </div>
+                    {% endif %}
+
+                    <h2 class="fw-bold mb-1">{{ user.first_name }} {{ user.last_name }}</h2>
+                    <p class="text-muted mb-3">@{{ user.username }}</p>
+
+                    {% if user.linkedin_profile_url and not user.socialaccount_set.all %}
+                    <!-- Fallback: Show button if strictly manual entry without social auth (rare but possible) -->
+                    <div class="mb-3">
+                        <a href="{{ user.linkedin_profile_url }}" target="_blank"
+                            class="btn btn-sm btn-outline-primary fw-bold">
+                            <i class="bi bi-linkedin"></i> View LinkedIn Profile
+                        </a>
+                    </div>
+                    {% endif %}
+
+
+                    <div class="d-inline-block bg-light px-4 py-2 rounded-pill border">
+                        <small class="text-uppercase fw-bold text-muted me-2" style="font-size: 0.75rem;">WALLET</small>
+                        <span class="fw-bold text-warning fs-5">{{ user.creds }} Creds</span>
                     </div>
                 </div>
             </div>
 
-            <div class="mb-4">
-                <h5 class="fw-bold border-bottom pb-2">Bio</h5>
-                <p class="text-muted">{{ user.bio|default:"No bio provided yet." }}</p>
+            <div class="row g-4">
+                <!-- Left Column (Bio & Skills) -->
+                <div class="col-md-5">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-person-lines-fill text-primary me-2"></i>About</h5>
+                            <p class="text-muted">{{ user.bio|default:"No bio added yet."|linebreaks }}</p>
+
+                            <hr class="my-4">
+
+                            <h5 class="fw-bold mb-3"><i class="bi bi-tools text-primary me-2"></i>Skills</h5>
+                            {% if user.skills %}
+                            <div class="text-muted" style="white-space: pre-line;">{{ user.skills }}</div>
+
+                            {% else %}
+                            <p class="text-muted small fst-italic">No skills listed.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column (Experience & Education) -->
+                <div class="col-md-7">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-briefcase text-primary me-2"></i>Experience</h5>
+                            {% if user.experience %}
+                            <div class="text-muted" style="white-space: pre-wrap;">{{ user.experience }}</div>
+                            {% else %}
+                            <p class="text-muted small fst-italic">No experience added.</p>
+                            {% endif %}
+
+                            <hr class="my-4">
+
+                            <h5 class="fw-bold mb-3"><i class="bi bi-mortarboard text-primary me-2"></i>Education</h5>
+                            {% if user.education %}
+                            <div class="text-muted" style="white-space: pre-wrap;">{{ user.education }}</div>
+                            {% else %}
+                            <p class="text-muted small fst-italic">No education details.</p>
+                            {% endif %}
+
+                            <hr class="my-4">
+
+                            <h5 class="fw-bold mb-3"><i class="bi bi-award text-primary me-2"></i>Certifications</h5>
+                            {% if user.certification %}
+                            <div class="text-muted" style="white-space: pre-wrap;">{{ user.certification }}</div>
+                            {% else %}
+                            <p class="text-muted small fst-italic">No certifications listed.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="d-flex gap-2">
-                <a href="{% url 'profile_edit' %}" class="btn btn-primary flex-grow-1 fw-bold">Edit Profile</a>
-                <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary flex-grow-1 fw-bold">Back to
-                    Dashboard</a>
+            <!-- Action Buttons -->
+            <div class="mt-4 d-flex gap-3 justify-content-center">
+                <a href="{% url 'profile_edit' %}" class="btn btn-primary px-5 fw-bold shadow-sm">Edit Profile</a>
+                <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary px-4 fw-bold">Back to Dashboard</a>
             </div>
+
         </div>
     </div>
 </div>

@@ -51,7 +51,11 @@
                         <h5 class="alert-heading">✅ Enrolled</h5>
                         <p class="mb-0">You are already learning this course.</p>
                     </div>
-                    <button class="btn btn-primary w-100 btn-lg mb-3" disabled>Book Session</button>
+                    {% if user == course.teacher %} <!-- Edge case if teacher enrolled in own course -->
+                    <a href="{% url 'edit_course' course.id %}" class="btn btn-outline-primary w-100 mb-2">Edit
+                        Course</a>
+                    {% endif %}
+
                     {% elif user == course.teacher %}
                     <div class="alert alert-info">
                         <h5 class="alert-heading">👨‍🏫 Instructor</h5>
@@ -61,23 +65,66 @@
                         Course</a>
                     {% else %}
                     <div class="d-grid gap-2">
-                        <a href="{% url 'join_course' course.id %}" class="btn btn-primary btn-lg">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal"
+                            data-bs-target="#bookingModal">
                             Book Session
-                        </a>
+                        </button>
                     </div>
                     <p class="text-muted small text-center mt-3">
-                        Clicking "Book Session" will deduct {{ course.price }} creds from your wallet.
+                        Clicking "Book Session" will open the calendar to select a slot.
                     </p>
                     {% endif %}
 
                     <hr>
 
                     <ul class="list-unstyled">
-                        <li class="mb-2">✅ Full Lifetime Access</li>
+                        <li class="mb-2">✅ Live 1:1 Session</li>
                         <li class="mb-2">✅ Access on Mobile and PC</li>
-                        <li class="mb-2">✅ Certificate of Completion</li>
+                        <li class="mb-2">✅ Verified Expert</li>
                     </ul>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Booking Modal -->
+<div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold" id="bookingModalLabel">Select a Session Time</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted mb-4">Choose a time that works for you. {{ course.price }} Creds will be deducted
+                    upon confirmation.</p>
+
+                {% if slots %}
+                <div class="list-group">
+                    {% for slot in slots %}
+                    <a href="{% url 'book_slot' slot.id %}"
+                        class="list-group-item list-group-item-action d-flex justify-content-between align-items-center mb-2 rounded border"
+                        onclick="return confirm('Book this session for {{ course.price }} creds?');">
+                        <div>
+                            <h6 class="mb-1 fw-bold">{{ slot.start_time|date:"l, F j, Y" }}</h6>
+                            <p class="mb-0 text-muted small">{{ slot.start_time|date:"g:i A" }} - {{
+                                slot.end_time|date:"g:i A" }}</p>
+                        </div>
+                        <span class="badge bg-success rounded-pill">Available</span>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <h4 class="text-muted">📅 No slots available</h4>
+                    <p>The instructor has not added any availability yet. Please check back later.</p>
+                </div>
+                {% endif %}
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
