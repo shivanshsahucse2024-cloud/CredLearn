@@ -27,4 +27,5 @@ urlpatterns = [
     path('teaching/', views.my_teaching, name='my_teaching'),
     path('course/learn/<int:course_id>/', views.course_dashboard_student, name='course_dashboard_student'),
     path('course/teach/<int:course_id>/', views.course_dashboard_teacher, name='course_dashboard_teacher'),
+    path('u/<str:username>/', views.public_profile, name='public_profile'),
 ]

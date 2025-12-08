@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ profile_user.username }} - Instructor | CredLearn {% endblock title %}
+
+{% block content %}
+<div class="bg-white border-bottom">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-md-auto mb-3 mb-md-0">
+                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                    style="width: 120px; height: 120px; font-size: 48px;">
+                    {{ profile_user.username|make_list|first|upper }}
+                </div>
+            </div>
+            <div class="col-md">
+                <h1 class="fw-bold mb-1">{{ profile_user.username }}</h1>
+                <p class="lead text-muted mb-2">Instructor at CredLearn</p>
+
+                <div class="d-flex gap-3 align-items-center mb-3">
+                    {% if profile_user.linkedin_profile_url %}
+                    <a href="{{ profile_user.linkedin_profile_url }}" target="_blank"
+                        class="btn btn-sm btn-outline-primary fw-bold">
+                        <span class="me-1">🔗</span> LinkedIn Verified
+                    </a>
+                    {% endif %}
+                    <span class="text-muted small">Joined {{ profile_user.date_joined|date:"F Y" }}</span>
+                </div>
+
+                <div class="d-flex gap-4">
+                    <div>
+                        <div class="h5 fw-bold mb-0">{{ courses.count }}</div>
+                        <div class="small text-muted">Courses</div>
+                    </div>
+                    <div>
+                        <div class="h5 fw-bold mb-0">{{ total_students }}</div>
+                        <div class="small text-muted">Students</div>
+                    </div>
+                    <div>
+                        <div class="h5 fw-bold mb-0">4.9 ★</div>
+                        <div class="small text-muted">Rating</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row g-5">
+        <!-- Sidebar: Info -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3">About Me</h5>
+                    <p class="text-muted">{{ profile_user.bio|default:"No bio added." }}</p>
+
+                    <hr>
+
+                    <h6 class="fw-bold mb-2">Skills</h6>
+                    <div class="d-flex flex-wrap gap-2 mb-4">
+                        {% if profile_user.skills %}
+                        {% for skill in profile_user.skills.splitlines %}
+                        {% if skill %}
+                        <span class="badge bg-light text-dark border">{{ skill }}</span>
+                        {% endif %}
+                        {% endfor %}
+                        {% else %}
+                        <span class="text-muted small">No skills listed.</span>
+                        {% endif %}
+                    </div>
+
+                    <h6 class="fw-bold mb-2">Education</h6>
+                    <p class="text-muted small">{{ profile_user.education|default:"Not specified"|linebreaks }}</p>
+
+                    <h6 class="fw-bold mb-2">Experience</h6>
+                    <p class="text-muted small">{{ profile_user.experience|default:"Not specified"|linebreaks }}</p>
+
+                    <h6 class="fw-bold mb-2">Certifications</h6>
+                    <p class="text-muted small">{{ profile_user.certification|default:"Not listed"|linebreaks }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main: Courses -->
+        <div class="col-lg-8">
+            <h3 class="fw-bold mb-4">Courses by {{ profile_user.username }}</h3>
+
+            {% if courses %}
+            <div class="row g-4">
+                {% for course in courses %}
+                <div class="col-md-6">
+                    <a href="{% url 'course_detail' course.id %}" class="text-decoration-none text-dark">
+                        <div class="card h-100 border-0 shadow-sm hover-shadow transition-all">
+                            <img src="{{ course.image }}" class="card-img-top" alt="{{ course.title }}"
+                                style="height: 180px; object-fit: cover;">
+                            <div class="card-body p-4">
+                                <div class="mb-2">
+                                    <span class="badge bg-secondary">{{ course.category.name }}</span>
+                                </div>
+                                <h5 class="card-title fw-bold">{{ course.title }}</h5>
+                                <div class="d-flex justify-content-between text-muted small mt-3">
+                                    <span>⏱ {{ course.duration }}</span>
+                                    <span>💰 {{ course.price }} Creds</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="alert alert-light border-0 shadow-sm">
+                This instructor hasn't published any courses yet.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+    }
+
+    .transition-all {
+        transition: all 0.3s ease;
+    }
+</style>
+{% endblock content %}

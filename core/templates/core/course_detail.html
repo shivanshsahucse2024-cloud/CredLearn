@@ -39,6 +39,71 @@
                 <h3 class="fw-bold mb-3">About This Course</h3>
                 <p class="lead">{{ course.description|linebreaks }}</p>
             </div>
+
+            <!-- Instructor Details -->
+            <div class="mb-5">
+                <h3 class="fw-bold mb-4">Meet Your Instructor</h3>
+                <div class="card border-0 shadow-sm bg-light">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3"
+                                style="width: 64px; height: 64px; font-size: 24px;">
+                                {{ course.teacher.username|make_list|first|upper }}
+                            </div>
+                            <div>
+                                <h4 class="fw-bold mb-1">
+                                    <a href="{% url 'public_profile' course.teacher.username %}"
+                                        class="text-dark text-decoration-none hover-underline">{{
+                                        course.teacher.username }}</a>
+                                </h4>
+                                <p class="text-muted mb-0">
+                                    {% if course.teacher.linkedin_profile_url %}
+                                    <a href="{{ course.teacher.linkedin_profile_url }}" target="_blank"
+                                        class="text-decoration-none">LinkedIn Profile ↗</a>
+                                    {% else %}
+                                    Instructor
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+
+                        {% if course.teacher.bio %}
+                        <div class="mb-3">
+                            <h6 class="fw-bold text-uppercase text-muted small">Bio</h6>
+                            <p>{{ course.teacher.bio }}</p>
+                        </div>
+                        {% endif %}
+
+                        {% if course.teacher.skills %}
+                        <div class="mb-3">
+                            <h6 class="fw-bold text-uppercase text-muted small">Skills</h6>
+                            <p>{{ course.teacher.skills|linebreaks }}</p>
+                        </div>
+                        {% endif %}
+
+                        {% if course.teacher.experience %}
+                        <div class="mb-3">
+                            <h6 class="fw-bold text-uppercase text-muted small">Experience</h6>
+                            <p class="small">{{ course.teacher.experience|linebreaks }}</p>
+                        </div>
+                        {% endif %}
+
+                        {% if course.teacher.education %}
+                        <div class="mb-3">
+                            <h6 class="fw-bold text-uppercase text-muted small">Education</h6>
+                            <p class="small">{{ course.teacher.education|linebreaks }}</p>
+                        </div>
+                        {% endif %}
+
+                        {% if course.teacher.certification %}
+                        <div>
+                            <h6 class="fw-bold text-uppercase text-muted small">Certifications</h6>
+                            <p class="small">{{ course.teacher.certification|linebreaks }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="col-lg-4">

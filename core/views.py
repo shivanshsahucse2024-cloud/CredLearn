@@ -246,6 +246,9 @@ def course_list_by_category(request, category_id):
 @login_required
 def course_detail(request, course_id):
     course = get_object_or_404(Course, id=course_id)
+    is_enrolled = request.user in course.students.all()
+    slots = course.slots.filter(is_booked=False).order_by('start_time')
+    return render(request, 'core/course_detail.html', {'course': course, 'is_enrolled': is_enrolled, 'slots': slots})
 
 # --- Enhanced Dashboards ---
 
@@ -308,3 +311,16 @@ def course_dashboard_teacher(request, course_id):
         'active_slot': active_slot,
         'now': now
     })
+
+def public_profile(request, username):
+    profile_user = get_object_or_404(User, username=username)
+    teaching_courses = profile_user.teaching_courses.all()
+    # Calculate stats
+    total_students = sum(c.students.count() for c in teaching_courses)
+    
+    return render(request, 'core/public_profile.html', {
+        'profile_user': profile_user,
+        'courses': teaching_courses,
+        'total_students': total_students
+    })
+
