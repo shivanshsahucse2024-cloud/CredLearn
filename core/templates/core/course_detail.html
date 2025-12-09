@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ course.title }} | CredLearn {% endblock title %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'category_list' %}">Explore</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'course_list_by_category' course.category.id %}">{{
+                            course.category.name }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ course.title }}</li>
+                </ol>
+            </nav>
+
+            <img src="{{ course.image }}" class="img-fluid rounded mb-4 w-100" alt="{{ course.title }}"
+                style="max-height: 400px; object-fit: cover;">
+
+            <h1 class="fw-bold mb-3">{{ course.title }}</h1>
+
+            <div class="d-flex align-items-center mb-4">
+                <div class="me-4">
+                    <span class="text-muted">Instructor:</span>
+                    <span class="fw-bold">{{ course.teacher.username }}</span>
+                </div>
+                <div class="me-4">
+                    <span class="text-muted">Duration:</span>
+                    <span class="fw-bold">{{ course.duration }}</span>
+                </div>
+                <div>
+                    <span class="text-muted">Category:</span>
+                    <span class="badge bg-secondary">{{ course.category.name }}</span>
+                </div>
+            </div>
+
+            <div class="mb-5">
+                <h3 class="fw-bold mb-3">About This Course</h3>
+                <p class="lead">{{ course.description|linebreaks }}</p>
+            </div>
+
+            <!-- Instructor Details -->
+            <div class="mb-5">
+                <h3 class="fw-bold mb-4">Meet Your Instructor</h3>
+                <div class="card border-0 shadow-sm bg-light">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3"
+                                style="width: 64px; height: 64px; font-size: 24px;">
+                                {{ course.teacher.username|make_list|first|upper }}
+                            </div>
+                            <div>
+                                <h4 class="fw-bold mb-1">
+                                    <a href="{% url 'public_profile' course.teacher.username %}"
+                                        class="text-dark text-decoration-none hover-underline">{{
+                                        course.teacher.username }}</a>
+                                </h4>
+                                <p class="text-muted mb-0">
+                                    {% if course.teacher.linkedin_profile_url %}
+                                    <a href="{{ course.teacher.linkedin_profile_url }}" target="_blank"
+                                        class="text-decoration-none">LinkedIn Profile ↗</a>
+                                    {% else %}
+                                    Instructor
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+
+                        {% if course.teacher.bio %}
+                        <div class="mb-3">
+                            <h6 class="fw-bold text-uppercase text-muted small">Bio</h6>
+                            <p>{{ course.teacher.bio }}</p>
+                        </div>
+                        {% endif %}
+
+                        {% if course.teacher.skills %}
+                        <div class="mb-3">
+                            <h6 class="fw-bold text-uppercase text-muted small">Skills</h6>
+                            <p>{{ course.teacher.skills|linebreaks }}</p>
+                        </div>
+                        {% endif %}
+
+                        {% if course.teacher.experience %}
+                        <div class="mb-3">
+                            <h6 class="fw-bold text-uppercase text-muted small">Experience</h6>
+                            <p class="small">{{ course.teacher.experience|linebreaks }}</p>
+                        </div>
+                        {% endif %}
+
+                        {% if course.teacher.education %}
+                        <div class="mb-3">
+                            <h6 class="fw-bold text-uppercase text-muted small">Education</h6>
+                            <p class="small">{{ course.teacher.education|linebreaks }}</p>
+                        </div>
+                        {% endif %}
+
+                        {% if course.teacher.certification %}
+                        <div>
+                            <h6 class="fw-bold text-uppercase text-muted small">Certifications</h6>
+                            <p class="small">{{ course.teacher.certification|linebreaks }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0 sticky-top" style="top: 100px;">
+                <div class="card-body p-4">
+                    <h2 class="card-title fw-bold text-primary mb-4">{{ course.price }} Creds</h2>
+
+                    {% if is_enrolled %}
+                    <div class="alert alert-success">
+                        <h5 class="alert-heading">✅ Enrolled</h5>
+                        <p class="mb-0">You are already learning this course.</p>
+                    </div>
+                    {% if user == course.teacher %} <!-- Edge case if teacher enrolled in own course -->
+                    <a href="{% url 'edit_course' course.id %}" class="btn btn-outline-primary w-100 mb-2">Edit
+                        Course</a>
+                    {% endif %}
+
+                    {% elif user == course.teacher %}
+                    <div class="alert alert-info">
+                        <h5 class="alert-heading">👨‍🏫 Instructor</h5>
+                        <p class="mb-0">You are teaching this course.</p>
+                    </div>
+                    <a href="{% url 'edit_course' course.id %}" class="btn btn-outline-primary w-100 mb-2">Edit
+                        Course</a>
+                    {% else %}
+                    <div class="d-grid gap-2">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal"
+                            data-bs-target="#bookingModal">
+                            Book Session
+                        </button>
+                    </div>
+                    <p class="text-muted small text-center mt-3">
+                        Clicking "Book Session" will open the calendar to select a slot.
+                    </p>
+                    {% endif %}
+
+                    <hr>
+
+                    <ul class="list-unstyled">
+                        <li class="mb-2">✅ Live 1:1 Session</li>
+                        <li class="mb-2">✅ Access on Mobile and PC</li>
+                        <li class="mb-2">✅ Verified Expert</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Booking Modal -->
+<div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold" id="bookingModalLabel">Select a Session Time</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted mb-4">Choose a time that works for you. {{ course.price }} Creds will be deducted
+                    upon confirmation.</p>
+
+                {% if slots %}
+                <div class="list-group">
+                    {% for slot in slots %}
+                    <a href="{% url 'book_slot' slot.id %}"
+                        class="list-group-item list-group-item-action d-flex justify-content-between align-items-center mb-2 rounded border"
+                        onclick="return confirm('Book this session for {{ course.price }} creds?');">
+                        <div>
+                            <h6 class="mb-1 fw-bold">{{ slot.start_time|date:"l, F j, Y" }}</h6>
+                            <p class="mb-0 text-muted small">{{ slot.start_time|date:"g:i A" }} - {{
+                                slot.end_time|date:"g:i A" }}</p>
+                        </div>
+                        <span class="badge bg-success rounded-pill">Available</span>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <h4 class="text-muted">📅 No slots available</h4>
+                    <p>The instructor has not added any availability yet. Please check back later.</p>
+                </div>
+                {% endif %}
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

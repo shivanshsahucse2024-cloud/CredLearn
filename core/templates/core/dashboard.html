@@ -28,16 +28,21 @@
     <div class="col-md-9">
 
         <!-- Section: Courses I am Enrolled In -->
-        <h3 class="fw-bold mb-4 text-primary">📚 My Enrolled Courses</h3>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold text-primary mb-0">📚 My Enrolled Courses</h3>
+            <a href="{% url 'my_learning' %}" class="btn btn-outline-primary fw-bold shadow-sm">Show All</a>
+        </div>
+
         {% if my_courses %}
         <div class="row g-4 mb-5">
-            {% for course in my_courses %}
+            {% for course in my_courses|slice:":3" %}
             <div class="col-md-4">
                 <div class="card p-4 h-100 border-0 shadow-sm bg-white">
                     <h5 class="fw-bold">{{ course.title }}</h5>
                     <p class="small text-muted mb-3">Teacher: {{ course.teacher }}</p>
                     <div class="mt-auto">
-                        <button class="btn btn-secondary btn-sm w-100" disabled>Enrolled</button>
+                        <a href="{% url 'course_dashboard_student' course.id %}" class="btn btn-primary btn-sm w-100">Go
+                            to Course</a>
                     </div>
                 </div>
             </div>
@@ -49,40 +54,40 @@
         </div>
         {% endif %}
 
-        <!-- Section: Courses Available to Join -->
-        <h3 class="fw-bold mb-4 text-primary">🛒 Available Courses</h3>
-        <div class="row g-4">
-            {% for course in available_courses %}
-            <div class="col-md-4">
-                <div class="card p-4 h-100 border-0 shadow-sm">
-                    <h5 class="fw-bold">{{ course.title }}</h5>
-                    <p class="text-muted small mb-3">{{ course.description|truncatechars:80 }}</p>
-                    <div class="mt-auto d-flex justify-content-between align-items-center">
-                        <span class="fw-bold text-warning">{{ course.price }} Creds</span>
-                        <a href="{% url 'join_course' course.id %}" class="btn btn-primary btn-sm px-3">Join Class</a>
-                    </div>
-                </div>
+        <!-- Section: Explore -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold text-primary mb-0">🛒 Find New Courses</h3>
+            <a href="{% url 'category_list' %}" class="btn btn-primary fw-bold shadow-sm">
+                Explore Categories →
+            </a>
+        </div>
+
+        <div class="card border-0 shadow-sm bg-primary text-white mb-5">
+            <div class="card-body p-5 text-center">
+                <h2 class="fw-bold mb-3">Ready to learn something new?</h2>
+                <p class="lead mb-4">Browse our catalog of courses across various categories.</p>
+                <a href="{% url 'category_list' %}" class="btn btn-light btn-lg fw-bold text-primary px-5">
+                    Browse Categories
+                </a>
             </div>
-            {% empty %}
-            <div class="col-12">
-                <p class="text-muted">No new courses available right now.</p>
-            </div>
-            {% endfor %}
         </div>
 
         <!-- Section: Courses I Teach (Visible to all) -->
         <hr class="my-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h3 class="fw-bold text-primary mb-0">🎓 Courses I Teach</h3>
-            <a href="{% url 'create_course' %}" class="btn btn-success fw-bold shadow-sm">
-                <span class="me-2">+</span>Create New Course
-            </a>
+            <div>
+                <a href="{% url 'create_course' %}" class="btn btn-success fw-bold shadow-sm me-2">
+                    <span class="me-2">+</span>Create New
+                </a>
+                <a href="{% url 'my_teaching' %}" class="btn btn-outline-primary fw-bold shadow-sm">Show All</a>
+            </div>
         </div>
 
         {% if teaching_courses %}
         <div class="card p-4 border-0 shadow-sm">
             <ul class="list-group list-group-flush">
-                {% for course in teaching_courses %}
+                {% for course in teaching_courses|slice:":3" %}
                 <li
                     class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 py-3 border-bottom">
                     <div>
@@ -90,10 +95,10 @@
                         <small class="text-muted">{{ course.students.count }} students enrolled</small>
                     </div>
                     <div class="d-flex gap-2">
+                        <a href="{% url 'course_dashboard_teacher' course.id %}"
+                            class="btn btn-sm btn-primary fw-bold">Manage</a>
                         <a href="{% url 'edit_course' course.id %}"
-                            class="btn btn-sm btn-outline-primary fw-bold">Edit</a>
-                        <a href="{% url 'delete_course' course.id %}"
-                            class="btn btn-sm btn-outline-danger fw-bold">Delete</a>
+                            class="btn btn-sm btn-outline-secondary fw-bold">Edit</a>
                     </div>
                 </li>
                 {% endfor %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %} My Teaching | CredLearn {% endblock title %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1 class="fw-bold text-primary">🎓 My Teaching</h1>
+        <div>
+            <a href="{% url 'create_course' %}" class="btn btn-success me-2">+ Create Course</a>
+            <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+
+    {% if courses %}
+    <div class="row g-4">
+        {% for course in courses %}
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <img src="{{ course.image }}" class="card-img-top" alt="{{ course.title }}"
+                    style="height: 200px; object-fit: cover;">
+                <div class="card-body p-4 d-flex flex-column">
+                    <div class="mb-2">
+                        <span class="badge bg-secondary">{{ course.category.name }}</span>
+                    </div>
+                    <h5 class="card-title fw-bold mb-3">{{ course.title }}</h5>
+
+                    <div class="d-flex justify-content-between text-muted small mb-4">
+                        <span>👥 {{ course.students.count }} Students</span>
+                        <span>💰 {{ course.price }} Creds</span>
+                    </div>
+
+                    <div class="mt-auto d-grid gap-2">
+                        <a href="{% url 'course_dashboard_teacher' course.id %}" class="btn btn-primary">Manage
+                            Course</a>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'edit_course' course.id %}"
+                                class="btn btn-outline-secondary flex-grow-1">Edit</a>
+                            <a href="{% url 'delete_course' course.id %}"
+                                class="btn btn-outline-danger flex-grow-1">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <div class="mb-4 text-muted" style="font-size: 4rem;">👨‍🏫</div>
+        <h3>You haven't created any courses yet.</h3>
+        <p class="text-muted mb-4">Share your knowledge and earn credits!</p>
+        <a href="{% url 'create_course' %}" class="btn btn-success btn-lg">Create First Course</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

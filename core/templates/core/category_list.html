@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %} Explore Categories | CredLearn {% endblock title %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-5 fw-bold">Explore Categories</h1>
+
+    <div class="row g-4">
+        {% for category in categories %}
+        <div class="col-md-4 col-lg-3">
+            <a href="{% url 'course_list_by_category' category.id %}" class="text-decoration-none">
+                <div class="card h-100 border-0 shadow-sm hover-card text-center py-4">
+                    <div class="card-body">
+                        <div class="display-4 mb-3">{{ category.icon }}</div>
+                        <h3 class="h5 card-title text-dark fw-bold">{{ category.name }}</h3>
+                        <p class="card-text text-muted small">{{ category.description|truncatewords:10 }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p class="text-muted">No categories found.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .hover-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hover-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+    }
+</style>
+{% endblock content %}

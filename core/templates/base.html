@@ -27,7 +27,9 @@
 
             <div class="ms-auto">
                 {% if user.is_authenticated %}
-                <span class="creds-badge me-3">💰 {{ user.creds }} Creds</span>
+                <a href="{% url 'wallet' %}" class="text-decoration-none">
+                    <span class="creds-badge me-3">💰 {{ user.creds }} Creds</span>
+                </a>
                 <a href="{% url 'profile' %}" class="btn btn-light btn-sm fw-bold text-primary">
                     <span class="me-1">👤</span> My Profile
                 </a>
