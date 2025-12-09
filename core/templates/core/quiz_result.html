@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg text-center overflow-hidden mb-4" style="border-radius: 1rem;">
+                <div class="card-body p-5">
+                    {% if passed %}
+                    <div class="mb-4 text-success display-1">
+                        <i class="bi bi-patch-check-fill drop-shadow"></i>
+                    </div>
+                    <h2 class="fw-bold mb-2">Verified!</h2>
+                    <p class="text-muted mb-4 lead">You have successfully verified your skill in <strong
+                            class="text-dark">{{ skill.name }}</strong>.</p>
+
+                    <div class="display-4 fw-bold text-primary mb-4">
+                        {{ score }}<span class="fs-4 text-muted">/10</span>
+                    </div>
+
+                    <p class="text-success fw-bold bg-success bg-opacity-10 py-2 rounded">
+                        <i class="bi bi-stars me-1"></i> Excellent Job!
+                    </p>
+                    {% else %}
+                    <div class="mb-4 text-warning display-1">
+                        <i class="bi bi-exclamation-circle-fill"></i>
+                    </div>
+                    <h2 class="fw-bold mb-2">Not Quite There</h2>
+                    <p class="text-muted mb-4 lead">You didn't reach the passing score for <strong class="text-dark">{{
+                            skill.name }}</strong>.</p>
+
+                    <div class="display-4 fw-bold text-secondary mb-4">
+                        {{ score }}<span class="fs-4 text-muted">/10</span>
+                    </div>
+
+                    <p class="text-warning fw-bold bg-warning bg-opacity-10 py-2 rounded">
+                        Pass mark is 7/10. Keep learning!
+                    </p>
+                    {% endif %}
+
+                    <div class="mt-4">
+                        <a href="{% url 'profile' %}"
+                            class="btn btn-primary btn-lg px-5 fw-bold shadow-sm rounded-pill">
+                            Return to Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Results -->
+            {% if results %}
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card-header bg-white border-0 py-3 px-4">
+                    <h5 class="fw-bold mb-0 text-dark">Detailed Results</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        {% for res in results %}
+                        <div class="list-group-item p-4 border-light">
+                            <div class="d-flex align-items-start">
+                                <div class="me-3 mt-1">
+                                    {% if res.status == 'correct' %}
+                                    <i class="bi bi-check-circle-fill text-success fs-4"></i>
+                                    {% else %}
+                                    <i class="bi bi-x-circle-fill text-danger fs-4"></i>
+                                    {% endif %}
+                                </div>
+                                <div class="flex-grow-1 text-start">
+                                    <p class="fw-bold mb-2 text-dark">{{ res.question }}</p>
+
+                                    <div class="mb-2">
+                                        <span class="text-muted small text-uppercase fw-bold"
+                                            style="font-size: 0.7rem;">Your Answer</span>
+                                        <div
+                                            class="{% if res.status == 'correct' %}text-success{% else %}text-danger{% endif %}">
+                                            {{ res.user_answer }}
+                                        </div>
+                                    </div>
+
+                                    {% if res.correct_answer %}
+                                    <div class="bg-light rounded p-2 mt-2 border border-light">
+                                        <div class="d-flex text-muted small text-uppercase fw-bold align-items-center mb-1"
+                                            style="font-size: 0.7rem;">
+                                            <i class="bi bi-lightbulb me-1"></i> Insight
+                                        </div>
+                                        <div class="text-secondary small">
+                                            {{ res.correct_answer }}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

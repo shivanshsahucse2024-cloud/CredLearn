@@ -73,9 +73,26 @@
                             <hr class="my-4">
 
                             <h5 class="fw-bold mb-3"><i class="bi bi-tools text-primary me-2"></i>Skills</h5>
-                            {% if user.skills %}
-                            <div class="text-muted" style="white-space: pre-line;">{{ user.skills }}</div>
-
+                            {% if user.user_skills.all %}
+                            <div class="d-flex flex-wrap gap-2">
+                                {% for skill in user.user_skills.all %}
+                                <div class="d-flex align-items-center bg-light border rounded-pill px-3 py-2">
+                                    <span class="me-2 fw-medium text-dark">{{ skill.name }}</span>
+                                    {% if skill.is_verified %}
+                                    <i class="bi bi-patch-check-fill text-success" title="Verified Skill"></i>
+                                    {% else %}
+                                    {% if user == request.user %}
+                                    <a href="{% url 'verify_skill_start' skill.id %}"
+                                        class="btn btn-xs btn-outline-primary rounded-pill py-0 px-2 ms-2"
+                                        style="font-size: 0.7rem;">Verify</a>
+                                    {% else %}
+                                    <span class="text-muted small ms-1" title="Unverified"><i
+                                            class="bi bi-dash-circle"></i></span>
+                                    {% endif %}
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
                             {% else %}
                             <p class="text-muted small fst-italic">No skills listed.</p>
                             {% endif %}

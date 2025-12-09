@@ -57,12 +57,136 @@ def profile_edit(request):
     if request.method == 'POST':
         form = ProfileUpdateForm(request.POST, instance=request.user)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            
+            # Sync text skills to Skill model
+            if user.skills:
+                skill_names = [s.strip() for s in user.skills.split('\n') if s.strip()]
+                # content retention strategy: verifying existing skills
+                # 1. Get existing skills
+                existing_skills = Skill.objects.filter(user=user)
+                existing_names = set(s.name for s in existing_skills)
+                new_names = set(skill_names)
+                
+                # Delete skills that are no longer in the list (optional, but good for consistency)
+                # But be careful not to delete verified skills if user just made a typo? 
+                # For now, strict sync:
+                to_delete = existing_names - new_names
+                Skill.objects.filter(user=user, name__in=to_delete).delete()
+                
+                # Create new skills
+                for name in new_names:
+                    Skill.objects.get_or_create(user=user, name=name)
+            else:
+                 # If empty, delete all?
+                 Skill.objects.filter(user=user).delete()
+                 
             messages.success(request, "Profile updated!")
             return redirect('profile')
     else:
         form = ProfileUpdateForm(instance=request.user)
     return render(request, 'core/profile_edit.html', {'form': form})
+
+from .models import Skill
+from .utils.gemini_utils import generate_quiz_questions, grade_quiz_answers
+
+@login_required
+def start_verification(request, skill_id):
+    skill = get_object_or_404(Skill, id=skill_id, user=request.user)
+    
+    # Generate questions
+    try:
+        questions = generate_quiz_questions(skill.name)
+    except Exception as e:
+        messages.error(request, f"Error: {str(e)}")
+        return redirect('profile')
+        
+    if not questions:
+        messages.error(request, "Could not generate quiz. Empty response from AI.")
+        return redirect('profile')
+        
+    # Store in session
+    request.session[f'quiz_{skill.id}'] = questions
+    
+    return render(request, 'core/quiz.html', {'skill': skill, 'questions': questions})
+
+@login_required
+def submit_verification(request, skill_id):
+    skill = get_object_or_404(Skill, id=skill_id, user=request.user)
+    
+    if request.method == 'POST':
+        questions = request.session.get(f'quiz_{skill.id}')
+        if not questions:
+             messages.error(request, "Session expired. Please start over.")
+             return redirect('profile')
+             
+        user_answers = {}
+        for key, value in request.POST.items():
+            if key.startswith('question_'):
+                q_id = key.split('_')[1]
+                user_answers[q_id] = value
+                
+        # Grade
+        grading_data = grade_quiz_answers(skill.name, questions, user_answers)
+        
+        # Handle backward compatibility or failure
+        if isinstance(grading_data, int):
+            score = grading_data
+            detailed_results = []
+        else:
+            raw_score = grading_data.get('score', 0)
+            try:
+                # Handle edge case where score might be returned as a dict or string
+                if isinstance(raw_score, dict):
+                    # Try to find a numeric value if possible, or just fail
+                    raw_score = raw_score.get('value', 0)
+                score = int(raw_score)
+            except (ValueError, TypeError):
+                score = 0
+            detailed_results = grading_data.get('results', [])
+        
+        # Merge user answers into detailed results for display
+        # We need to match question_id from results with question text and user answer
+        final_results = []
+        questions_map = {str(q['id']): q['question'] for q in questions}
+        
+        for res in detailed_results:
+            q_id = str(res.get('question_id'))
+            
+            # Normalize status
+            status = res.get('status', '').lower()
+            
+            final_results.append({
+                'question': questions_map.get(q_id, 'Unknown Question'),
+                'user_answer': user_answers.get(q_id, '-'),
+                'status': status,
+                'correct_answer': res.get('correct_answer')
+            })
+            
+        # If grading failed completely (empty results), we might want to fill basics
+        if not final_results and score == 0:
+             # Fallback if AI didn't return list
+             pass
+
+        passed = score >= 7
+        if passed:
+            skill.is_verified = True
+            skill.save()
+            messages.success(request, f"Congratulations! You passed the verification for {skill.name} with score {score}/10.")
+        else:
+            messages.warning(request, f"You scored {score}/10. You need 7 to pass. Review your results below.")
+            
+        # Clear session
+        del request.session[f'quiz_{skill.id}']
+        
+        return render(request, 'core/quiz_result.html', {
+            'skill': skill, 
+            'score': score, 
+            'passed': passed,
+            'results': final_results
+        })
+    
+    return redirect('profile')
 
 # --- Course Logic ---
 

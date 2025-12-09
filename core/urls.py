@@ -1,9 +1,6 @@
 from django.urls import path
 from . import views
 
-from django.urls import path
-from . import views
-
 urlpatterns = [
     path('', views.landing_page, name='landing_page'),
     path('dashboard/', views.dashboard, name='dashboard'),
@@ -16,6 +13,10 @@ urlpatterns = [
     path('book/<int:slot_id>/', views.book_slot, name='book_slot'),
     path('course/edit/<int:course_id>/', views.edit_course, name='edit_course'),
     path('course/delete/<int:course_id>/', views.delete_course, name='delete_course'),
+    
+    # Skill Verification
+    path('skill/<int:skill_id>/verify/', views.start_verification, name='verify_skill_start'),
+    path('skill/<int:skill_id>/verify/submit/', views.submit_verification, name='verify_skill_submit'),
     
     # Discovery
     path('explore/', views.category_list, name='category_list'),

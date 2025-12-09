@@ -72,6 +72,7 @@ class Transaction(models.Model):
     def __str__(self):
         return f'{self.user.username}: {self.amount} ({self.description})'
 
+
 class TimeSlot(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='slots')
     start_time = models.DateTimeField()
@@ -82,3 +83,10 @@ class TimeSlot(models.Model):
     def __str__(self):
         return f"{self.course.title} - {self.start_time.strftime('%Y-%m-%d %H:%M')}"
 
+class Skill(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_skills')
+    name = models.CharField(max_length=100)
+    is_verified = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return f"{self.name} ({'Verified' if self.is_verified else 'Unverified'})"
