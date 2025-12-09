@@ -1,13 +1,20 @@
 /* Modern Color Palette */
 :root {
-    --primary-color: #4f46e5; /* Indigo 600 */
-    --primary-hover: #4338ca; /* Indigo 700 */
-    --secondary-color: #10b981; /* Emerald 500 */
-    --background-color: #f3f4f6; /* Gray 100 */
+    --primary-color: #4f46e5;
+    /* Indigo 600 */
+    --primary-hover: #4338ca;
+    /* Indigo 700 */
+    --secondary-color: #10b981;
+    /* Emerald 500 */
+    --background-color: #f3f4f6;
+    /* Gray 100 */
     --card-bg: #ffffff;
-    --text-main: #1f2937; /* Gray 800 */
-    --text-muted: #6b7280; /* Gray 500 */
-    --navbar-bg: #1e1b4b; /* Indigo 950 */
+    --text-main: #1f2937;
+    /* Gray 800 */
+    --text-muted: #6b7280;
+    /* Gray 500 */
+    --navbar-bg: #1e1b4b;
+    /* Indigo 950 */
 }
 
 body {
@@ -97,7 +104,12 @@ body {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-weight: 700;
     letter-spacing: -0.025em;
 }
@@ -108,4 +120,58 @@ h1, h2, h3, h4, h5, h6 {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+}
+
+/* Discussion Panel Styles */
+.vote-btn {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    transition: color 0.2s;
+}
+
+.vote-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}
+
+.vote-btn.upvote:hover {
+    color: #ef4444;
+    /* Red-500 */
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+.vote-btn.downvote:hover {
+    color: #3b82f6;
+    /* Blue-500 */
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+.score {
+    font-weight: 700;
+    min-width: 20px;
+    text-align: center;
+}
+
+.thread-item {
+    transition: background-color 0.2s;
+}
+
+.thread-item:hover {
+    background-color: #f8fafc;
+    /* Slate-50 */
+}
+
+/* Comment Styles */
+.border-start {
+    border-left: 2px solid #e5e7eb !important;
+}
+
+.reply-btn {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.reply-btn:hover {
+    color: var(--primary-color);
 }

@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-10 offset-md-1">
+        <!-- Thread Content -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body p-4">
+                <div class="d-flex">
+                    <div class="d-flex flex-column align-items-center me-4 vote-container" data-id="{{ thread.id }}"
+                        data-type="thread">
+                        <button class="btn btn-link p-0 text-decoration-none vote-btn upvote" data-value="1">▲</button>
+                        <span class="fw-bold my-1 score fs-5" id="score-thread-{{ thread.id }}">{{ thread.score
+                            }}</span>
+                        <button class="btn btn-link p-0 text-decoration-none vote-btn downvote"
+                            data-value="-1">▼</button>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h2 class="fw-bold mb-2">{{ thread.title }}</h2>
+                        <p class="text-muted small mb-3">
+                            Posted by <span class="fw-bold text-dark">{{ thread.author.username }}</span>
+                            • {{ thread.created_at|date:"F j, Y, g:i a" }}
+                        </p>
+                        <div class="thread-content fs-5 mb-4">
+                            {{ thread.content|linebreaks }}
+                        </div>
+                        <div class="d-flex border-top pt-3">
+                            <span class="me-3 text-muted">💬 {{ thread.comments.count }} comments</span>
+                            <button class="btn btn-link text-muted p-0 report-btn" data-id="{{ thread.id }}"
+                                data-type="thread">🚩 Report</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Comment Form -->
+        {% if user.is_authenticated %}
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body p-4">
+                <h5 class="fw-bold mb-3">Leave a comment</h5>
+                <form action="{% url 'discussion:comment_create' thread_id=thread.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <textarea name="content" class="form-control" rows="3" placeholder="What are your thoughts?"
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary fw-bold">Comment</button>
+                </form>
+            </div>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            Please <a href="{% url 'login' %}">login</a> to participate in the conversation.
+        </div>
+        {% endif %}
+
+        <!-- Comments Section -->
+        <h5 class="fw-bold mb-4">Comments</h5>
+        {% for comment in comments %}
+        {% include 'discussion/includes/comment.html' with comment=comment %}
+        {% empty %}
+        <p class="text-muted">No comments yet.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    // Include shared voting/reporting script or duplicate here if not in base
+    // For now, duplicating the essential parts for this page context or referencing
+
+    function toggleReplyForm(commentId) {
+        const form = document.getElementById(`reply-form-${commentId}`);
+        if (form) form.classList.toggle('d-none');
+    }
+
+    // Event delegation for reply buttons (better for potential future dynamic content)
+    document.addEventListener('click', function (e) {
+        if (e.target.closest('.reply-btn') || e.target.closest('.reply-cancel-btn')) {
+            const btn = e.target.closest('.reply-btn') || e.target.closest('.reply-cancel-btn');
+            const id = btn.dataset.id;
+            if (id) toggleReplyForm(id);
+        }
+    });
+
+    const getCookie = (name) => {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    };
+    const csrftoken = getCookie('csrftoken');
+
+    document.querySelectorAll('.vote-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const container = this.closest('.vote-container');
+            const objectId = container.dataset.id;
+            const contentType = container.dataset.type;
+            const value = this.dataset.value;
+
+            fetch("{% url 'discussion:vote' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrftoken
+                },
+                body: `object_id=${objectId}&content_type=${contentType}&value=${value}`
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.score !== undefined) {
+                        document.getElementById(`score-${contentType}-${objectId}`).innerText = data.score;
+                    }
+                });
+        });
+    });
+
+    document.querySelectorAll('.report-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const objectId = this.dataset.id;
+            const contentType = this.dataset.type;
+            const reason = prompt("Reason for reporting:");
+
+            if (reason) {
+                fetch("{% url 'discussion:report' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: `object_id=${objectId}&content_type=${contentType}&reason=${reason}`
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert('Report submitted.');
+                    });
+            }
+        });
+    });
+</script>
+{% endblock %}
+{% endblock %}

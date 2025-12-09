@@ -24,6 +24,13 @@
     <nav class="navbar navbar-expand-lg navbar-dark mb-4">
         <div class="container">
             <a class="navbar-brand" href="{% url 'dashboard' %}">CredLearn</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" href="{% url 'discussion:thread_list' %}">Discussions</a>
+                    </li>
+                </ul>
+            </div>
 
             <div class="ms-auto">
                 {% if user.is_authenticated %}

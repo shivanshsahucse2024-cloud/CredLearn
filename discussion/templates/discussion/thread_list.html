@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-9">
+        <h1 class="display-6 fw-bold">Discussions</h1>
+        <p class="text-muted">Join the community conversation.</p>
+    </div>
+    <div class="col-md-3 text-end">
+        <a href="{% url 'discussion:thread_create' %}" class="btn btn-primary fw-bold">
+            <span class="me-1">+</span> New Thread
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-sm border-0 mb-3">
+            <div class="card-header bg-white border-bottom-0 py-3">
+                <ul class="nav nav-pills card-header-pills">
+                    <li class="nav-item">
+                        <a class="nav-link {% if not request.GET.sort or request.GET.sort == 'new' %}active{% endif %}"
+                            href="?sort=new">New</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.GET.sort == 'hot' %}active{% endif %}" href="?sort=hot">Hot</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.GET.sort == 'top' %}active{% endif %}" href="?sort=top">Top</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="list-group list-group-flush">
+                {% for thread in threads %}
+                <div class="list-group-item p-4 thread-item">
+                    <div class="d-flex align-items-start">
+                        <!-- Vote Column -->
+                        <div class="d-flex flex-column align-items-center me-4 vote-container" data-id="{{ thread.id }}"
+                            data-type="thread">
+                            <button class="btn btn-link p-0 text-decoration-none vote-btn upvote" data-value="1">
+                                ▲
+                            </button>
+                            <span class="fw-bold my-1 score" id="score-thread-{{ thread.id }}">{{ thread.vote_score
+                                }}</span>
+                            <button class="btn btn-link p-0 text-decoration-none vote-btn downvote" data-value="-1">
+                                ▼
+                            </button>
+                        </div>
+
+                        <!-- Content Column -->
+                        <div class="flex-grow-1">
+                            <h5 class="mb-1">
+                                <a href="{% url 'discussion:thread_detail' pk=thread.pk %}"
+                                    class="text-decoration-none text-dark fw-bold">
+                                    {{ thread.title }}
+                                </a>
+                            </h5>
+                            <p class="text-muted small mb-2">
+                                Posted by <span class="fw-bold">{{ thread.author.username }}</span>
+                                • {{ thread.created_at|timesince }} ago
+                            </p>
+                            <div class="d-flex text-muted small">
+                                <span class="me-3">
+                                    💬 {{ thread.comments.count }} comments
+                                </span>
+                                <!-- Report Button -->
+                                <button class="btn btn-link text-muted p-0 report-btn" style="font-size: 0.875em;"
+                                    data-id="{{ thread.id }}" data-type="thread">
+                                    🚩 Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="list-group-item p-5 text-center text-muted">
+                    <h5>No threads yet</h5>
+                    <p>Be the first to start a discussion!</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    // Simple script to handle voting via AJAX
+    // Note: We need to ensure CSRF token is sent
+    const getCookie = (name) => {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    };
+    const csrftoken = getCookie('csrftoken');
+
+    document.querySelectorAll('.vote-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const container = this.closest('.vote-container');
+            const objectId = container.dataset.id;
+            const contentType = container.dataset.type;
+            const value = this.dataset.value;
+
+            fetch("{% url 'discussion:vote' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrftoken
+                },
+                body: `object_id=${objectId}&content_type=${contentType}&value=${value}`
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.score !== undefined) {
+                        document.getElementById(`score-${contentType}-${objectId}`).innerText = data.score;
+                    }
+                });
+        });
+    });
+
+    document.querySelectorAll('.report-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const objectId = this.dataset.id;
+            const contentType = this.dataset.type;
+            const reason = prompt("Reason for reporting:");
+
+            if (reason) {
+                fetch("{% url 'discussion:report' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: `object_id=${objectId}&content_type=${contentType}&reason=${reason}`
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert('Report submitted.');
+                    });
+            }
+        });
+    });
+</script>
+{% endblock %}
+{% endblock %}

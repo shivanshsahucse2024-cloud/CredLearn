@@ -167,6 +167,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.openid_connect',
     'core', # <--- Add this
+    'discussion',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
